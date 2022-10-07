@@ -1,6 +1,5 @@
-import {View, Text} from 'react-native';
 import React from 'react';
-import RootNavigation from './src/navigation/Root Navigation';
+import RootNavigation from './src/navigation';
 
 const App = () => {
   return (

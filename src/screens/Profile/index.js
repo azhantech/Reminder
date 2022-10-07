@@ -1,12 +1,13 @@
 import {View, Text} from 'react-native';
 import React from 'react';
+import styles from './styles';
 
-const RootNavigation = () => {
+const Profile = () => {
   return (
     <View>
-      <Text>RootNavigation</Text>
+      <Text>Profile</Text>
     </View>
   );
 };
 
-export default RootNavigation;
+export default Profile;
