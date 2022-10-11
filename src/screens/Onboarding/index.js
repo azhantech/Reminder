@@ -26,6 +26,7 @@ const Onboarding = () => {
           autoplayLoop
           showPagination
           PaginationComponent={CustomPagination}
+          removeClippedSubviews={false}
           data={items}
           renderItem={({item, index}) => (
             <Image
