@@ -1,29 +1,50 @@
-import {View, Text, Image, Button} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
+import {SwiperFlatList} from 'react-native-swiper-flatlist';
+import {CustomPagination} from '../../util/CustomPagination/index';
 import icons from '../../constants/icons';
+import styles from './styles';
+
+const newImage = [icons.onBoarding, icons.onBoarding];
+const image = index => ({image: newImage[index % newImage.length]});
+const items = Array.from(Array(3)).map((_, index) => image(index));
 
 const Onboarding = () => {
+  const navigation = useNavigation();
+
+  const handleStarted = () => {
+    navigation.navigate('Login');
+  };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.upperContainer}>
-        <Image source={icons.onBoarding} />
+        <SwiperFlatList
+          autoplay
+          autoplayDelay={3}
+          autoplayLoop
+          showPagination
+          PaginationComponent={CustomPagination}
+          data={items}
+          renderItem={({item, index}) => (
+            <Image
+              source={item.image}
+              testID={`container_swiper_renderItem_screen_${index}`}></Image>
+          )}
+        />
       </View>
       <View style={styles.middleContainer}>
-        <Text>Task Management</Text>
-        <Text>Made Simple</Text>
+        <Text style={styles.upperMiddleText}>Task Management</Text>
+        <Text style={styles.upperMiddleText}>Made Simple</Text>
         <Text style={styles.textThree}>
           The smart tool is designed to help you better manage your task
         </Text>
       </View>
       <View style={styles.lowerContainer}>
-        <Button
-          title="Get Started"
-          // buttonStyle={styles.btnTwo}
-          // containerStyle={styles.subContainerTwo}
-          // titleStyle={styles.subTitleTwo}
-          // onPress={handleSubmit}
-        />
+        <TouchableOpacity style={styles.btnContainer} onPress={handleStarted}>
+          <Text style={styles.btnText}>Get Started</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

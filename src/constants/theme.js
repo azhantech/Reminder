@@ -19,7 +19,7 @@ export const COLORS = {
   red: '#D84035',
   black: '#000000',
   gray: '#212125',
-  gray1: '#1f1f1f',
+  gray1: '#FBFBFB',
   lightGray: '#3B3B3B',
   lightGray2: '#212125',
   lightGray3: '#757575',
