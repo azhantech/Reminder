@@ -5,8 +5,8 @@ export const COLORS = {
   primary: '#1E1E1E',
   secondary: '#DADADA',
 
-  mainBg: '#07092F',
-  mainFg: '#1B86E6',
+  mainBg: '#FFFFFF',
+  mainFg: '#8085FF',
 
   sideBg: '#07628F',
   topBg: '#07396E',

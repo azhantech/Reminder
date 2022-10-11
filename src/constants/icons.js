@@ -13,6 +13,7 @@ const mail = require('../assets/icons/mail.png');
 const password = require('../assets/icons/key.png');
 const search = require('../assets/icons/search.png');
 const edit = require('../assets/icons/edit.png');
+const onBoarding = require('../assets/icons/onBoarding.png');
 
 export default {
   briefcase,
@@ -30,4 +31,5 @@ export default {
   password,
   search,
   edit,
+  onBoarding,
 };
