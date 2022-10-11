@@ -3,9 +3,12 @@ package com.todoapp;
 import static com.blitzapp.animatedsplash.animation.AnimatedText.FIT_XY;
 import static com.blitzapp.animatedsplash.animation.Constants.SCALE;
 import static com.blitzapp.animatedsplash.animation.Constants.SLIDE;
+import static com.blitzapp.animatedsplash.animation.Constants.FADE;
 import static com.blitzapp.animatedsplash.animation.Constants.SPLASH_SLIDE_DOWN;
 import static com.blitzapp.animatedsplash.animation.Constants.SPLASH_SLIDE_LEFT;
+import static com.blitzapp.animatedsplash.animation.Constants.SPLASH_SLIDE_RIGHT;
 import static com.blitzapp.animatedsplash.animation.Constants.SPLASH_FADE;
+import static com.blitzapp.animatedsplash.animation.AnimatedText.FIT_CENTER;
 import static com.blitzapp.animatedsplash.animation.Splash.screenHeight;
 import static com.blitzapp.animatedsplash.animation.Splash.screenWidth;
 
@@ -83,51 +86,44 @@ public class MainActivity extends ReactActivity {
     Splash splash = new Splash(MainActivity.this);
 
     // set background
-    splash.setBackgroundImage(R.drawable.splashbg);
+    // splash.setBackgroundImage(R.drawable.splashbg);
+    splash.setBackgroundColor("#FFFFFF");
 
     // set splash hide animation
-    splash.setSplashHideAnimation(SPLASH_FADE);
+    splash.setSplashHideAnimation(SPLASH_SLIDE_DOWN);
 
     // set splash hide delay
-    splash.setSplashHideDelay(1500);
+    splash.setSplashHideDelay(1000);
 
-    // Create and add images to view
-    // AnimatedObject image1 = new AnimatedObject(R.drawable.header, screenHeight *
-    // 0.15, screenWidth);
-    // image1.setPositionX(0);
-    // image1.setPositionY(0);
-    // image1.setScaleType(FIT_XY);
-    // image1.setVisibility(false);
-    // splash.addAnimatedImage(image1);
+    AnimatedObject image1 = new AnimatedObject(R.drawable.logo1, screenHeight * 0.15, screenWidth);
+    image1.setPositionX(0);
+    image1.setPositionY(0);
+    image1.setScaleType(FIT_XY);
+    image1.setVisibility(false);
+    splash.addAnimatedImage(image1);
 
-    // AnimatedObject image2 = new AnimatedObject(R.drawable.footer, screenHeight *
-    // 0.15, screenWidth, 0,
-    // screenHeight - screenHeight * 0.15, FIT_XY, false);
-    // image2.setPositionX(0);
-    // image2.setPositionY(screenHeight - screenHeight * 0.15f);
-    // image2.setScaleType(FIT_XY);
-    // image2.setVisibility(false);
-    // splash.addAnimatedImage(image2);
+    AnimatedObject image2 = new AnimatedObject(R.drawable.logo1, screenHeight * 0.15, screenWidth, 0, screenHeight - screenHeight * 0.15, FIT_XY, false);
+    image2.setPositionX(0);
+    image2.setPositionY(screenHeight-screenHeight*0.15f);
+    image2.setScaleType(FIT_XY);
+    image2.setVisibility(false);
+    splash.addAnimatedImage(image2);
 
-    // AnimatedObject logoimage = new AnimatedObject(R.drawable.logo2, screenHeight
-    // * 0.18, screenWidth * 0.45);
-    // splash.addAnimatedImage(logoimage);
-    // ObjectAnimation image1Animation = new ObjectAnimation(image1, SLIDE, 780, 0f,
-    // 0f, -screenHeight * 0.15f, 0f);
-    // ObjectAnimation image2Animation = new ObjectAnimation(image2, SLIDE, 780, 0f,
-    // 0f, screenHeight * 0.15f, 0f);
-    // ObjectAnimation logoimageAnimation = new ObjectAnimation(logoimage, SCALE,
-    // 780, 0.2f, 1f, 0.2f, 1f);
+    AnimatedObject logoimage = new AnimatedObject(R.drawable.logo, screenHeight * 0.24, screenWidth * 0.4);
+    splash.addAnimatedImage(logoimage);
+    ObjectAnimation image1Animation = new ObjectAnimation(image1, SLIDE, 780, 0f, 0f, -screenHeight * 0.15f, 0f);
+    ObjectAnimation image2Animation = new ObjectAnimation(image2, SLIDE, 780, 0f, 0f, screenHeight * 0.15f, 0f);
 
-    // add group animation
+    ObjectAnimation logoimageAnimation1 = new ObjectAnimation(logoimage, FADE, 1000, 0f, 1f, false);
+    ObjectAnimation logoimageAnimation2 = new ObjectAnimation(logoimage, SCALE, 1000, 0f, 1f, 0f, 1f, false);
 
-    // GroupAnimation group1 = new GroupAnimation(1);
-    // group1.addAnimation(image1Animation);
-    // group1.addAnimation(image2Animation);
+    GroupAnimation group1 = new GroupAnimation(1);
 
-    // add single animation
+    group1.addAnimation(image1Animation);
+    group1.addAnimation(image2Animation);
 
-    // SingleAnimation singleAnimation = new SingleAnimation(logoimageAnimation, 2);
+    group1.addAnimation(logoimageAnimation1);
+    group1.addAnimation(logoimageAnimation2);
 
     splash.ShowSplash();
 
