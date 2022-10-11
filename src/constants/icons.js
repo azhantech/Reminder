@@ -14,6 +14,8 @@ const password = require('../assets/icons/key.png');
 const search = require('../assets/icons/search.png');
 const edit = require('../assets/icons/edit.png');
 const onBoarding = require('../assets/icons/onBoarding.png');
+const calendar = require('../assets/icons/calendar.png');
+const plus = require('../assets/icons/plus.png');
 
 export default {
   briefcase,
@@ -32,4 +34,6 @@ export default {
   search,
   edit,
   onBoarding,
+  calendar,
+  plus,
 };

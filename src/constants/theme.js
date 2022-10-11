@@ -7,6 +7,8 @@ export const COLORS = {
 
   mainBg: '#FFFFFF',
   mainFg: '#8085FF',
+  mainMg: '#F5F6FB',
+  mainGrey: '#F7F7F7',
 
   sideBg: '#07628F',
   topBg: '#07396E',

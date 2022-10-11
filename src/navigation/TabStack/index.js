@@ -1,26 +1,37 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {COLORS} from '../../constants';
+
+import {COLORS, icons} from '../../constants';
 import HomeStack from '../HomeStack';
 import ScheduleStack from '../ScheduleStack';
 import AddTaskStack from '../AddTaskStack';
 import ReportStack from '../ReportStack';
 import ProfileStack from '../ProfileStack';
+import TabIcon from '../../util/TabIcon';
+import styles from './styles';
+import {Image} from 'react-native';
+import {CustomTabBarButton} from '../../util/CustomTabBarButton';
 
 const Tab = createBottomTabNavigator();
 
 const TabStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="SearchStack"
+      initialRouteName="HomeStack"
       screenOptions={{
         showLabel: false,
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
           borderTopColor: 'transparent',
-          height: 60,
-          backgroundColor: COLORS.mainBg,
+          position: 'absolute',
+          bottom: 25,
+          left: 20,
+          right: 20,
+          elevation: 0,
+          borderRadius: 15,
+          height: 90,
+          ...styles.shadow,
         },
       }}>
       <Tab.Screen
@@ -38,7 +49,7 @@ const TabStack = () => {
         component={ScheduleStack}
         options={{
           tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.home} />;
+            return <TabIcon focused={focused} icon={icons.verified} />;
           },
         }}
       />
@@ -47,9 +58,27 @@ const TabStack = () => {
         name="AddTaskStack"
         component={AddTaskStack}
         options={{
-          tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.home} />;
-          },
+          tabBarIcon: ({focused}) => (
+            // <Image
+            //   source={icons.plus}
+            //   resizeMode="contain"
+            //   style={{
+            //     width: 70,
+            //     height: 70,
+            //     // tintColor: focused ? '' : COLORS.mainFg,
+            //   }}
+            // />
+
+            <Image
+              source={require('../../assets/icons/cross.png')}
+              style={{
+                tintColor: focused ? COLORS.mainMg : COLORS.mainBg,
+                height: '40%',
+                width: '40%',
+              }}
+            />
+          ),
+          tabBarButton: props => <CustomTabBarButton {...props} />,
         }}
       />
 
@@ -58,7 +87,7 @@ const TabStack = () => {
         component={ReportStack}
         options={{
           tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.home} />;
+            return <TabIcon focused={focused} icon={icons.market} />;
           },
         }}
       />
@@ -68,7 +97,7 @@ const TabStack = () => {
         component={ProfileStack}
         options={{
           tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.home} />;
+            return <TabIcon focused={focused} icon={icons.profile} />;
           },
         }}
       />
