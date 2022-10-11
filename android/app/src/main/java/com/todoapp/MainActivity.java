@@ -4,6 +4,7 @@ import static com.blitzapp.animatedsplash.animation.AnimatedText.FIT_XY;
 import static com.blitzapp.animatedsplash.animation.Constants.SCALE;
 import static com.blitzapp.animatedsplash.animation.Constants.SLIDE;
 import static com.blitzapp.animatedsplash.animation.Constants.FADE;
+import static com.blitzapp.animatedsplash.animation.Constants.ROTATE;
 import static com.blitzapp.animatedsplash.animation.Constants.SPLASH_SLIDE_DOWN;
 import static com.blitzapp.animatedsplash.animation.Constants.SPLASH_SLIDE_LEFT;
 import static com.blitzapp.animatedsplash.animation.Constants.SPLASH_SLIDE_RIGHT;
@@ -102,9 +103,10 @@ public class MainActivity extends ReactActivity {
     image1.setVisibility(false);
     splash.addAnimatedImage(image1);
 
-    AnimatedObject image2 = new AnimatedObject(R.drawable.logo1, screenHeight * 0.15, screenWidth, 0, screenHeight - screenHeight * 0.15, FIT_XY, false);
+    AnimatedObject image2 = new AnimatedObject(R.drawable.logo1, screenHeight * 0.15, screenWidth, 0,
+        screenHeight - screenHeight * 0.15, FIT_XY, false);
     image2.setPositionX(0);
-    image2.setPositionY(screenHeight-screenHeight*0.15f);
+    image2.setPositionY(screenHeight - screenHeight * 0.15f);
     image2.setScaleType(FIT_XY);
     image2.setVisibility(false);
     splash.addAnimatedImage(image2);
