@@ -3,10 +3,10 @@ import {COLORS, FONTS} from '../../constants';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    marginHorizontal: 10,
-    paddingHorizontal: 40,
-    marginVertical: 20,
-    paddingVertical: 55,
+    marginHorizontal: 20,
+    paddingHorizontal: 30,
+    marginVertical: 10,
+    paddingVertical: 40,
     transform: [
       {
         rotateX: '20deg',

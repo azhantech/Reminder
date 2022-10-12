@@ -13,6 +13,7 @@ const RootNavigation = () => {
 
   return (
     <NavigationContainer>
+      {/* <AuthStack /> */}
       <MainStack />
     </NavigationContainer>
   );
