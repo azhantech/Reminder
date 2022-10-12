@@ -16,6 +16,8 @@ const edit = require('../assets/icons/edit.png');
 const onBoarding = require('../assets/icons/onBoarding.png');
 const calendar = require('../assets/icons/calendar.png');
 const plus = require('../assets/icons/plus.png');
+const avatar = require('../assets/icons/avatar.jpg');
+const clock = require('../assets/icons/clock.png');
 
 export default {
   briefcase,
@@ -36,4 +38,6 @@ export default {
   onBoarding,
   calendar,
   plus,
+  avatar,
+  clock,
 };
