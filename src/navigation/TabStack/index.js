@@ -14,95 +14,97 @@ import {CustomTabBarButton} from '../../util/CustomTabBarButton';
 
 const Tab = createBottomTabNavigator();
 
-const TabStack = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="HomeStack"
-      screenOptions={{
-        showLabel: false,
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          borderTopColor: 'transparent',
-          position: 'absolute',
-          bottom: 25,
-          left: 20,
-          right: 20,
-          elevation: 0,
-          borderRadius: 15,
-          height: 90,
-          ...styles.shadow,
-        },
-      }}>
-      <Tab.Screen
-        name="HomeStack"
-        component={HomeStack}
-        options={{
-          tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.home} />;
+class TabStack extends React.PureComponent {
+  render() {
+    return (
+      <Tab.Navigator
+        initialRouteName="HomeStack"
+        screenOptions={{
+          showLabel: false,
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            borderTopColor: 'transparent',
+            position: 'absolute',
+            bottom: 25,
+            left: 20,
+            right: 20,
+            elevation: 0,
+            borderRadius: 15,
+            height: 90,
+            ...styles.shadow,
           },
-        }}
-      />
+        }}>
+        <Tab.Screen
+          name="HomeStack"
+          component={HomeStack}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return <TabIcon focused={focused} icon={icons.home} />;
+            },
+          }}
+        />
 
-      <Tab.Screen
-        name="ScheduleStack"
-        component={ScheduleStack}
-        options={{
-          tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.verified} />;
-          },
-        }}
-      />
+        <Tab.Screen
+          name="ScheduleStack"
+          component={ScheduleStack}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return <TabIcon focused={focused} icon={icons.verified} />;
+            },
+          }}
+        />
 
-      <Tab.Screen
-        name="AddTaskStack"
-        component={AddTaskStack}
-        options={{
-          tabBarIcon: ({focused}) => (
-            // <Image
-            //   source={icons.plus}
-            //   resizeMode="contain"
-            //   style={{
-            //     width: 70,
-            //     height: 70,
-            //     // tintColor: focused ? '' : COLORS.mainFg,
-            //   }}
-            // />
+        <Tab.Screen
+          name="AddTaskStack"
+          component={AddTaskStack}
+          options={{
+            tabBarIcon: ({focused}) => (
+              // <Image
+              //   source={icons.plus}
+              //   resizeMode="contain"
+              //   style={{
+              //     width: 70,
+              //     height: 70,
+              //     // tintColor: focused ? '' : COLORS.mainFg,
+              //   }}
+              // />
 
-            <Image
-              source={require('../../assets/icons/cross.png')}
-              style={{
-                tintColor: focused ? COLORS.mainMg : COLORS.mainBg,
-                height: '40%',
-                width: '40%',
-              }}
-            />
-          ),
-          tabBarButton: props => <CustomTabBarButton {...props} />,
-        }}
-      />
+              <Image
+                source={require('../../assets/icons/cross.png')}
+                style={{
+                  tintColor: focused ? COLORS.mainMg : COLORS.mainBg,
+                  height: '40%',
+                  width: '40%',
+                }}
+              />
+            ),
+            tabBarButton: props => <CustomTabBarButton {...props} />,
+          }}
+        />
 
-      <Tab.Screen
-        name="ReportStack"
-        component={ReportStack}
-        options={{
-          tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.market} />;
-          },
-        }}
-      />
+        <Tab.Screen
+          name="ReportStack"
+          component={ReportStack}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return <TabIcon focused={focused} icon={icons.market} />;
+            },
+          }}
+        />
 
-      <Tab.Screen
-        name="ProfileStack"
-        component={ProfileStack}
-        options={{
-          tabBarIcon: ({focused}) => {
-            return <TabIcon focused={focused} icon={icons.profile} />;
-          },
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
+        <Tab.Screen
+          name="ProfileStack"
+          component={ProfileStack}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return <TabIcon focused={focused} icon={icons.profile} />;
+            },
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
+}
 
 export default TabStack;
