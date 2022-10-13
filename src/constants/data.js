@@ -167,4 +167,31 @@ export const DATA = [
       },
     ],
   },
+  {
+    name: 'Reading cookbook',
+    progress: '100',
+    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
+      Math.random() * 256,
+    )}, ${Math.floor(Math.random() * 256)})`,
+    tasks: [
+      {
+        tname: 'implementation',
+        date: 'January 22, 2022',
+        time: '07:00 AM',
+        desc: 'a task to do work',
+      },
+      {
+        tname: 'article reading',
+        date: 'January 22, 2022',
+        time: '07:00 AM',
+        desc: 'a task to do work',
+      },
+      {
+        tname: 'hibernating',
+        date: 'January 22, 2022',
+        time: '07:00 AM',
+        desc: 'a task to do work',
+      },
+    ],
+  },
 ];

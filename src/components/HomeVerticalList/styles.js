@@ -3,8 +3,6 @@ import {COLORS} from '../../constants';
 
 const styles = StyleSheet.create({
   mainCont: {
-    color: COLORS.black,
-    fontWeight: '800',
     backgroundColor: COLORS.mainBg,
     marginVertical: 10,
     textAlign: 'left',
@@ -12,6 +10,10 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     marginHorizontal: 25,
     paddingVertical: 20,
+  },
+  txtStyle: {
+    color: COLORS.black,
+    fontWeight: '800',
   },
   listCont: {
     height: 200,

@@ -53,6 +53,7 @@ const Home = () => {
             <Text style={styles.catTwoTxtStyle}>All Tasks</Text>
           </Link>
         </View>
+
         <HomeVerticalList task={task} />
       </View>
     </View>

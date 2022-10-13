@@ -20,6 +20,7 @@ const avatar = require('../assets/icons/avatar.jpg');
 const clock = require('../assets/icons/clock.png');
 const wave = require('../assets/icons/wave.png');
 const hand = require('../assets/icons/hand.gif');
+const back = require('../assets/icons/back.png');
 export default {
   briefcase,
   close,
@@ -43,4 +44,5 @@ export default {
   clock,
   wave,
   hand,
+  back,
 };
