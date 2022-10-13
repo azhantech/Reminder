@@ -24,6 +24,12 @@ export const DATA = [
         time: '07:00 AM',
         desc: 'a task to do work',
       },
+      {
+        tname: 'task 4',
+        date: 'January 22, 2022',
+        time: '07:00 AM',
+        desc: 'a task to do work',
+      },
     ],
   },
   {

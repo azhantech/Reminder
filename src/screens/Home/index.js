@@ -11,7 +11,7 @@ import {DATA} from '../../constants/data';
 const NUM_TASKS = 6;
 
 const Home = () => {
-  const [task, setTask] = useState(DATA[0]);
+  const [task, setTask] = useState();
 
   const handleSelectedTask = value => {
     DATA.map((item, index) => {
@@ -27,12 +27,8 @@ const Home = () => {
     handleSelectedTask,
   };
 
-  const verticalProps = {
-    task,
-  };
-
   return (
-    <ScrollView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       <View style={styles.upContainer}>
         <View style={styles.upperContainer}>
           <View style={styles.upperLevelTxtContainer}>
@@ -57,9 +53,9 @@ const Home = () => {
             <Text style={styles.catTwoTxtStyle}>All Tasks</Text>
           </Link>
         </View>
-        <HomeVerticalList {...verticalProps} />
+        <HomeVerticalList task={task} />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

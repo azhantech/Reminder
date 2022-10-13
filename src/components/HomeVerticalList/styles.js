@@ -6,7 +6,15 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontWeight: '800',
     backgroundColor: COLORS.mainBg,
-    marginVertical: 5,
+    marginVertical: 10,
+    textAlign: 'left',
+    paddingLeft: 10,
+    marginVertical: 12,
+    marginHorizontal: 25,
+    paddingVertical: 20,
+  },
+  listCont: {
+    height: 200,
   },
 });
 
