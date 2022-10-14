@@ -136,7 +136,6 @@ const Schedule = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        {/* Flatlist Component */}
         <ScheduleVerticalList category={currentTab} />
       </View>
     </View>

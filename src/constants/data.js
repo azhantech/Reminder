@@ -2,6 +2,8 @@ export const DATA = [
   {
     name: 'Dashboard Design',
     progress: '59',
+    desc: 'A task to do work',
+
     color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256,
     )}, ${Math.floor(Math.random() * 256)})`,
@@ -35,6 +37,8 @@ export const DATA = [
   {
     name: 'Moble App Alpha',
     progress: '70',
+    desc: 'a task to do work',
+
     color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256,
     )}, ${Math.floor(Math.random() * 256)})`,
@@ -62,6 +66,9 @@ export const DATA = [
   {
     name: 'Jogging',
     progress: '54',
+
+    desc: 'a task to do work',
+
     color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256,
     )}, ${Math.floor(Math.random() * 256)})`,
@@ -89,6 +96,8 @@ export const DATA = [
   {
     name: 'Inside gaming',
     progress: '20',
+    desc: 'a task to do work',
+
     color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256,
     )}, ${Math.floor(Math.random() * 256)})`,
@@ -116,6 +125,8 @@ export const DATA = [
   {
     name: 'Studying react',
     progress: '54',
+    desc: 'a task to do work',
+
     color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256,
     )}, ${Math.floor(Math.random() * 256)})`,
@@ -143,6 +154,8 @@ export const DATA = [
   {
     name: 'Reading cookbook',
     progress: '20',
+    desc: 'a task to do work',
+
     color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256,
     )}, ${Math.floor(Math.random() * 256)})`,
@@ -170,6 +183,8 @@ export const DATA = [
   {
     name: 'Reading cookbook',
     progress: '100',
+    desc: 'a task to do work',
+
     color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256,
     )}, ${Math.floor(Math.random() * 256)})`,
