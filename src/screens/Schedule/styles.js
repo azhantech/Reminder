@@ -24,9 +24,9 @@ const styles = StyleSheet.create({
   dateNumberStyle: {
     borderWidth: 1,
     color: COLORS.black,
-    borderColor: COLORS.mainBg   ,
+    borderColor: COLORS.mainBg,
     backgroundColor: COLORS.mainBg,
-    borderRadius: 10
+    borderRadius: 10,
   },
   dateNameStyle: {
     color: COLORS.black,
@@ -35,24 +35,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginBottom: 2
+    marginBottom: 2,
   },
 
   highlightDateNameStyle: {
-
     color: COLORS.mainBg,
     borderColor: COLORS.mainFg,
     backgroundColor: COLORS.mainFg,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginBottom: 2
-
+    marginBottom: 2,
   },
 
   highlightDateNumberStyle: {
     color: COLORS.mainFg,
-    borderRadius: 10
+    borderRadius: 10,
   },
   bottomUpContainer: {
     backgroundColor: COLORS.mainBg,
@@ -99,10 +97,9 @@ const styles = StyleSheet.create({
     width: vw * 80,
     paddingBottom: 30,
     marginTop: vh * 0.3,
-    backgroundColor: COLORS.lightGray3
+    backgroundColor: COLORS.lightGray3,
+    borderRadius: 200,
   },
-
- 
 
   iconContainer: {},
   upperTopContainer: {},

@@ -1,11 +1,13 @@
-import {View, Text, FlatList, Alert} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, FlatList, Alert, Animated} from 'react-native';
+import React, {useRef, useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {useFocusEffect} from '@react-navigation/native';
 
 import {COLORS} from '../../constants';
 import styles from './styles';
 import {DATA} from '../../constants/data';
+
+const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
 
 const HomeVerticalList = props => {
   const {task} = props;
@@ -61,7 +63,8 @@ const HomeVerticalList = props => {
 
   return (
     <View style={styles.listCont}>
-      <FlatList
+      <AnimatedFlatlist
+        scrollEventThrottle={16}
         data={task ? task : DATA[0].tasks}
         bounces={true}
         horizontal={false}

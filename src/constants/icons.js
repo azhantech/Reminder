@@ -22,7 +22,8 @@ const wave = require('../assets/icons/wave.png');
 const hand = require('../assets/icons/hand.gif');
 const back = require('../assets/icons/back.png');
 const checkbox = require('../assets/icons/checkbox.png');
-
+const checked = require('../assets/icons/checked.png');
+const time = require('../assets/icons/time.png');
 export default {
   briefcase,
   close,
@@ -48,4 +49,6 @@ export default {
   hand,
   back,
   checkbox,
+  checked,
+  time,
 };

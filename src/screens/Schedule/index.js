@@ -1,4 +1,10 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  LayoutAnimation,
+  UIManager,
+} from 'react-native';
 import React, {useState} from 'react';
 import CalendarStrip from 'react-native-calendar-strip';
 import {useFocusEffect} from '@react-navigation/native';
@@ -8,6 +14,13 @@ import ScheduleVerticalList from '../../components/ScheduleVerticalList';
 import styles from './styles';
 import {COLORS} from '../../constants';
 import {DATA} from '../../constants/data';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const Schedule = () => {
   const [selectedDate, setSelectedDate] = useState();
@@ -21,14 +34,20 @@ const Schedule = () => {
     switch (value) {
       case 'Ongoing':
         const dat = DATA.filter(item => item.progress < 100);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+
         setCurrentTab(dat);
         break;
       case 'Completed':
         const val = DATA.filter(item => item.progress == 100);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+
         setCurrentTab(val);
         break;
       case 'All':
         setCurrentTab(DATA);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+
         break;
       default:
         console.log(`Sorry, we are out of ${expr}.`);
