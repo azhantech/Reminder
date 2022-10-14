@@ -63,6 +63,8 @@ const Schedule = () => {
 
           <CalendarStrip
             scrollable
+            // minDate={new Date()}
+            // selectedDate={selectedDate ? selectedDate : new Date()}
             scrollToOnSetSelectedDate={true}
             style={styles.calendarStripStyle}
             onDateSelected={handleOnDateSelected}

@@ -9,8 +9,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     borderRadius: 10,
     elevation: 5,
-    opacity: 0.95,
-    // paddingHorizontal: 20,
+    opacity: 0.93,
   },
   mainCont: {
     height: '100%',
@@ -32,7 +31,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   circleStyle: {
-    // backgroundColor: 'red',
     marginTop: -10,
     marginBottom: 14,
   },

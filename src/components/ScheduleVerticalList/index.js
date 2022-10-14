@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Image} from 'react-native';
+import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
 import ProgressCircle from 'react-native-progress/Circle';
 
 import React from 'react';
@@ -11,7 +11,7 @@ const ScheduleVerticalList = props => {
 
   const renderItem = ({item}) => {
     return (
-      <View style={styles.listCont}>
+      <TouchableOpacity activeOpacity={0.7} style={styles.listCont}>
         <View
           style={[
             styles.absoluteView,
@@ -63,7 +63,7 @@ const ScheduleVerticalList = props => {
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
