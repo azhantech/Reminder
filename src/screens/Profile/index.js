@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
+import {COLORS} from '../../constants';
 
 const Profile = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}></View>
+      <LinearGradient
+        colors={['#4b51d7', COLORS.mainFg, '#b6b9f3']}
+        style={styles.header}></LinearGradient>
       <Image
         style={styles.avatar}
         source={require('../../assets/icons/avatar.jpg')}

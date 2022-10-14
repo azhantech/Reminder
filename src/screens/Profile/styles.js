@@ -4,7 +4,9 @@ import {COLORS, FONTS} from '../../constants';
 const styles = StyleSheet.create({
   header: {
     backgroundColor: COLORS.mainFg,
-    height: 200,
+    height: 350,
+    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 50,
   },
   avatar: {
     width: 130,
@@ -17,16 +19,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: 130,
   },
-  name: {
-    fontSize: 22,
-    color: 'black',
-    fontWeight: '600',
-  },
+
   body: {
-    marginTop: 40,
+    marginTop: -40,
   },
   container: {
-    backgroundColor: COLORS.mainBg,
     flex: 1,
   },
   bodyContent: {
@@ -36,7 +33,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 28,
-    color: COLORS.white,
+    color: COLORS.mainFg,
     fontWeight: '600',
     marginVertical: 30,
     position: 'absolute',
@@ -44,7 +41,8 @@ const styles = StyleSheet.create({
   info: {
     fontSize: 16,
     marginVertical: 70,
-    color: COLORS.white,
+    color: COLORS.mainFg,
+
     position: 'absolute',
   },
   description: {
