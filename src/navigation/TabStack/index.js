@@ -20,11 +20,11 @@ class TabStack extends React.PureComponent {
       <Tab.Navigator
         initialRouteName="HomeStack"
         screenOptions={{
+          tabBarHideOnKeyboard: true,
           showLabel: false,
           headerShown: false,
           tabBarShowLabel: false,
           tabBarStyle: {
-            borderTopColor: 'transparent',
             position: 'absolute',
             bottom: 25,
             left: 20,

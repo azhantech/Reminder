@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 15,
     marginBottom: 120,
+    backgroundColor: COLORS.mainBg,
   },
   upperContainer: {
     justifyContent: 'center',
