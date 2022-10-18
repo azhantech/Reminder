@@ -21,12 +21,14 @@ const styles = StyleSheet.create({
   lowerCont: {
     backgroundColor: COLORS.mainBg,
     marginHorizontal: 10,
+    // marginVertical: 20,
     paddingBottom: 150,
   },
   labelStyle: {
     color: COLORS.transparentText,
     fontSize: FONTS.body3.fontSize,
     marginHorizontal: 20,
+    marginBottom: 15,
   },
   touchableCont: {
     flexDirection: 'row',
@@ -58,7 +60,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 5,
   },
-
+  datePickerTxt: {
+    width: 100,
+    height: 100,
+  },
   subTitleTwo: {fontWeight: 'bold', color: COLORS.mainBg},
   btnTwo: {
     backgroundColor: COLORS.mainFg,

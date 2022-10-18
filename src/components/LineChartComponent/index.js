@@ -12,7 +12,6 @@ const LineChartComponent = props => {
 
   return (
     <View>
-      <Text>Bezier Line Chart</Text>
       <LineChart
         data={{
           labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -29,7 +28,7 @@ const LineChartComponent = props => {
             },
           ],
         }}
-        width={Dimensions.get('window').width} // from react-native
+        width={Dimensions.get('window').width * 0.89} // from react-native
         height={220}
         yAxisLabel="$"
         yAxisSuffix="k"

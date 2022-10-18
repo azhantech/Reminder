@@ -4,8 +4,7 @@ import {COLORS, FONTS} from '../../constants';
 const styles = StyleSheet.create({
   mainCont: {
     flex: 1,
-    marginHorizontal: 15,
-    marginBottom: 120,
+
     backgroundColor: COLORS.mainBg,
   },
   upperContainer: {

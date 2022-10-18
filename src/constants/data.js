@@ -1,5 +1,6 @@
 export const DATA = [
   {
+    index: 1,
     name: 'Dashboard Design',
     progress: '59',
     desc: 'A task to do work',
@@ -39,6 +40,8 @@ export const DATA = [
     ],
   },
   {
+    index: 2,
+
     name: 'Moble App Alpha',
     progress: '70',
     desc: 'a task to do work',
@@ -71,6 +74,8 @@ export const DATA = [
     ],
   },
   {
+    index: 3,
+
     name: 'Jogging',
     progress: '54',
 
@@ -104,6 +109,8 @@ export const DATA = [
     ],
   },
   {
+    index: 4,
+
     name: 'Inside gaming',
     progress: '20',
     desc: 'a task to do work',
@@ -136,6 +143,8 @@ export const DATA = [
     ],
   },
   {
+    index: 5,
+
     name: 'Studying react',
     progress: '54',
     desc: 'a task to do work',
@@ -167,7 +176,10 @@ export const DATA = [
       },
     ],
   },
+
   {
+    index: 6,
+
     name: 'Reading cookbook',
     progress: '20',
     desc: 'a task to do work',
@@ -200,7 +212,9 @@ export const DATA = [
     ],
   },
   {
-    name: 'Reading cookbook',
+    index: 7,
+
+    name: 'playing soccer',
     progress: '100',
     desc: 'a task to do work',
 

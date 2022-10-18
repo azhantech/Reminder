@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  FlatList,
 } from 'react-native';
 import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -14,10 +15,8 @@ import moment from 'moment';
 import Toast from 'react-native-toast-message';
 
 import MainInputBar from '../../components/MainInputBar';
-
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
-
 import {DATA} from '../../constants/data';
 
 const AddTask = () => {
@@ -28,7 +27,81 @@ const AddTask = () => {
   const [open, setOpen] = useState(false); // flag
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
-  const [currentIndex, setCurrentIndex] = useState();
+  const [step, setStep] = useState({
+    index: 0,
+    value: '',
+  });
+
+  const handleSubmit = () => {
+    const task = {
+      tname: title,
+      desc: description,
+      date: dateAdv,
+      start_time: startTime,
+      end_time: endTime,
+      category: step.value,
+    };
+
+    if (
+      task.tname == ' ' ||
+      task.desc == ' ' ||
+      task.date == undefined ||
+      task.start_time == undefined ||
+      task.end_time == undefined ||
+      task.category == ' '
+    ) {
+      Toast.show({
+        type: 'error',
+        visibilityTime: 2000,
+        text1: 'Kindly fill all the fields 👋',
+      });
+    }
+    console.log('task', task);
+  };
+  const renderItem = ({item}) => {
+    return (
+      <View
+        style={[
+          {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            backgroundColor: COLORS.mainBg,
+            borderWidth: 2,
+            borderColor: item.color,
+            marginHorizontal: 10,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            borderRadius: 12,
+          },
+
+          item?.index == step.index && {
+            backgroundColor: item.color,
+          },
+        ]}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() =>
+            setStep({
+              index: item.index,
+              value: item.name,
+            })
+          }>
+          <Text
+            style={[
+              {
+                color: item.color,
+              },
+              item?.index == step.index && {
+                color: COLORS.mainBg,
+                fontWeight: 'bold',
+              },
+            ]}>
+            {item.name}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>
@@ -83,10 +156,7 @@ const AddTask = () => {
               date={date}
               mode="time"
               theme="light"
-              style={{
-                width: 90,
-                height: 100,
-              }}
+              style={styles.datePickerTxt}
               onDateChange={val => {
                 console.log(moment(val).format('LT'));
                 setStartTime(moment(val).format('LT'));
@@ -97,10 +167,7 @@ const AddTask = () => {
               date={date}
               mode="time"
               theme="light"
-              style={{
-                width: 90,
-                height: 100,
-              }}
+              style={styles.datePickerTxt}
               onDateChange={val => {
                 console.log(moment(val).format('LT'));
                 setEndTime(moment(val).format('LT'));
@@ -116,16 +183,17 @@ const AddTask = () => {
             onChangeText={value => setDescription(value)}
           />
         </View>
-        <View>
-          <Text style={styles.labelStyle}>Category</Text>
-          <MainInputBar
-            placeholder="Enter Task Description"
-            value={description}
-            onChangeText={value => setDescription(value)}
-          />
-        </View>
+        <Text style={styles.labelStyle}>Category</Text>
 
-        <TouchableOpacity style={styles.btnTwo}>
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => item?.index.toString()}
+        />
+
+        <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>
           <Text style={styles.subTitleTwo}>ADD</Text>
         </TouchableOpacity>
       </ScrollView>

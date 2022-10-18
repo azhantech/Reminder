@@ -50,12 +50,12 @@ const ScheduleVerticalList = props => {
             <View style={styles.calendarMain}>
               <View style={styles.calendarIconView}>
                 <Image source={icons.calendar} style={styles.calendarStyle} />
-                <Text>{item.tasks[0].date} </Text>
+                <Text style={styles.extraTxt}>{item.tasks[0].date} </Text>
               </View>
               <View style={styles.checkMain}>
                 <Image source={icons.checkbox} style={styles.calendarStyle} />
 
-                <Text style={{}}>
+                <Text style={styles.extraTxt}>
                   {Math.floor(item.tasks.length * (item.progress / 100))}/
                   {item.tasks.length}
                 </Text>

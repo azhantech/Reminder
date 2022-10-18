@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     flexWrap: 'wrap',
     marginHorizontal: 5,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     paddingVertical: 20,
     borderRadius: 10,
     elevation: 5,
@@ -20,12 +20,14 @@ const styles = StyleSheet.create({
   lowerCont: {},
   progTxt: {
     paddingLeft: 10,
+
     color: COLORS.mainBg,
     fontSize: FONTS.h3.fontSize,
   },
   titleTxt: {
     fontSize: FONTS.h5.fontSize,
     paddingLeft: 25,
+    color: COLORS.mainBg,
   },
 });
 

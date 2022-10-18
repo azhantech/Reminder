@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   descStyle: {
     fontWeight: '400',
     paddingTop: 6,
+    color: COLORS.white,
   },
   calendarMain: {
     flexDirection: 'row',
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     marginTop: -30,
   },
+  extraTxt: {color: COLORS.white},
 });
 
 export default styles;

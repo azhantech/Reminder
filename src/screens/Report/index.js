@@ -56,32 +56,38 @@ const Report = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.mainCont}>
-      <View style={styles.upperContainer}>
-        <Text style={styles.mainText}>Report</Text>
-      </View>
-      <View>
+      <View
+        style={{
+          marginHorizontal: 15,
+          marginBottom: 120,
+        }}>
+        <View style={styles.upperContainer}>
+          <Text style={styles.mainText}>Report</Text>
+        </View>
         <View>
-          <Text style={styles.projTxt}>Statistical Overview</Text>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <ScheduleDataCards
-            title="Completed Projects"
-            imgSrc={icons.checked}
-            progress={completedPercentage && completedPercentage}
-          />
+          <View>
+            <Text style={styles.projTxt}>Statistical Overview</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <ScheduleDataCards
+              title="Completed Projects"
+              imgSrc={icons.checked}
+              progress={completedPercentage && completedPercentage}
+            />
 
-          <ScheduleDataCards
-            title="Ongoing Projects"
-            imgSrc={icons.clock}
-            progress={nonCompletedPercentage && nonCompletedPercentage}
-          />
+            <ScheduleDataCards
+              title="Ongoing Projects"
+              imgSrc={icons.clock}
+              progress={nonCompletedPercentage && nonCompletedPercentage}
+            />
+          </View>
         </View>
-      </View>
-      <View>
-        <BarChartComponent data={DATA} />
-      </View>
-      <View>
-        <LineChartComponent data={DATA} />
+        <View>
+          <BarChartComponent data={DATA} />
+        </View>
+        <View>
+          <LineChartComponent data={DATA} />
+        </View>
       </View>
     </ScrollView>
   );
