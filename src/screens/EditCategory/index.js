@@ -16,10 +16,12 @@ import MainInputBar from '../../components/MainInputBar';
 import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
 
-const AddCategory = () => {
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [selectColor, setSelectColor] = useState();
+const EditCategory = ({route, navigation}) => {
+  const {data} = route.params;
+
+  const [title, setTitle] = useState(data.name);
+  const [description, setDescription] = useState(data.desc);
+  const [selectColor, setSelectColor] = useState(data.color);
 
   const handleSubmit = () => {
     const category = {
@@ -71,7 +73,7 @@ const AddCategory = () => {
       <View style={styles.upperCont}>
         <BackButon />
 
-        <Text style={styles.mainText}>Add Category</Text>
+        <Text style={styles.mainText}>Edit Category</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>
         <View>
@@ -106,9 +108,16 @@ const AddCategory = () => {
         <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>
           <Text style={styles.subTitleTwo}>SUBMIT</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={styles.btnThree}>
+          <Text style={styles.subTitleTwo}>CANCEL</Text>
+        </TouchableOpacity>
       </ScrollView>
     </KeyboardAwareScrollView>
   );
 };
 
-export default AddCategory;
+export default EditCategory;

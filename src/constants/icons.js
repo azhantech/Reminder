@@ -24,6 +24,7 @@ const back = require('../assets/icons/back.png');
 const checkbox = require('../assets/icons/checkbox.png');
 const checked = require('../assets/icons/checked.png');
 const time = require('../assets/icons/time.png');
+const trash = require('../assets/icons/trash.png');
 export default {
   briefcase,
   close,
@@ -51,4 +52,5 @@ export default {
   checkbox,
   checked,
   time,
+  trash,
 };

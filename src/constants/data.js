@@ -5,9 +5,7 @@ export const DATA = [
     progress: '59',
     desc: 'A task to do work',
 
-    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256,
-    )}, ${Math.floor(Math.random() * 256)})`,
+    color: '#7bc043',
     tasks: [
       {
         tname: 'task 1',
@@ -37,6 +35,20 @@ export const DATA = [
         end_time: '11:30 AM',
         desc: 'a task to do work',
       },
+      {
+        tname: 'library linkage',
+        date: 'January 22, 2022',
+        start_time: '07:00 AM',
+        end_time: '11:30 AM',
+        desc: 'a task to do work',
+      },
+      {
+        tname: 'pull ups',
+        date: 'January 22, 2022',
+        start_time: '07:00 AM',
+        end_time: '11:30 AM',
+        desc: 'a task to do work',
+      },
     ],
   },
   {
@@ -46,9 +58,7 @@ export const DATA = [
     progress: '70',
     desc: 'a task to do work',
 
-    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256,
-    )}, ${Math.floor(Math.random() * 256)})`,
+    color: '#d0e1f9',
     tasks: [
       {
         tname: 'UI',
@@ -81,9 +91,7 @@ export const DATA = [
 
     desc: 'a task to do work',
 
-    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256,
-    )}, ${Math.floor(Math.random() * 256)})`,
+    color: '#005b96',
     tasks: [
       {
         tname: 'push ups',
@@ -115,9 +123,7 @@ export const DATA = [
     progress: '20',
     desc: 'a task to do work',
 
-    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256,
-    )}, ${Math.floor(Math.random() * 256)})`,
+    color: '#f6abb6',
     tasks: [
       {
         tname: 'DOTA',
@@ -149,9 +155,7 @@ export const DATA = [
     progress: '54',
     desc: 'a task to do work',
 
-    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256,
-    )}, ${Math.floor(Math.random() * 256)})`,
+    color: '#06bcee',
     tasks: [
       {
         tname: 'docs',
@@ -184,9 +188,7 @@ export const DATA = [
     progress: '20',
     desc: 'a task to do work',
 
-    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256,
-    )}, ${Math.floor(Math.random() * 256)})`,
+    color: '#fed766',
     tasks: [
       {
         tname: 'implementation',
@@ -218,9 +220,7 @@ export const DATA = [
     progress: '100',
     desc: 'a task to do work',
 
-    color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256,
-    )}, ${Math.floor(Math.random() * 256)})`,
+    color: '#2ab7ca',
     tasks: [
       {
         tname: 'implementation',

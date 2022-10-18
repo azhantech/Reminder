@@ -4,14 +4,23 @@ import ProgressCircle from 'react-native-progress/Circle';
 import React from 'react';
 import styles from './style';
 import {COLORS, icons} from '../../constants';
+import {useNavigation} from '@react-navigation/native';
 
 const ScheduleVerticalList = props => {
   const {category} = props;
+  const navigation = useNavigation();
   console.log('dshjdsujd', category);
 
   const renderItem = ({item}) => {
     return (
-      <TouchableOpacity activeOpacity={0.7} style={styles.listCont}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
+          navigation.navigate('CategoryDetail', {
+            data: item,
+          });
+        }}
+        style={styles.listCont}>
         <View
           style={[
             styles.absoluteView,

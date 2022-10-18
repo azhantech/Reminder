@@ -12,16 +12,20 @@ const NUM_TASKS = 6;
 
 const Home = () => {
   const [task, setTask] = useState();
+  const [newTask, setNewTasks] = useState();
 
   const handleSelectedTask = value => {
     DATA.map((item, index) => {
       if (value.name == item.name) {
         console.log('sdjhdsjds', value.tasks);
-        setTask(value.tasks);
+        setNewTasks(value.tasks);
+        setTask(value);
       }
     });
   };
 
+  console.log(task);
+  console.log(task);
   const horizontalProps = {
     DATA,
     handleSelectedTask,
@@ -52,12 +56,14 @@ const Home = () => {
       <View style={styles.bottomContainer}>
         <View style={styles.bottomTopContainer}>
           <Text style={styles.catOneTxtStyle}>My Tasks</Text>
-          <Link to={{screen: 'ViewTasks'}}>
-            <Text style={styles.catTwoTxtStyle}>All Tasks</Text>
-          </Link>
+          {task && (
+            <Link to={{screen: 'ViewTasks', params: {id: task?.name}}}>
+              <Text style={styles.catTwoTxtStyle}>View Tasks</Text>
+            </Link>
+          )}
         </View>
 
-        <HomeVerticalList task={task} />
+        <HomeVerticalList tasks={newTask} />
       </View>
     </View>
   );

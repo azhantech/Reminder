@@ -64,7 +64,6 @@ const Schedule = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('Updated');
       setPressedValue('All');
       setCurrentTab(DATA);
     }, []),
@@ -83,7 +82,9 @@ const Schedule = () => {
           <CalendarStrip
             scrollable
             // minDate={new Date()}
-            // selectedDate={selectedDate ? selectedDate : new Date()}
+            // selectedDate={
+            //   selectedDate ? moment(selectedDate).format('dddd') : new Date()
+            // }
             scrollToOnSetSelectedDate={true}
             style={styles.calendarStripStyle}
             onDateSelected={handleOnDateSelected}

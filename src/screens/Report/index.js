@@ -66,7 +66,7 @@ const Report = () => {
         </View>
         <View>
           <View>
-            <Text style={styles.projTxt}>Statistical Overview</Text>
+            {/* <Text style={styles.projTxt}>Statistical Overview</Text> */}
           </View>
           <View style={{flexDirection: 'row'}}>
             <ScheduleDataCards
