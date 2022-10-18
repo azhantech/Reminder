@@ -76,7 +76,7 @@ const Schedule = () => {
         <View style={styles.upperContainer}>
           <View>
             <Text style={styles.upperText}>
-              {selectedDate ? selectedDate : 'Today'}
+              {selectedDate ? selectedDate : ''}
             </Text>
           </View>
 

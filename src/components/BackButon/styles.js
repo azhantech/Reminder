@@ -3,14 +3,15 @@ import {COLORS} from '../../constants';
 
 const styles = StyleSheet.create({
   mainView: {
-    backgroundColor: COLORS.mainBg,
+    backgroundColor: COLORS.mainFg,
     borderRadius: 25,
     width: 50,
   },
   backBtnImg: {
-    tintColor: COLORS.transparentText,
-    height: 50,
-    width: 50,
+    tintColor: COLORS.mainBg,
+    height: 30,
+    width: 30,
+    alignSelf: 'center',
   },
 });
 

@@ -246,3 +246,57 @@ export const DATA = [
     ],
   },
 ];
+
+export const COLOR_SELECTOR = [
+  {
+    item: '#2ab7ca',
+  },
+  {
+    item: '#fed766',
+  },
+  {
+    item: '#06bcee',
+  },
+  {
+    item: '#f6abb6',
+  },
+  {
+    item: '#011f4b',
+  },
+  {
+    item: '#005b96',
+  },
+  {
+    item: '#251e3e',
+  },
+  {
+    item: '#451e3e',
+  },
+  {
+    item: '#651e3e',
+  },
+  {
+    item: '#fe8a71',
+  },
+  {
+    item: '#35a79c',
+  },
+  {
+    item: '#7bc043',
+  },
+  {
+    item: '#d0e1f9',
+  },
+  {
+    item: '#d11141',
+  },
+  {
+    item: '#ff3377',
+  },
+  {
+    item: '#ff77aa',
+  },
+  {
+    item: '#84c1ff',
+  },
+];

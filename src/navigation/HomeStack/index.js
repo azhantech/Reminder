@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../../screens/Home';
 import ViewTasks from '../../screens/ViewTasks';
-import ViewCategories from '../../screens/ViewCategories';
+import AddCategory from '../../screens/AddCategory';
 import styles from '../AuthStack/styles';
 
 const Stack = createNativeStackNavigator();
@@ -17,7 +17,7 @@ const HomeStack = () => {
       }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="ViewTasks" component={ViewTasks} />
-      <Stack.Screen name="ViewCategories" component={ViewCategories} />
+      <Stack.Screen name="AddCategories" component={AddCategory} />
     </Stack.Navigator>
   );
 };

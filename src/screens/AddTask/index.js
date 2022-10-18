@@ -11,7 +11,6 @@ import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
-
 import Toast from 'react-native-toast-message';
 
 import MainInputBar from '../../components/MainInputBar';
@@ -60,7 +59,14 @@ const AddTask = () => {
   };
   const renderItem = ({item}) => {
     return (
-      <View
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() =>
+          setStep({
+            index: item.index,
+            value: item.name,
+          })
+        }
         style={[
           {
             flexDirection: 'row',
@@ -78,14 +84,7 @@ const AddTask = () => {
             backgroundColor: item.color,
           },
         ]}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() =>
-            setStep({
-              index: item.index,
-              value: item.name,
-            })
-          }>
+        <View>
           <Text
             style={[
               {
@@ -98,8 +97,8 @@ const AddTask = () => {
             ]}>
             {item.name}
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -112,7 +111,7 @@ const AddTask = () => {
         <View>
           <Text style={styles.labelStyle}>Title</Text>
           <MainInputBar
-            placeholder="Enter Title"
+            // placeholder="Enter Title"
             value={title}
             onChangeText={value => setTitle(value)}
           />
@@ -123,7 +122,7 @@ const AddTask = () => {
           <View style={styles.touchableCont}>
             <TextInput
               style={styles.otherTextInputStyle}
-              placeholder="Choose Date"
+              // placeholder="Choose Date"
               value={dateAdv ? dateAdv : ''}
             />
 
@@ -178,7 +177,7 @@ const AddTask = () => {
         <View>
           <Text style={styles.labelStyle}>Description</Text>
           <MainInputBar
-            placeholder="Enter Task Description"
+            // placeholder="Enter Task Description"
             value={description}
             onChangeText={value => setDescription(value)}
           />

@@ -1,11 +1,11 @@
-import {View, Text, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {Link} from '@react-navigation/native';
 
 import HomeHorizontalCards from '../../components/HomeHorizontalCards';
 import HomeVerticalList from '../../components/HomeVerticalList';
 import styles from './styles';
-import {icons} from '../../constants';
+import {COLORS, icons} from '../../constants';
 
 import {DATA} from '../../constants/data';
 const NUM_TASKS = 6;
@@ -42,6 +42,9 @@ const Home = () => {
         <View style={styles.middleContainer}>
           <View style={styles.middleTopContainer}>
             <Text style={styles.catTxtStyle}>My Categories</Text>
+            <Link to={{screen: 'AddCategories'}}>
+              <Text style={styles.opacTxt}> Add Category </Text>
+            </Link>
           </View>
           <HomeHorizontalCards {...horizontalProps} />
         </View>

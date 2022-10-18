@@ -11,10 +11,9 @@ const MainInputBar = ({placeholder, value, onChangeText}) => {
           autoCapitalize="sentences"
           multiline={true}
           style={styles.otherTextInputStyle}
-          placeholder={placeholder}
+          // placeholder={placeholder}
           value={value}
           onChangeText={onChangeText}
-          // placeholderTextColor={COLORS.t}
         />
       </View>
     </>

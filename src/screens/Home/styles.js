@@ -36,11 +36,16 @@ const styles = StyleSheet.create({
   middleContainer: {
     marginVertical: 20,
   },
+  middleTopContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+  },
   catTxtStyle: {
     color: COLORS.black,
     fontSize: FONTS.h2.fontSize,
     fontWeight: '500',
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
   },
   bottomContainer: {
     paddingVertical: 10,
@@ -63,6 +68,12 @@ const styles = StyleSheet.create({
   linkTaskStyle: {
     color: COLORS.lightGray3,
     fontSize: FONTS.h3.fontSize,
+  },
+  opacView: {},
+  opacTxt: {
+    color: COLORS.mainFg,
+    fontSize: FONTS.h3.fontSize,
+    fontWeight: '800',
   },
 });
 

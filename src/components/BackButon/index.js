@@ -9,7 +9,15 @@ const BackButon = () => {
   return (
     <TouchableOpacity
       onPress={() => navigation.goBack()}
-      style={styles.mainView}>
+      style={[
+        styles.mainView,
+        {
+          justifyContent: 'center',
+          height: 40,
+          width: 40,
+          marginTop: 15,
+        },
+      ]}>
       <Image source={icons.back} style={styles.backBtnImg} />
     </TouchableOpacity>
   );

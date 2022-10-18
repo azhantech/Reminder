@@ -82,12 +82,10 @@ const Report = () => {
             />
           </View>
         </View>
-        <View>
-          <BarChartComponent data={DATA} />
-        </View>
-        <View>
-          <LineChartComponent data={DATA} />
-        </View>
+
+        <BarChartComponent data={DATA} />
+
+        <LineChartComponent data={DATA} />
       </View>
     </ScrollView>
   );
