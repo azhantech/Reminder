@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     borderRadius: 20,
     alignSelf: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 2,
     paddingVertical: 10,
     marginVertical: 10,
   },
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   renderMain: {
-    marginVertical: 20,
+    marginVertical: 32,
     paddingHorizontal: 20,
     paddingVertical: 20,
     borderRadius: 30,
