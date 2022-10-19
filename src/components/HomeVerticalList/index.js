@@ -40,9 +40,9 @@ const HomeVerticalList = props => {
   };
 
   useEffect(() => {
-    console.log(tasks);
+    console.log('tasks', tasks);
     setTask(tasks);
-  }, []);
+  }, [tasks]);
   // useFocusEffect(
   //   React.useCallback(() => {
   //     console.log(tasks);
@@ -69,39 +69,3 @@ const HomeVerticalList = props => {
 };
 
 export default HomeVerticalList;
-
-// <BouncyCheckbox
-//           size={25}
-//           fillColor={COLORS.lightGreen}
-//           text={item.tname}
-//           unfillColor={COLORS.mainBg}
-//           iconStyle={COLORS.mainGrey}
-//           innerIconStyle={{borderWidth: 2}}
-//           textStyle={styles.txtStyle}
-//           onPress={isChecked => {
-//             console.log(isChecked);
-//             // setCheck(isChecked);
-
-//             // Alert.alert('', 'You want to delete this task?', [
-//             //   {
-//             //     text: 'Cancel',
-//             //     onPress: () => {
-//             //       setCheck(false);
-//             //       console.log('Cancel Pressed');
-//             //     },
-//             //     style: 'cancel',
-//             //   },
-//             //   {
-//             //     text: 'OK',
-//             //     onPress: () => {
-//             //       const value = DATA.filter(val => val.tname === item.tname);
-//             //       setTasks(value);
-//             //       console.log('OK Pressed');
-//             //     },
-//             //   },
-//             // ]);
-//           }}
-//           bouncinessIn={40}
-//           bounceVelocityIn={0.6}
-//           bounceEffectIn={0.9}
-//         />

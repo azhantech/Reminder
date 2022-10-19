@@ -223,14 +223,14 @@ export const DATA = [
     color: '#2ab7ca',
     tasks: [
       {
-        tname: 'implementation',
+        tname: 'sleeepig',
         date: 'January 22, 2022',
         start_time: '07:00 AM',
         end_time: '11:30 AM',
         desc: 'a task to do work',
       },
       {
-        tname: 'article reading',
+        tname: 'cooking',
         date: 'January 22, 2022',
         start_time: '07:00 AM',
         end_time: '11:30 AM',

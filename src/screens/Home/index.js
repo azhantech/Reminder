@@ -25,7 +25,7 @@ const Home = () => {
   };
 
   console.log(task);
-  console.log(task);
+
   const horizontalProps = {
     DATA,
     handleSelectedTask,
