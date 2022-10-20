@@ -1,7 +1,8 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
+
 import {CustomPagination} from '../../util/CustomPagination/index';
 import icons from '../../constants/icons';
 import styles from './styles';
