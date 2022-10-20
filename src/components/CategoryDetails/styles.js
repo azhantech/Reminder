@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     borderRadius: 20,
     alignSelf: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 8,
     marginHorizontal: 8,
   },
   contUpStyle: {
     flexDirection: 'row',
     paddingHorizontal: 120,
-    position: 'absolute',
+    // position: 'absolute',
   },
   subTitleTwo: {fontWeight: 'bold', color: COLORS.mainBg},
   btnTwo: {

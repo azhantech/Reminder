@@ -48,7 +48,6 @@ const Login = () => {
   const handleSubmit = () => {
     if (email === '' || password === '') {
       showToast();
-      navigation.navigate('TabStack');
     } else {
       validateEmail(email);
     }

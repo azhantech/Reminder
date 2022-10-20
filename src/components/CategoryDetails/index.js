@@ -63,16 +63,16 @@ const CategoryDetails = ({route, navigation}) => {
       <View
         style={{
           flexDirection: 'row',
-          marginVertical: 20,
-          paddingHorizontal: 10,
+          marginVertical: 25,
+          justifyContent: 'space-between',
+          paddingHorizontal: 20,
         }}>
-        <View>
-          <Text style={styles.txtFt}>{item.tname}</Text>
-        </View>
-        <View style={styles.contUpStyle}>
-          <Text style={styles.timeTxt}>{item.start_time}</Text>
-          <Text style={styles.timeTxt}>{item.end_time}</Text>
-        </View>
+        {/* <View style={styles.contUpStyle}> */}
+        <Text style={styles.txtFt}>{item.tname}</Text>
+
+        <Text style={styles.timeTxt}>{item.start_time}</Text>
+        <Text style={styles.timeTxt}>{item.end_time}</Text>
+        {/* </View> */}
       </View>
     );
   };
