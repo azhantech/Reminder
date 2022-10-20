@@ -42,6 +42,8 @@ const Signup = () => {
   const showToast = () => {
     Toast.show({
       type: 'success',
+      visibilityTime: 2000,
+
       text1: 'Kindly fill all the fields 👋',
     });
   };
@@ -95,7 +97,10 @@ const Signup = () => {
         </View>
 
         <View style={styles.bottomContainer}>
-          <TouchableOpacity style={styles.btnTwo} onPress={handleSubmit}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.btnTwo}
+            onPress={handleSubmit}>
             <Text style={styles.subTitleTwo}>Sign Up</Text>
           </TouchableOpacity>
 

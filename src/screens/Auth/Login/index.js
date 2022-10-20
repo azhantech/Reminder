@@ -1,14 +1,7 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Platform,
-  ToastAndroid,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {Link, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-// import {useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 
@@ -19,8 +12,9 @@ import HeadingAuth from '../../../components/HeadingAuth';
 import InputFields from '../../../components/InputFields';
 
 import styles from './styles';
-
+import {changeLogIn} from '../../../redux/reducers/authReducer';
 const Login = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,16 +25,19 @@ const Login = () => {
 
     if (reg.test(text) === false) {
       console.log('Email is Not Correct');
-      if (Platform.OS === 'ios') {
-        Toast.show({
-          type: 'success',
-          text1: 'Email is Not Correct',
-        });
-      } else if (Platform.OS === 'android') {
-        ToastAndroid.show('Email is not correct', ToastAndroid.SHORT);
-      }
+      Toast.show({
+        type: 'success',
+        text1: 'Email is Not Correct',
+      });
     } else {
       console.log('Email is Correct');
+
+      dispatch(changeLogIn(email));
+
+      setTimeout(() => {
+        navigation.navigate('TabStack');
+      }, 3000);
+
       const user = {
         email,
         password,
@@ -51,6 +48,7 @@ const Login = () => {
   const handleSubmit = () => {
     if (email === '' || password === '') {
       showToast();
+      navigation.navigate('TabStack');
     } else {
       validateEmail(email);
     }
@@ -59,6 +57,7 @@ const Login = () => {
   const showToast = () => {
     Toast.show({
       type: 'success',
+      visibilityTime: 2000,
       text1: 'Kindly fill all the fields 👋',
     });
   };
@@ -88,7 +87,10 @@ const Login = () => {
         </View>
 
         <View style={styles.scrollContainerTwo}>
-          <TouchableOpacity style={styles.btnTwo} onPress={handleSubmit}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.btnTwo}
+            onPress={handleSubmit}>
             <Text style={styles.subTitleTwo}>Log In</Text>
           </TouchableOpacity>
 

@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch} from 'react-redux';
+
+import {changeLogOut} from '../../redux/reducers/authReducer';
+import {ImageLoader} from '../../components/ImageLoader';
 
 import styles from './styles';
 import {COLORS} from '../../constants';
-
 const Profile = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   return (
@@ -14,7 +18,7 @@ const Profile = () => {
       <LinearGradient
         colors={['#4b51d7', COLORS.mainFg, '#b6b9f3']}
         style={styles.header}></LinearGradient>
-      <Image
+      <ImageLoader
         style={styles.avatar}
         source={require('../../assets/icons/avatar.jpg')}
       />
@@ -27,11 +31,12 @@ const Profile = () => {
             activeOpacity={0.7}
             style={styles.buttonContainer}
             onPress={() => {
-              // dispatch(changeLogOut());
+              dispatch(changeLogOut());
+
               // dispatch(onLogout());
 
               setTimeout(() => {
-                // navigation.navigate('Login');
+                navigation.navigate('Login');
               }, 3000);
             }}>
             <Text style={styles.btnStyle}>Log Out</Text>
