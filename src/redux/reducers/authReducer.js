@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
+import auth from '@react-native-firebase/auth';
 
 const initialState = {
   isLogedIn: false,
   checkOnboarding: false,
-  userName: '',
   emailId: '',
 };
 
@@ -13,14 +13,15 @@ export const authSlice = createSlice({
   reducers: {
     changeLogIn: (state, action) => {
       state.isLogedIn = true;
-      state.userName = action.payload.username;
-      //   state.emailId = action.payload.email;
+      state.emailId = action.payload.email;
     },
     changeLogOut: state => {
       state.isLogedIn = false;
-      state.userName = null;
       state.emailId = null;
       state.checkOnboarding = true;
+      auth()
+        .signOut()
+        .then(() => console.log('User signed out!'));
     },
   },
 });

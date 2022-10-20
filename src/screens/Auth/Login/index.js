@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
 
 import {COLORS} from '../../../constants';
 
@@ -13,6 +14,7 @@ import InputFields from '../../../components/InputFields';
 
 import styles from './styles';
 import {changeLogIn} from '../../../redux/reducers/authReducer';
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -26,22 +28,33 @@ const Login = () => {
     if (reg.test(text) === false) {
       console.log('Email is Not Correct');
       Toast.show({
-        type: 'success',
+        type: 'error',
         text1: 'Email is Not Correct',
       });
     } else {
       console.log('Email is Correct');
 
-      dispatch(changeLogIn(email));
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account signed in!');
+          dispatch(changeLogIn(email));
 
-      setTimeout(() => {
-        navigation.navigate('TabStack');
-      }, 3000);
+          setTimeout(() => {
+            navigation.navigate('TabStack');
+          }, 3000);
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
 
-      const user = {
-        email,
-        password,
-      };
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+
+          console.error(error);
+        });
     }
   };
 

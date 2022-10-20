@@ -4,6 +4,7 @@ import {View, Text, ToastAndroid, TouchableOpacity} from 'react-native';
 import {Link, useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
 
 import {ImageLoader} from '../../../components/ImageLoader';
 import InputFields from '../../../components/InputFields';
@@ -21,21 +22,32 @@ const Signup = () => {
 
     if (reg.test(text) === false) {
       console.log('Email is Not Correct');
-      if (Platform.OS === 'ios') {
-        Toast.show({
-          type: 'success',
-          text1: 'Email is Not Correct',
-        });
-      } else if (Platform.OS === 'android') {
-        ToastAndroid.show('Email is not correct', ToastAndroid.SHORT);
-      }
+
+      Toast.show({
+        type: 'error',
+        visibilityTime: 2000,
+        text1: 'Email is Not Correct',
+      });
     } else {
       console.log('Email is Correct');
-      const user = {
-        userName: name,
-        email,
-        password,
-      };
+
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          navigation.navigate('Login');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+
+          console.error(error);
+        });
     }
   };
 
