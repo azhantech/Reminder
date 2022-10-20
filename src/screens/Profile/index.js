@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {changeLogOut} from '../../redux/reducers/authReducer';
 import {ImageLoader} from '../../components/ImageLoader';
@@ -10,6 +10,7 @@ import {ImageLoader} from '../../components/ImageLoader';
 import styles from './styles';
 import {COLORS} from '../../constants';
 const Profile = () => {
+  const emailAdd = useSelector(state => state.auth.emailId);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -24,8 +25,8 @@ const Profile = () => {
       />
       <View style={styles.body}>
         <View style={styles.bodyContent}>
-          <Text style={styles.name}>username</Text>
-          <Text style={styles.info}>email</Text>
+          {/* <Text style={styles.name}>username</Text> */}
+          <Text style={styles.info}>{emailAdd && emailAdd}</Text>
 
           <TouchableOpacity
             activeOpacity={0.7}

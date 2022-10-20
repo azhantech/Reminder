@@ -13,3 +13,5 @@ Tab screens:
 - report -> shows Report screen charts and graphs
 - profile
 - addTask
+
+home useselector issue

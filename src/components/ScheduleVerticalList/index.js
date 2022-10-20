@@ -12,74 +12,154 @@ const ScheduleVerticalList = props => {
   console.log('dshjdsujd', category);
 
   const renderItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => {
-          navigation.navigate('CategoryDetail', {
-            data: item,
-          });
-        }}
-        style={styles.listCont}>
-        <View
-          style={[
-            styles.absoluteView,
-            {
-              backgroundColor: item.color,
-            },
-          ]}></View>
-        <View style={styles.subView}>
-          <View>
-            <View style={styles.progressStyle}>
-              <View>
-                <Text style={styles.nameStyle}>{item.name}</Text>
-                <Text style={styles.descStyle}>{item.desc}</Text>
+    if (item.name == 'Nothing to show' && item.tasks.length == 0) {
+      return (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            navigation.navigate('CategoryDetail', {
+              data: item,
+            });
+          }}
+          style={styles.listCont}>
+          <View
+            style={[
+              styles.absoluteView,
+              {
+                backgroundColor: item.color,
+              },
+            ]}></View>
+          <View style={styles.subView}>
+            <View>
+              <View style={styles.progressStyle}>
+                <View>
+                  <Text style={styles.nameStyle}>{item.name}</Text>
+                  <Text style={styles.descStyle}>{item.desc}</Text>
+                </View>
+                <View style={styles.circleStyle}>
+                  <ProgressCircle
+                    size={60}
+                    color="white"
+                    showsText={true}
+                    animated={true}
+                    thickness={5}
+                    strokeCap="round"
+                    progress={Number(item.progress / 100)}
+                    formatText={() => {
+                      return item.progress + '%';
+                    }}
+                    textStyle={styles.progressTxt}
+                    borderWidth={0.4}
+                  />
+                </View>
               </View>
-              <View style={styles.circleStyle}>
-                <ProgressCircle
-                  size={60}
-                  color="white"
-                  showsText={true}
-                  animated={true}
-                  thickness={5}
-                  strokeCap="round"
-                  progress={Number(item.progress / 100)}
-                  formatText={() => {
-                    return item.progress + '%';
-                  }}
-                  textStyle={styles.progressTxt}
-                  borderWidth={0.4}
-                />
+              <View></View>
+            </View>
+
+            <View>
+              <View style={styles.calendarMain}>
+                <View style={styles.calendarIconView}>
+                  <Image source={icons.calendar} style={styles.calendarStyle} />
+                  {/* <Text style={styles.extraTxt}>{item.tasks[0].date}</Text> */}
+                </View>
+                <View style={styles.checkMain}>
+                  <Image source={icons.checkbox} style={styles.calendarStyle} />
+
+                  <Text style={styles.extraTxt}>
+                    {Math.floor(item.tasks.length * (item.progress / 100))}/
+                    {item.tasks.length}
+                  </Text>
+                </View>
               </View>
             </View>
-            <View></View>
           </View>
-
-          <View>
-            <View style={styles.calendarMain}>
-              <View style={styles.calendarIconView}>
-                <Image source={icons.calendar} style={styles.calendarStyle} />
-                <Text style={styles.extraTxt}>{item.tasks[0].date} </Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            navigation.navigate('CategoryDetail', {
+              data: item,
+            });
+          }}
+          style={styles.listCont}>
+          <View
+            style={[
+              styles.absoluteView,
+              {
+                backgroundColor: item.color,
+              },
+            ]}></View>
+          <View style={styles.subView}>
+            <View>
+              <View style={styles.progressStyle}>
+                <View>
+                  <Text style={styles.nameStyle}>{item.name}</Text>
+                  <Text style={styles.descStyle}>{item.desc}</Text>
+                </View>
+                <View style={styles.circleStyle}>
+                  <ProgressCircle
+                    size={60}
+                    color="white"
+                    showsText={true}
+                    animated={true}
+                    thickness={5}
+                    strokeCap="round"
+                    progress={Number(item.progress / 100)}
+                    formatText={() => {
+                      return item.progress + '%';
+                    }}
+                    textStyle={styles.progressTxt}
+                    borderWidth={0.4}
+                  />
+                </View>
               </View>
-              <View style={styles.checkMain}>
-                <Image source={icons.checkbox} style={styles.calendarStyle} />
+              <View></View>
+            </View>
 
-                <Text style={styles.extraTxt}>
-                  {Math.floor(item.tasks.length * (item.progress / 100))}/
-                  {item.tasks.length}
-                </Text>
+            <View>
+              <View style={styles.calendarMain}>
+                <View style={styles.calendarIconView}>
+                  <Image source={icons.calendar} style={styles.calendarStyle} />
+                  <Text style={styles.extraTxt}>
+                    {/* {item.tasks[0].date} */}
+                  </Text>
+                </View>
+                <View style={styles.checkMain}>
+                  <Image source={icons.checkbox} style={styles.calendarStyle} />
+
+                  <Text style={styles.extraTxt}>
+                    {Math.floor(item.tasks.length * (item.progress / 100))}/
+                    {item.tasks.length}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    );
+        </TouchableOpacity>
+      );
+    }
   };
 
   return (
     <View style={styles.mainCont}>
       <FlatList
-        data={category}
+        data={
+          category
+            ? category
+            : [
+                {
+                  color: COLORS.mainFg,
+                  desc: 'Add Categories to get started !',
+                  index: Math.floor(Math.random()),
+                  name: 'Nothing to show',
+                  progress: '0',
+                  tasks: [],
+                },
+              ]
+        }
         bounces={true}
         horizontal={false}
         renderItem={renderItem}

@@ -39,7 +39,6 @@ const Login = () => {
         .then(() => {
           console.log('User account signed in!');
           dispatch(changeLogIn(email));
-
           setTimeout(() => {
             navigation.navigate('TabStack');
           }, 3000);

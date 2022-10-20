@@ -26,17 +26,28 @@ const HomeVerticalList = props => {
   };
 
   const renderItem = ({item}) => {
-    return (
-      <View style={styles.mainCont}>
-        <Text style={styles.txtStyle}>{item.tname}</Text>
-        <TouchableOpacity
-          onPress={() => {
-            onDelete(item.tname);
-          }}>
-          <Image source={icons.trash} style={styles.imgStyle} />
-        </TouchableOpacity>
-      </View>
-    );
+    if (item.data == '' && start_time == '' && end_time == '' && desc == '') {
+      return (
+        <View style={styles.mainCont}>
+          <Text style={styles.txtStyle}>{item.tname}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              onDelete(item.tname);
+            }}>
+            <Image source={icons.trash} style={styles.imgStyle} />
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.mainCont}>
+          <Text style={styles.txtStyle}>{item.tname}</Text>
+          <TouchableOpacity>
+            <Image source={icons.upArrow} style={styles.imgStyle} />
+          </TouchableOpacity>
+        </View>
+      );
+    }
   };
 
   useEffect(() => {
@@ -54,7 +65,19 @@ const HomeVerticalList = props => {
     <View style={styles.listCont}>
       <AnimatedFlatlist
         scrollEventThrottle={16}
-        data={task ? task : DATA[0].tasks}
+        data={
+          task
+            ? task
+            : [
+                {
+                  tname: 'No Tasks to show',
+                  date: '',
+                  start_time: '',
+                  end_time: '',
+                  desc: '',
+                },
+              ]
+        }
         bounces={true}
         horizontal={false}
         renderItem={renderItem}

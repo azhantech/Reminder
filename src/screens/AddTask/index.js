@@ -12,13 +12,16 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import Toast from 'react-native-toast-message';
+import {useSelector} from 'react-redux';
 
 import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
-import {DATA} from '../../constants/data';
+// import {DATA} from '../../constants/data';
 
 const AddTask = () => {
+  const DATA = useSelector(state => state.task.totalData);
+
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [date, setDate] = useState(new Date());
@@ -41,21 +44,29 @@ const AddTask = () => {
       category: step.value,
     };
 
-    if (
-      task.tname == ' ' ||
-      task.desc == ' ' ||
-      task.date == undefined ||
-      task.start_time == undefined ||
-      task.end_time == undefined ||
-      task.category == ' '
-    ) {
+    if (DATA == 'undefined') {
+      if (
+        task.tname == ' ' ||
+        task.desc == ' ' ||
+        task.date == undefined ||
+        task.start_time == undefined ||
+        task.end_time == undefined ||
+        task.category == ' '
+      ) {
+        Toast.show({
+          type: 'error',
+          visibilityTime: 2000,
+          text1: 'Kindly fill all the fields 👋',
+        });
+      }
+      console.log('task', task);
+    } else {
       Toast.show({
         type: 'error',
         visibilityTime: 2000,
-        text1: 'Kindly fill all the fields 👋',
+        text1: 'Kindly create the Categories first 👋',
       });
     }
-    console.log('task', task);
   };
   const renderItem = ({item}) => {
     return (

@@ -1,16 +1,23 @@
 import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import {Link} from '@react-navigation/native';
+import {Link, useFocusEffect} from '@react-navigation/native';
 
+import {getData} from '../../redux/reducers/taskReducer';
 import HomeHorizontalCards from '../../components/HomeHorizontalCards';
 import HomeVerticalList from '../../components/HomeVerticalList';
 import styles from './styles';
-import {COLORS, icons} from '../../constants';
+import {icons} from '../../constants';
 
-import {DATA} from '../../constants/data';
+// import {DATA} from '../../constants/data';
+import {useDispatch, useSelector} from 'react-redux';
+
 const NUM_TASKS = 6;
 
 const Home = () => {
+  const DATA = useSelector(state => state.task.totalData);
+  console.log('DATA', DATA);
+  // const [dataVal, setDataVal] = useState();
+
   const [task, setTask] = useState();
   const [newTask, setNewTasks] = useState();
 
@@ -36,7 +43,7 @@ const Home = () => {
       <View style={styles.upContainer}>
         <View style={styles.upperContainer}>
           <View style={styles.upperLevelTxtContainer}>
-            <Text style={styles.helloTxtStyle}>Hello, Shan</Text>
+            <Text style={styles.helloTxtStyle}>Hello!</Text>
             <Text>You have {NUM_TASKS} task today</Text>
           </View>
           <View style={styles.upperLevelImgContainer}>

@@ -8,6 +8,7 @@ import {COLORS, icons} from '../../constants';
 const HomeHorizontalCards = props => {
   const {DATA, handleSelectedTask} = props;
 
+  console.log('DATA', DATA);
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
@@ -41,6 +42,7 @@ const HomeHorizontalCards = props => {
             animated={true}
             width={250}
             height={8}
+            indeterminate={item.color != COLORS.mainFg ? false : true}
             animationType="spring"
             color="#FFFFFF"
             borderWidth={0.5}
@@ -61,7 +63,20 @@ const HomeHorizontalCards = props => {
   return (
     <>
       <FlatList
-        data={DATA}
+        data={
+          DATA
+            ? DATA
+            : [
+                {
+                  index: Math.floor(Math.random()),
+                  name: 'Nothing to show yet 🎖️',
+                  progress: 100,
+                  desc: '',
+
+                  color: COLORS.mainFg,
+                },
+              ]
+        }
         renderItem={renderItem}
         horizontal={true}
         showsHorizontalScrollIndicator={false}

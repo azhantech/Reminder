@@ -83,9 +83,9 @@ const Report = () => {
           </View>
         </View>
 
-        <BarChartComponent data={DATA} />
+        <BarChartComponent data={DATA && DATA} />
 
-        <LineChartComponent data={DATA} />
+        <LineChartComponent data={DATA && DATA} />
       </View>
     </ScrollView>
   );
