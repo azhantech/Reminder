@@ -38,6 +38,7 @@ const AddCategory = () => {
       task: [
         {
           tname: 'sample task',
+          category: 'sos',
           date: 'January 22, 2022',
           start_time: '07:00 AM',
           end_time: '11:00 PM',

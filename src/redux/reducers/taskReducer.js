@@ -33,21 +33,31 @@ export const taskSlice = createSlice({
 
     editCategory: (state, action) => {
       console.log('EDIT CATEGORY action.payload', action.payload);
-      return {...state, totalData: {...state.totalData, ...action.payload}};
+      // return {...state, totalData: {...state.totalData, ...action.payload}};
     },
 
     deleteTask: (state, action) => {
       console.log(action.payload);
 
-      // state['totalData'].filter((item) => )
+      state['totalData'].map((item, index) => {
+        if (item.name === action.payload?.category) {
+          console.log('==>', item);
 
-      // const newTotalData = state.totalData.filter(
-      //   data => data.id !== action.payload,
-      // );
-      // state.totalData = newTotalData;
+          const updatedValue = item['task'].filter(
+            data => data.tname !== action.payload.id,
+          );
+
+          console.log('updatedValue', updatedValue);
+
+          console.log(
+            "state['totalData'][index]['task'] =>",
+            state['totalData'][index]['task'],
+          );
+
+          state['totalData'][index]['task'] = updatedValue;
+        }
+      });
     },
-
-    // ------------------- // -------------------
 
     onLoggingOut: state => {
       state.totalData = [];
