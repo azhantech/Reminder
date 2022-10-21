@@ -15,16 +15,21 @@ import BackButon from '../../components/BackButon';
 import MainInputBar from '../../components/MainInputBar';
 import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
+import {useDispatch} from 'react-redux';
+import {editCategory} from '../../redux/reducers/taskReducer';
 
 const EditCategory = ({route, navigation}) => {
   const {data} = route.params;
 
+  console.log('EDIT DATA', data);
+  const dispatch = useDispatch();
   const [title, setTitle] = useState(data.name);
   const [description, setDescription] = useState(data.desc);
   const [selectColor, setSelectColor] = useState(data.color);
 
   const handleSubmit = () => {
     const category = {
+      index: data.index,
       name: title,
       progress: '0',
       desc: description,
@@ -42,8 +47,10 @@ const EditCategory = ({route, navigation}) => {
         visibilityTime: 2000,
         text1: 'Kindly fill all the fields 👋',
       });
+    } else {
+      console.log('category', category);
+      dispatch(editCategory(category));
     }
-    console.log('category', category);
   };
 
   const renderItem = ({item}) => {

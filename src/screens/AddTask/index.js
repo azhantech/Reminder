@@ -12,15 +12,17 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import Toast from 'react-native-toast-message';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
+import {addTask} from '../../redux/reducers/taskReducer';
 // import {DATA} from '../../constants/data';
 
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);
+  const dispatch = useDispatch();
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -36,30 +38,33 @@ const AddTask = () => {
 
   const handleSubmit = () => {
     const task = {
+      category: step?.value,
       tname: title,
       desc: description,
       date: dateAdv,
       start_time: startTime,
       end_time: endTime,
-      category: step.value,
     };
-
-    if (DATA == 'undefined') {
+    console.log('DATA addTask', DATA.length);
+    if (DATA.length != 0) {
       if (
         task.tname == ' ' ||
         task.desc == ' ' ||
         task.date == undefined ||
         task.start_time == undefined ||
         task.end_time == undefined ||
-        task.category == ' '
+        task.category == ''
       ) {
         Toast.show({
           type: 'error',
           visibilityTime: 2000,
           text1: 'Kindly fill all the fields 👋',
         });
+      } else {
+        console.log('task', task);
+
+        dispatch(addTask(task));
       }
-      console.log('task', task);
     } else {
       Toast.show({
         type: 'error',
@@ -200,7 +205,11 @@ const AddTask = () => {
           renderItem={renderItem}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => item?.index.toString()}
+          keyExtractor={
+            (item, index) => item?.index.toString()
+            // (item, index) => index.toString()
+            // item && item.index && item?.index?.toString()
+          }
         />
 
         <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>

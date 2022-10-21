@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     marginVertical: 32,
     paddingHorizontal: 20,
     paddingVertical: 20,
-    borderRadius: 30,
+    borderRadius: 50,
     backgroundColor: COLORS.mainFg,
     elevation: 2,
     opacity: 0.85,

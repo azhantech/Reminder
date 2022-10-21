@@ -12,7 +12,8 @@ const ScheduleVerticalList = props => {
   console.log('dshjdsujd', category);
 
   const renderItem = ({item}) => {
-    if (item.name == 'Nothing to show' && item.tasks.length == 0) {
+    console.log('item', item);
+    if (item.name != 'Nothing to show' && item.task.length != 0) {
       return (
         <TouchableOpacity
           activeOpacity={0.7}
@@ -66,8 +67,8 @@ const ScheduleVerticalList = props => {
                   <Image source={icons.checkbox} style={styles.calendarStyle} />
 
                   <Text style={styles.extraTxt}>
-                    {Math.floor(item.tasks.length * (item.progress / 100))}/
-                    {item.tasks.length}
+                    {Math.floor(item.task.length * (item.progress / 100))}/
+                    {item.task.length}
                   </Text>
                 </View>
               </View>
@@ -77,14 +78,7 @@ const ScheduleVerticalList = props => {
       );
     } else {
       return (
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            navigation.navigate('CategoryDetail', {
-              data: item,
-            });
-          }}
-          style={styles.listCont}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.listCont}>
           <View
             style={[
               styles.absoluteView,
@@ -123,17 +117,12 @@ const ScheduleVerticalList = props => {
               <View style={styles.calendarMain}>
                 <View style={styles.calendarIconView}>
                   <Image source={icons.calendar} style={styles.calendarStyle} />
-                  <Text style={styles.extraTxt}>
-                    {/* {item.tasks[0].date} */}
-                  </Text>
+                  <Text style={styles.extraTxt}></Text>
                 </View>
                 <View style={styles.checkMain}>
                   <Image source={icons.checkbox} style={styles.calendarStyle} />
 
-                  <Text style={styles.extraTxt}>
-                    {Math.floor(item.tasks.length * (item.progress / 100))}/
-                    {item.tasks.length}
-                  </Text>
+                  <Text style={styles.extraTxt}></Text>
                 </View>
               </View>
             </View>

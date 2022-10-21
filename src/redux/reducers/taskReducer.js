@@ -1,4 +1,4 @@
-import {createSlice, createAction} from '@reduxjs/toolkit';
+import {createSlice, current} from '@reduxjs/toolkit';
 
 const initialState = {
   totalData: [],
@@ -11,17 +11,44 @@ export const taskSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
-    getData: state => {
-      return state.totalData;
-    },
     addCategory: (state, action) => {
       console.log('ADD action.payload', action.payload);
       // state.totalData = [];
       state['totalData'].push(action.payload);
     },
-    editCategory: (state, action) => {},
-    addTask: (state, action) => {},
-    deleteTask: (state, action) => {},
+
+    addTask: (state, action) => {
+      console.log('ADD TASK action.payload', action.payload);
+
+      state['totalData'].map((item, index) => {
+        if (item.name === action.payload.category) {
+          console.log(
+            'target object',
+            current(state['totalData'][index]['task']),
+          );
+          state['totalData'][index]['task'].push(action.payload);
+        }
+      });
+    },
+
+    editCategory: (state, action) => {
+      console.log('EDIT CATEGORY action.payload', action.payload);
+      return {...state, totalData: {...state.totalData, ...action.payload}};
+    },
+
+    deleteTask: (state, action) => {
+      console.log(action.payload);
+
+      // state['totalData'].filter((item) => )
+
+      // const newTotalData = state.totalData.filter(
+      //   data => data.id !== action.payload,
+      // );
+      // state.totalData = newTotalData;
+    },
+
+    // ------------------- // -------------------
+
     onLoggingOut: state => {
       state.totalData = [];
       state.tasks = null;
@@ -29,13 +56,7 @@ export const taskSlice = createSlice({
   },
 });
 
-export const {
-  getData,
-  addCategory,
-  editCategory,
-  addTask,
-  deleteTask,
-  onLoggingOut,
-} = taskSlice.actions;
+export const {addCategory, editCategory, addTask, deleteTask, onLoggingOut} =
+  taskSlice.actions;
 
 export default taskSlice.reducer;

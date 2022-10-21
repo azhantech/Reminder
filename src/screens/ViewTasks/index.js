@@ -5,8 +5,10 @@ import styles from './styles';
 import BackButon from '../../components/BackButon';
 import {useFocusEffect} from '@react-navigation/native';
 import {COLORS} from '../../constants';
+import {useSelector} from 'react-redux';
 
 const ViewTasks = ({route, navigation}) => {
+  const DATA = useSelector(state => state.task.totalData);
   const {id} = route.params;
   console.log('id', id);
 
@@ -33,7 +35,7 @@ const ViewTasks = ({route, navigation}) => {
     React.useCallback(() => {
       DATA.map((item, index) => {
         if (item.name == id) {
-          setData(item.tasks);
+          setData(item.task);
         }
       });
     }, [data]),

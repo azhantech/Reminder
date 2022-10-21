@@ -22,16 +22,19 @@ const Home = () => {
   const [newTask, setNewTasks] = useState();
 
   const handleSelectedTask = value => {
+    // console.log('value', value);
+
     DATA.map((item, index) => {
+      // console.log('item', item);
       if (value.name == item.name) {
-        console.log('sdjhdsjds', value.tasks);
-        setNewTasks(value.tasks);
+        console.log('sdjhdsjds', value);
+        setNewTasks(value.task);
         setTask(value);
       }
     });
   };
 
-  console.log(task);
+  // console.log(task);
 
   const horizontalProps = {
     DATA,

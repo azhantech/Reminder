@@ -67,12 +67,10 @@ const CategoryDetails = ({route, navigation}) => {
           justifyContent: 'space-between',
           paddingHorizontal: 20,
         }}>
-        {/* <View style={styles.contUpStyle}> */}
         <Text style={styles.txtFt}>{item.tname}</Text>
 
         <Text style={styles.timeTxt}>{item.start_time}</Text>
         <Text style={styles.timeTxt}>{item.end_time}</Text>
-        {/* </View> */}
       </View>
     );
   };
