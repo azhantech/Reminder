@@ -9,7 +9,7 @@ import {
 import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {addCategory} from '../../redux/reducers/taskReducer';
 import BackButon from '../../components/BackButon';
@@ -20,6 +20,8 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 
 const AddCategory = () => {
+  const reduxData = useSelector(state => state.task.totalData);
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [title, setTitle] = useState();
@@ -28,6 +30,7 @@ const AddCategory = () => {
 
   const handleSubmit = () => {
     const category = {
+      index: reduxData.length ? reduxData.length + 1 : 1,
       name: title,
       progress: '0',
       desc: description,
