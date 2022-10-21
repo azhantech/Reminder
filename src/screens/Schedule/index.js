@@ -86,7 +86,7 @@ const Schedule = () => {
             scrollable
             // minDate={new Date()}
             // selectedDate={
-            //   selectedDate ? moment(selectedDate).format('dddd') : new Date()
+            //   selectedDate ? moment(selectedDate, 'MM-DD-YYYY') : new Date()
             // }
             scrollToOnSetSelectedDate={true}
             style={styles.calendarStripStyle}

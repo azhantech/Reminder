@@ -9,14 +9,19 @@ import {
 import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
+import {useDispatch} from 'react-redux';
 
-import styles from './styles';
+import {addCategory} from '../../redux/reducers/taskReducer';
 import BackButon from '../../components/BackButon';
 import MainInputBar from '../../components/MainInputBar';
 import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
+import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 const AddCategory = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [selectColor, setSelectColor] = useState();
@@ -27,7 +32,15 @@ const AddCategory = () => {
       progress: '0',
       desc: description,
       color: selectColor,
-      task: [],
+      task: [
+        {
+          tname: 'sample task',
+          date: 'January 22, 2022',
+          start_time: '07:00 AM',
+          end_time: '11:00 PM',
+          desc: 'sample description',
+        },
+      ],
     };
 
     if (
@@ -40,8 +53,14 @@ const AddCategory = () => {
         visibilityTime: 2000,
         text1: 'Kindly fill all the fields 👋',
       });
+    } else {
+      console.log('category', category);
+      dispatch(addCategory(category));
+
+      setTimeout(() => {
+        // navigation.navigate('HomeStack')
+      }, 2000);
     }
-    console.log('category', category);
   };
 
   const renderItem = ({item}) => {

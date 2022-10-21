@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {changeLogOut} from '../../redux/reducers/authReducer';
+import {onLoggingOut} from '../../redux/reducers/taskReducer';
 import {ImageLoader} from '../../components/ImageLoader';
 
 import styles from './styles';
@@ -34,7 +35,7 @@ const Profile = () => {
             onPress={() => {
               dispatch(changeLogOut());
 
-              // dispatch(onLogout());
+              dispatch(onLoggingOut());
 
               setTimeout(() => {
                 navigation.navigate('Login');
