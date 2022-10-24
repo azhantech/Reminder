@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 const ScheduleVerticalList = props => {
   const {category} = props;
   const navigation = useNavigation();
-  console.log('dshjdsujd', category);
+  console.log('dihatsu', category);
 
   const renderItem = ({item}) => {
     console.log('item', item);

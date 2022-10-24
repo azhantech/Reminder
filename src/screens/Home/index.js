@@ -1,6 +1,7 @@
 import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useFocusEffect} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {getData} from '../../redux/reducers/taskReducer';
 import HomeHorizontalCards from '../../components/HomeHorizontalCards';
@@ -8,36 +9,30 @@ import HomeVerticalList from '../../components/HomeVerticalList';
 import styles from './styles';
 import {icons} from '../../constants';
 
-// import {DATA} from '../../constants/data';
-import {useDispatch, useSelector} from 'react-redux';
-
 const NUM_TASKS = 6;
 
 const Home = () => {
   const DATA = useSelector(state => state.task.totalData);
-  console.log('DATA', DATA);
-  // const [dataVal, setDataVal] = useState();
+  const [dataVal, setDataVal] = useState();
 
   const [task, setTask] = useState();
   const [newTask, setNewTasks] = useState();
 
   const handleSelectedTask = value => {
-    // console.log('value', value);
-
-    DATA.map((item, index) => {
-      // console.log('item', item);
+    dataVal.map((item, index) => {
       if (value.name == item.name) {
-        console.log('sdjhdsjds', value);
-        setNewTasks(value.task);
+        console.log('selected category', value.name);
+        setNewTasks(value.name);
         setTask(value);
       }
     });
   };
 
-  // console.log(task);
+  useEffect(() => {
+    setDataVal(DATA);
+  }, [dataVal]);
 
   const horizontalProps = {
-    DATA,
     handleSelectedTask,
   };
 

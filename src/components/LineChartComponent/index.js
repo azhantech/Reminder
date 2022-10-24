@@ -1,43 +1,82 @@
 import {View, Text, Dimensions} from 'react-native';
-import React from 'react';
-import {LineChart} from 'react-native-chart-kit';
+import React, {useEffect} from 'react';
+import {LineChart, ProgressChart} from 'react-native-chart-kit';
+import {useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
 
 import styles from './style';
 import {COLORS} from '../../constants';
 
-const LineChartComponent = props => {
-  const {data} = props;
+let label = [];
+let dataVal = [];
 
-  console.log('line chart', data);
+const LineChartComponent = () => {
+  const chartData = useSelector(state => state.task.totalData);
 
+  // const data = {
+  //   labels: label,
+  //   datasets: [
+  //     {
+  //       data: dataVal,
+  //     },
+  //   ],
+  // };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      chartData.map((item, index) => {
+        label.push(item?.name);
+        dataVal.push(item?.task.length);
+      });
+    }, [chartData]),
+  );
+
+  console.log('linedata', data);
+
+  const data = {
+    labels: label, // optional
+    data: dataVal,
+  };
   return (
     <View>
-      <LineChart
-        data={{
-          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-          datasets: [
-            {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
-            },
-          ],
-        }}
-        width={Dimensions.get('window').width * 0.89} // from react-native
+      <ProgressChart
+        data={data}
+        width={Dimensions.get('window').width * 0.89}
         height={220}
-        yAxisLabel="$"
-        yAxisSuffix="k"
-        yAxisInterval={1} // optional, defaults to 1
+        strokeWidth={16}
+        radius={32}
         chartConfig={{
           backgroundColor: COLORS.mainFg,
           backgroundGradientFrom: '#4b51d7',
           backgroundGradientTo: '#b6b9f3',
-          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+          fillShadowGradient: COLORS.lightGreen, // THIS
+          fillShadowGradientOpacity: 1, // THIS
+          propsForDots: {
+            r: '6',
+            strokeWidth: '2',
+            stroke: '#ffa726',
+          },
+          barPercentage: 0.4,
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+        hideLegend={false}
+      />
+      {/* <LineChart
+        data={data}
+        width={Dimensions.get('window').width * 0.89} // from react-native
+        height={220}
+        chartConfig={{
+          backgroundColor: COLORS.mainFg,
+          backgroundGradientFrom: '#4b51d7',
+          backgroundGradientTo: '#b6b9f3',
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
@@ -49,12 +88,11 @@ const LineChartComponent = props => {
             stroke: COLORS.lightGreen,
           },
         }}
-        bezier
         style={{
           marginVertical: 8,
           borderRadius: 16,
         }}
-      />
+      /> */}
     </View>
   );
 };

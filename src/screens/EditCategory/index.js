@@ -17,12 +17,14 @@ import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
 import {useDispatch} from 'react-redux';
 import {editCategory} from '../../redux/reducers/taskReducer';
+import {useNavigation} from '@react-navigation/native';
 
-const EditCategory = ({route, navigation}) => {
+const EditCategory = ({route}) => {
   const {data} = route.params;
 
   console.log('EDIT DATA', data);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const [title, setTitle] = useState(data.name);
   const [description, setDescription] = useState(data.desc);
   const [selectColor, setSelectColor] = useState(data.color);
@@ -34,7 +36,7 @@ const EditCategory = ({route, navigation}) => {
       progress: '0',
       desc: description,
       color: selectColor,
-      task: [],
+      task: data.task,
     };
 
     if (
@@ -50,6 +52,10 @@ const EditCategory = ({route, navigation}) => {
     } else {
       console.log('category', category);
       dispatch(editCategory(category));
+
+      setTimeout(() => {
+        navigation.navigate('ScheduleStack');
+      }, 500);
     }
   };
 

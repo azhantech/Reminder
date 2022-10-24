@@ -5,7 +5,7 @@ import {
   LayoutAnimation,
   UIManager,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CalendarStrip from 'react-native-calendar-strip';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -14,7 +14,6 @@ import moment from 'moment';
 import ScheduleVerticalList from '../../components/ScheduleVerticalList';
 import styles from './styles';
 import {COLORS} from '../../constants';
-// import {DATA} from '../../constants/data';
 
 if (
   Platform.OS === 'android' &&
@@ -68,9 +67,16 @@ const Schedule = () => {
   useFocusEffect(
     React.useCallback(() => {
       setPressedValue('All');
+      console.log('selector data', DATA);
       setCurrentTab(DATA);
     }, []),
   );
+
+  // useEffect(() => {
+  //   setPressedValue('All');
+  //   console.log('selector data', DATA);
+  //   setCurrentTab(DATA);
+  // }, []);
 
   return (
     <View style={styles.mainContainer}>

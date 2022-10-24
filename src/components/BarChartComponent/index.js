@@ -1,29 +1,43 @@
 import {View, Text, Dimensions} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 
-import styles from './styles';
 import {BarChart} from 'react-native-chart-kit';
 import {COLORS} from '../../constants';
+import {useSelector} from 'react-redux';
 
-const BarChartComponent = props => {
-  //   const {data} = props;
+let label = [];
+let dataVal = [];
 
-  const chartConfig = {};
+const BarChartComponent = () => {
+  const chartData = useSelector(state => state.task.totalData);
+
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: label,
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43],
+        data: dataVal,
       },
     ],
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      chartData.map((item, index) => {
+        label.push(item?.name);
+        dataVal.push(item?.task.length);
+      });
+    }, [chartData]),
+  );
+
+  console.log('bardata', data);
+
   return (
     <View>
       <BarChart
         data={data}
         width={Dimensions.get('window').width * 0.89}
         height={250}
-        yAxisLabel="$"
         chartConfig={{
           backgroundColor: COLORS.mainFg,
           backgroundGradientFrom: '#4b51d7',
@@ -48,7 +62,6 @@ const BarChartComponent = props => {
         }}
         showBarTops={true}
         showValuesOnTopOfBars={true}
-        verticalLabelRotation={15}
       />
     </View>
   );

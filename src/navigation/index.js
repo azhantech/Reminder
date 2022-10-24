@@ -23,7 +23,6 @@ const RootNavigation = () => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    console.log('subscriber', subscriber);
     return subscriber; // unsubscribe on unmount
   }, []);
 

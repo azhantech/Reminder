@@ -1,14 +1,20 @@
 import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './style';
 import {COLORS, icons} from '../../constants';
+import {useSelector} from 'react-redux';
 
 const HomeHorizontalCards = props => {
-  const {DATA, handleSelectedTask} = props;
+  const {handleSelectedTask} = props;
+  const [data, setData] = useState();
+  const reduxDefaultData = useSelector(state => state.task.totalData);
 
-  console.log('DATA', DATA);
+  useEffect(() => {
+    setData(reduxDefaultData);
+  }, [reduxDefaultData]);
+
   const renderItem = ({item}) => {
     if (item.name != 'Nothing to show yet 🎖️') {
       return (
@@ -107,8 +113,8 @@ const HomeHorizontalCards = props => {
     <>
       <FlatList
         data={
-          DATA.length > 0
-            ? DATA
+          data?.length > 0
+            ? data
             : [
                 {
                   index: Math.floor(Math.random()),

@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
 
 import {icons} from '../../constants';
 import {deleteTask} from '../../redux/reducers/taskReducer';
@@ -19,10 +18,11 @@ const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
 
 const HomeVerticalList = props => {
   const {tasks} = props;
+
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
 
-  console.log('reduxDefaultData ----> ', JSON.stringify(reduxDefaultData));
+  console.log('reduxDefaultData ----> ', reduxDefaultData);
 
   const [task, setTask] = useState();
 
@@ -61,9 +61,12 @@ const HomeVerticalList = props => {
   };
 
   useEffect(() => {
-    console.log('tasks---->', tasks);
-    setTask(tasks);
-  }, [tasks]);
+    reduxDefaultData.forEach(element => {
+      if (element.name == tasks) {
+        setTask(element.task);
+      }
+    });
+  }, [reduxDefaultData, tasks]);
 
   return (
     <View style={styles.listCont}>

@@ -64,6 +64,12 @@ const AddTask = () => {
         console.log('task', task);
 
         dispatch(addTask(task));
+
+        setTitle('');
+        setDescription('');
+        setDateAdv('');
+        setStartTime('');
+        setEndTime('');
       }
     } else {
       Toast.show({

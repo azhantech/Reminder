@@ -33,14 +33,20 @@ export const taskSlice = createSlice({
 
     editCategory: (state, action) => {
       console.log('EDIT CATEGORY action.payload', action.payload);
-      // return {...state, totalData: {...state.totalData, ...action.payload}};
+
+      state['totalData'].map((item, index) => {
+        if (item.index === action.payload.index) {
+          console.log('target category', current(item));
+          state['totalData'][index] = action.payload;
+        }
+      });
     },
 
     deleteTask: (state, action) => {
       console.log(action.payload);
 
       state['totalData'].map((item, index) => {
-        if (item.name === action.payload?.category) {
+        if (item.name === action.payload.category) {
           console.log('==>', item);
 
           const updatedValue = item['task'].filter(
@@ -55,6 +61,10 @@ export const taskSlice = createSlice({
           );
 
           state['totalData'][index]['task'] = updatedValue;
+        } else {
+          console.log('ELSE  BLOCK');
+          console.log('item.name', item.name);
+          console.log('action.payload.category', action.payload.category);
         }
       });
     },

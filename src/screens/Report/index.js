@@ -65,9 +65,7 @@ const Report = () => {
           <Text style={styles.mainText}>Report</Text>
         </View>
         <View>
-          <View>
-            {/* <Text style={styles.projTxt}>Statistical Overview</Text> */}
-          </View>
+          <View></View>
           <View style={{flexDirection: 'row'}}>
             <ScheduleDataCards
               title="Completed Projects"
@@ -83,9 +81,9 @@ const Report = () => {
           </View>
         </View>
 
-        <BarChartComponent data={DATA && DATA} />
+        <BarChartComponent />
 
-        <LineChartComponent data={DATA && DATA} />
+        <LineChartComponent />
       </View>
     </ScrollView>
   );

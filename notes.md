@@ -15,3 +15,11 @@ Tab screens:
 - addTask
 
 home useselector issue
+
+flow 1: direct data come
+flow 2: data exist show by default first card'd data
+flow 3: data dont exists go for other stuff
+
+schdule update directly on time on edit
+
+progress change.
