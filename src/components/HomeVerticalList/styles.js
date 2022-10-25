@@ -15,19 +15,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  slideOpac: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    marginLeft: 20,
+    marginVertical: 10,
+    borderRadius: 40,
+  },
   txtStyle: {
     color: COLORS.black,
-    fontWeight: '800',
-    fontSize: FONTS.h2.fontSize,
+    fontWeight: '400',
+    fontSize: FONTS.h3.fontSize,
     textAlign: 'center',
   },
   listCont: {
     height: 200,
   },
   imgStyle: {
+    resizeMode: 'contain',
+    height: 40,
+    width: 40,
+    tintColor: COLORS.mainBg,
+  },
+  img2Style: {
     height: 45,
     width: 45,
     tintColor: COLORS.mainFg,
+    transform: [{rotateY: '145deg'}, {rotateZ: '145deg'}],
   },
 });
 

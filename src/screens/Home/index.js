@@ -24,14 +24,18 @@ const Home = () => {
         console.log('selected category', value.name);
         setNewTasks(value.name);
         setTask(value);
+      } else {
+        console.log('value', value);
+        console.log('item.name', item.name);
       }
     });
   };
 
-  useEffect(() => {
-    setDataVal(DATA);
-  }, [dataVal]);
-
+  useFocusEffect(
+    React.useCallback(() => {
+      setDataVal(DATA);
+    }, [dataVal, DATA]),
+  );
   const horizontalProps = {
     handleSelectedTask,
   };

@@ -18,6 +18,7 @@ import AppStatusBar from './src/components/AppStatusBar';
 import {COLORS} from './src/constants';
 import RootNavigation from './src/navigation';
 import {persistedReducer} from './src/redux/store';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
   const store = configureStore({
@@ -36,11 +37,13 @@ const App = () => {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <AppStatusBar
-            backgroundColor={COLORS.mainBg}
-            barStyle="light-content"
-          />
-          <RootNavigation />
+          <GestureHandlerRootView style={{flex: 1}}>
+            <AppStatusBar
+              backgroundColor={COLORS.mainBg}
+              barStyle="light-content"
+            />
+            <RootNavigation />
+          </GestureHandlerRootView>
         </PersistGate>
       </Provider>
       <Toast />

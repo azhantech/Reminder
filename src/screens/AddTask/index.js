@@ -18,7 +18,6 @@ import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
-// import {DATA} from '../../constants/data';
 
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);
@@ -44,15 +43,16 @@ const AddTask = () => {
       date: dateAdv,
       start_time: startTime,
       end_time: endTime,
+      completed: false,
     };
     console.log('DATA addTask', DATA.length);
     if (DATA.length != 0) {
       if (
-        task.tname == ' ' ||
-        task.desc == ' ' ||
-        task.date == undefined ||
-        task.start_time == undefined ||
-        task.end_time == undefined ||
+        task.tname == '' ||
+        task.desc == '' ||
+        task.date == '' ||
+        task.start_time == '' ||
+        task.end_time == '' ||
         task.category == ''
       ) {
         Toast.show({
@@ -142,11 +142,14 @@ const AddTask = () => {
           <Text style={styles.labelStyle}>Date</Text>
 
           <View style={styles.touchableCont}>
-            <TextInput
-              style={styles.otherTextInputStyle}
-              // placeholder="Choose Date"
-              value={dateAdv ? dateAdv : ''}
-            />
+            {dateAdv ? (
+              <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
+            ) : (
+              <TextInput
+                style={styles.otherTwoTextInputStyle}
+                value={dateAdv}
+              />
+            )}
 
             <TouchableOpacity
               onPress={() => setOpen(true)}
@@ -211,11 +214,7 @@ const AddTask = () => {
           renderItem={renderItem}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={
-            (item, index) => item?.index.toString()
-            // (item, index) => index.toString()
-            // item && item.index && item?.index?.toString()
-          }
+          keyExtractor={(item, index) => item?.index.toString()}
         />
 
         <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>

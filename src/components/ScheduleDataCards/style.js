@@ -4,12 +4,12 @@ import {COLORS, FONTS} from '../../constants';
 const styles = StyleSheet.create({
   mainCont: {
     marginVertical: 10,
-    flexWrap: 'wrap',
     marginHorizontal: 5,
-    paddingHorizontal: 20,
+    paddingLeft: 5,
     paddingVertical: 20,
     borderRadius: 10,
     elevation: 5,
+    width: '50%',
   },
   imgStyle: {
     height: 25,

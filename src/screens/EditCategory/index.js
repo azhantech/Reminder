@@ -54,7 +54,7 @@ const EditCategory = ({route}) => {
       dispatch(editCategory(category));
 
       setTimeout(() => {
-        navigation.navigate('ScheduleStack');
+        navigation.navigate('Schedule');
       }, 500);
     }
   };
@@ -84,8 +84,6 @@ const EditCategory = ({route}) => {
   return (
     <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>
       <View style={styles.upperCont}>
-        <BackButon />
-
         <Text style={styles.mainText}>Edit Category</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>

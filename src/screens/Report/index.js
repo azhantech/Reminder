@@ -5,16 +5,17 @@ import {useFocusEffect} from '@react-navigation/native';
 import ScheduleDataCards from '../../components/ScheduleDataCards';
 import LineChartComponent from '../../components/LineChartComponent';
 import styles from './styles';
-import {DATA} from '../../constants/data';
-import {icons} from '../../constants';
+import {COLORS, icons} from '../../constants';
 import BarChartComponent from '../../components/BarChartComponent';
+import {useSelector} from 'react-redux';
 
 const Report = () => {
-  const [completedPercentage, setCompletedPercentage] = useState({
+  const DATA = useSelector(state => state.task.totalData);
+  const [nonCompletedPercentage, setNonCompletedPercentage] = useState({
     color: '',
     progress: '',
   });
-  const [nonCompletedPercentage, setNonCompletedPercentage] = useState({
+  const [completedPercentage, setCompletedPercentage] = useState({
     color: '',
     progress: '',
   });
@@ -29,19 +30,20 @@ const Report = () => {
     });
 
     data.forEach(element => {
-      if (element.progress == 100) {
-        setCompletedPercentage({
-          color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-            Math.random() * 256,
-          )}, ${Math.floor(Math.random() * 256)})`,
-          progress: Math.floor((counter / data.length) * 100),
+      console.log('element', element);
+      if (element.progress != 100) {
+        setNonCompletedPercentage({
+          color: COLORS.mainFg,
+          progress:
+            data.length > 0 ? Math.floor((counter / data.length) * 100) : 0,
         });
       } else {
-        setNonCompletedPercentage({
-          color: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-            Math.random() * 256,
-          )}, ${Math.floor(Math.random() * 256)})`,
-          progress: 100 - Math.floor((counter / data.length) * 100),
+        setCompletedPercentage({
+          color: COLORS.mainFg,
+          progress:
+            data.length > 0
+              ? 100 - Math.floor((counter / data.length) * 100)
+              : 0,
         });
       }
     });
@@ -51,28 +53,22 @@ const Report = () => {
   useFocusEffect(
     React.useCallback(() => {
       handlePercentageCount(DATA);
-    }, []),
+    }, [DATA]),
   );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.mainCont}>
-      <View
-        style={{
-          marginHorizontal: 15,
-          marginBottom: 120,
-        }}>
+      <View style={styles.upMainCont}>
         <View style={styles.upperContainer}>
           <Text style={styles.mainText}>Report</Text>
         </View>
         <View>
-          <View></View>
-          <View style={{flexDirection: 'row'}}>
+          <View style={styles.contView}>
             <ScheduleDataCards
               title="Completed Projects"
               imgSrc={icons.checked}
               progress={completedPercentage && completedPercentage}
             />
-
             <ScheduleDataCards
               title="Ongoing Projects"
               imgSrc={icons.clock}
@@ -80,10 +76,11 @@ const Report = () => {
             />
           </View>
         </View>
+        <View>
+          <BarChartComponent />
 
-        <BarChartComponent />
-
-        <LineChartComponent />
+          <LineChartComponent />
+        </View>
       </View>
     </ScrollView>
   );

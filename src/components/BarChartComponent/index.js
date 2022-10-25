@@ -1,5 +1,5 @@
-import {View, Text, Dimensions} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, Text, Dimensions, ActivityIndicator} from 'react-native';
+import React from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 
 import {BarChart} from 'react-native-chart-kit';
@@ -13,7 +13,7 @@ const BarChartComponent = () => {
   const chartData = useSelector(state => state.task.totalData);
 
   const data = {
-    labels: label,
+    // labels: label,
     datasets: [
       {
         data: dataVal,
@@ -38,6 +38,7 @@ const BarChartComponent = () => {
         data={data}
         width={Dimensions.get('window').width * 0.89}
         height={250}
+        verticalLabelRotation={-80}
         chartConfig={{
           backgroundColor: COLORS.mainFg,
           backgroundGradientFrom: '#4b51d7',

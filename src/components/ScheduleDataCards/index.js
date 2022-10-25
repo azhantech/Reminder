@@ -1,22 +1,30 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ActivityIndicator} from 'react-native';
 import React from 'react';
 import styles from './style';
+import {COLORS} from '../../constants';
 
 const ScheduleDataCards = props => {
-  console.log(props);
-  const {title, imgSrc, progress} = props;
+  console.log('props', props);
 
-  return (
-    <View style={[styles.mainCont, {backgroundColor: progress.color}]}>
-      <View style={styles.upperCont}>
-        <Image source={imgSrc} style={styles.imgStyle} />
-        <Text style={styles.progTxt}>{progress.progress}%</Text>
+  if (props.title != '' && props.progress.progress != '') {
+    return (
+      <View style={[styles.mainCont, {backgroundColor: props.progress.color}]}>
+        <View style={styles.upperCont}>
+          <Image source={props.imgSrc} style={styles.imgStyle} />
+          <Text style={styles.progTxt}>{props.progress?.progress}%</Text>
+        </View>
+        <View style={styles.lowerCont}>
+          <Text style={styles.titleTxt}>{props.title}</Text>
+        </View>
       </View>
-      <View style={styles.lowerCont}>
-        <Text style={styles.titleTxt}>{title}</Text>
+    );
+  } else {
+    return (
+      <View style={[styles.mainCont, {backgroundColor: COLORS.mainFg}]}>
+        <ActivityIndicator size="large" />
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 export default ScheduleDataCards;

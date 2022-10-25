@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   lowerCont: {
     backgroundColor: COLORS.mainBg,
     marginHorizontal: 10,
-    // marginVertical: 20,
     paddingBottom: 150,
   },
   labelStyle: {
@@ -44,6 +43,14 @@ const styles = StyleSheet.create({
     paddingRight: 70,
     fontWeight: 'bold',
     fontSize: 20,
+  },
+  otherTwoTextInputStyle: {
+    borderColor: COLORS.mainBg,
+    paddingVertical: 2,
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
+    marginVertical: 15,
+    paddingRight: 70,
   },
   opacStyle: {
     paddingTop: 20,

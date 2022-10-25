@@ -16,7 +16,7 @@ const HomeHorizontalCards = props => {
   }, [reduxDefaultData]);
 
   const renderItem = ({item}) => {
-    if (item.name != 'Nothing to show yet 🎖️') {
+    if (item.name != 'Nothing to show yet') {
       return (
         <TouchableOpacity
           activeOpacity={0.7}
@@ -118,7 +118,7 @@ const HomeHorizontalCards = props => {
             : [
                 {
                   index: Math.floor(Math.random()),
-                  name: 'Nothing to show yet 🎖️',
+                  name: 'Nothing to show yet',
                   progress: 100,
                   desc: '',
 

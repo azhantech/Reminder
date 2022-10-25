@@ -69,13 +69,13 @@ const CategoryDetails = ({route, navigation}) => {
         }}>
         <Text style={styles.txtFt}>{item.tname}</Text>
 
-        <Text style={styles.timeTxt}>{item.start_time}</Text>
-        <Text style={styles.timeTxt}>{item.end_time}</Text>
+        <View style={{flexDirection: 'column'}}>
+          <Text style={styles.timeTxt}>{item.start_time}</Text>
+          <Text style={styles.timeTxt}>{item.end_time}</Text>
+        </View>
       </View>
     );
   };
-
-  console.log(data);
 
   return (
     <View style={styles.mainCont}>
@@ -117,7 +117,7 @@ const CategoryDetails = ({route, navigation}) => {
             {opacity: backOpacity, position: 'absolute'},
           ]}>
           <FlatList
-            data={data && data.tasks}
+            data={data && data.task}
             renderItem={renderItem}
             horizontal={false}
             showsVerticalScrollIndicator={false}

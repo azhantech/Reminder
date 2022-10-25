@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   mainText: {
     marginVertical: 20,
     color: COLORS.black,
-    left: -50,
     textAlign: 'center',
     fontWeight: 'bold',
     ...FONTS.h1,

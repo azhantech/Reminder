@@ -4,13 +4,21 @@ import {COLORS, FONTS} from '../../constants';
 const styles = StyleSheet.create({
   mainCont: {
     flex: 1,
-
     backgroundColor: COLORS.mainBg,
+  },
+  upMainCont: {
+    marginHorizontal: 15,
+    marginBottom: 120,
   },
   upperContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
+  },
+  contView: {
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    justifyContent: 'center',
   },
   mainText: {
     marginVertical: 20,

@@ -26,11 +26,15 @@ const styles = StyleSheet.create({
   },
 
   topCont: {marginHorizontal: 20},
-  opcTxt: {color: COLORS.mainFg, fontSize: FONTS.h3.fontSize},
+  opcTxt: {
+    color: COLORS.mainFg,
+    fontSize: FONTS.h3.fontSize,
+  },
   touchOpac: {
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 10,
   },
   nameTxt: {
     marginTop: 20,
@@ -60,7 +64,8 @@ const styles = StyleSheet.create({
   txtFt: {
     color: COLORS.mainBg,
     fontSize: FONTS.h3.fontSize,
-    textAlign: 'justify',
+    textAlign: 'center',
+    paddingTop: 10,
   },
   timeTxt: {
     backgroundColor: COLORS.mainBg,
@@ -70,11 +75,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingHorizontal: 8,
     marginHorizontal: 8,
+    marginVertical: 5,
   },
   contUpStyle: {
     flexDirection: 'row',
     paddingHorizontal: 120,
-    // position: 'absolute',
   },
   subTitleTwo: {fontWeight: 'bold', color: COLORS.mainBg},
   btnTwo: {

@@ -13,14 +13,10 @@ let dataVal = [];
 const LineChartComponent = () => {
   const chartData = useSelector(state => state.task.totalData);
 
-  // const data = {
-  //   labels: label,
-  //   datasets: [
-  //     {
-  //       data: dataVal,
-  //     },
-  //   ],
-  // };
+  const data = {
+    labels: label,
+    data: dataVal,
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,10 +29,6 @@ const LineChartComponent = () => {
 
   console.log('linedata', data);
 
-  const data = {
-    labels: label, // optional
-    data: dataVal,
-  };
   return (
     <View>
       <ProgressChart
@@ -49,8 +41,8 @@ const LineChartComponent = () => {
           backgroundColor: COLORS.mainFg,
           backgroundGradientFrom: '#4b51d7',
           backgroundGradientTo: '#b6b9f3',
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          color: (opacity = 1) => `rgba(75, 238, 112, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(75, 238, 112, ${opacity})`,
           style: {
             borderRadius: 16,
           },
@@ -58,16 +50,16 @@ const LineChartComponent = () => {
           fillShadowGradientOpacity: 1, // THIS
           propsForDots: {
             r: '6',
-            strokeWidth: '2',
+            strokeWidth: '1',
             stroke: '#ffa726',
           },
           barPercentage: 0.4,
         }}
         style={{
           marginVertical: 8,
-          borderRadius: 16,
+          borderRadius: 10,
         }}
-        hideLegend={false}
+        hideLegend={true}
       />
       {/* <LineChart
         data={data}

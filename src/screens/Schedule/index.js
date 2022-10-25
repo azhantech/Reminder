@@ -66,17 +66,16 @@ const Schedule = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setPressedValue('All');
       console.log('selector data', DATA);
       setCurrentTab(DATA);
-    }, []),
+    }, [DATA]),
   );
 
-  // useEffect(() => {
-  //   setPressedValue('All');
-  //   console.log('selector data', DATA);
-  //   setCurrentTab(DATA);
-  // }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setPressedValue('All');
+    }, []),
+  );
 
   return (
     <View style={styles.mainContainer}>

@@ -2,22 +2,27 @@ import {
   View,
   Text,
   FlatList,
-  Alert,
   Animated,
-  Image,
+  Dimensions,
   TouchableOpacity,
+  Image,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-
-import {icons} from '../../constants';
-import {deleteTask} from '../../redux/reducers/taskReducer';
-import styles from './styles';
+import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+
+import {COLORS, icons} from '../../constants';
+import {deleteTask} from '../../redux/reducers/taskReducer';
+import {ImageLoader} from '../ImageLoader/index';
+import styles from './styles';
 
 const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
 
 const HomeVerticalList = props => {
   const {tasks} = props;
+
+  const bounceRef = useRef();
 
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
@@ -33,32 +38,67 @@ const HomeVerticalList = props => {
   };
 
   const renderItem = ({item}) => {
-    console.log('item.category', item.category);
+    console.log('item.category', item);
+
+    const leftSwipe = (progress, dragX) => {
+      const scale = dragX.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 1],
+        extrapolate: 'clamp',
+      });
+      return (
+        <TouchableOpacity
+          onPress={() => onDelete(item.tname, item.category)}
+          activeOpacity={0.6}
+          style={styles.slideOpac}>
+          <Animated.Image
+            source={icons.trash}
+            style={[styles.imgStyle, {transform: [{scale: scale}]}]}
+          />
+        </TouchableOpacity>
+      );
+    };
+
     if (
-      item.data != '' &&
+      item.tname != 'No Tasks to show' &&
       item.start_time != '' &&
-      item.end_time != '' &&
-      item.desc != ''
+      item.end_time != ''
     ) {
       return (
-        <View style={styles.mainCont}>
-          <Text style={styles.txtStyle}>{item.tname}</Text>
-          <TouchableOpacity onPress={() => onDelete(item.tname, item.category)}>
-            <Image source={icons.trash} style={styles.imgStyle} />
-          </TouchableOpacity>
-        </View>
+        <Swipeable renderLeftActions={leftSwipe}>
+          <View style={styles.mainCont}>
+            <BouncyCheckbox
+              ref={bounceRef}
+              size={25}
+              fillColor={COLORS.lightGreen}
+              text={item.tname}
+              unfillColor={COLORS.mainBg}
+              iconStyle={COLORS.mainGrey}
+              innerIconStyle={{borderWidth: 1}}
+              textStyle={styles.txtStyle}
+              onPress={isChecked => {
+                console.log('isChecked', isChecked, item); // check: true, item: tname, item: category
+              }}
+              bouncinessIn={40}
+              bounceVelocityIn={0.6}
+              bounceEffectIn={0.9}
+            />
+          </View>
+        </Swipeable>
       );
     } else {
       return (
         <View style={styles.mainCont}>
           <Text style={styles.txtStyle}>{item.tname}</Text>
           <TouchableOpacity>
-            <Image source={icons.upArrow} style={styles.imgStyle} />
+            <ImageLoader source={icons.upArrow} style={styles.img2Style} />
           </TouchableOpacity>
         </View>
       );
     }
   };
+
+  console.log('bounceRef', bounceRef);
 
   useEffect(() => {
     reduxDefaultData.forEach(element => {
