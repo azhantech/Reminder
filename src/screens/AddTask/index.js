@@ -13,6 +13,7 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
@@ -22,6 +23,7 @@ import {addTask} from '../../redux/reducers/taskReducer';
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -65,11 +67,17 @@ const AddTask = () => {
 
         dispatch(addTask(task));
 
+        navigation.navigate('HomeStack');
+
         setTitle('');
         setDescription('');
         setDateAdv('');
         setStartTime('');
         setEndTime('');
+        setStep({
+          index: 0,
+          value: '',
+        });
       }
     } else {
       Toast.show({

@@ -16,7 +16,14 @@ const HomeHorizontalCards = props => {
   }, [reduxDefaultData]);
 
   const renderItem = ({item}) => {
+    let counter = 0;
+
     if (item.name != 'Nothing to show yet') {
+      item?.task?.map((data, ind) => {
+        if (data.completed) {
+          counter = counter + 1;
+        }
+      });
       return (
         <TouchableOpacity
           activeOpacity={0.7}
@@ -41,7 +48,12 @@ const HomeHorizontalCards = props => {
                 style={([styles.upContOneImg], {tintColor: COLORS.mainBg})}
                 source={icons.clock}
               />
-              <Text style={styles.upContOneText}>{item.progress}%</Text>
+              <Text style={styles.upContOneText}>
+                {counter != 0 && item.task.length != 0
+                  ? (counter / item.task.length) * 100
+                  : 0}
+                %
+              </Text>
             </View>
           </View>
           <View style={styles.bottomContainer}>
@@ -54,13 +66,22 @@ const HomeHorizontalCards = props => {
               color="#FFFFFF"
               borderWidth={0.5}
               borderColor={item.color}
-              progress={Number(item.progress / 100)}
+              progress={
+                counter != 0 && item.task.length != 0
+                  ? Number(counter / item.task.length)
+                  : Number(0)
+              }
               unfilledColor={COLORS.transparentWhite}
             />
 
             <View style={styles.bottomBelowContainer}>
               <Text style={styles.progressText}>progress</Text>
-              <Text style={styles.progressText}>{item.progress}%</Text>
+              <Text style={styles.progressText}>
+                {counter != 0 && item.task.length != 0
+                  ? (counter / item.task.length) * 100
+                  : 0}
+                %
+              </Text>
             </View>
           </View>
         </TouchableOpacity>

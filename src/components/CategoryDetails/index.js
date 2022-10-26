@@ -9,7 +9,9 @@ const CategoryDetails = ({route, navigation}) => {
   let animatedValue = new Animated.Value(0);
   let currentValue = 0;
 
-  const {data} = route.params;
+  const {data, progress} = route.params;
+
+  console.log('progress', progress);
 
   animatedValue.addListener(({value}) => {
     currentValue = value;
@@ -65,7 +67,7 @@ const CategoryDetails = ({route, navigation}) => {
           flexDirection: 'row',
           marginVertical: 25,
           justifyContent: 'space-between',
-          paddingHorizontal: 20,
+          paddingHorizontal: 40,
         }}>
         <Text style={styles.txtFt}>{item.tname}</Text>
 
@@ -100,9 +102,9 @@ const CategoryDetails = ({route, navigation}) => {
               animated={true}
               thickness={5}
               strokeCap="round"
-              progress={Number(data?.progress / 100)}
+              progress={Number(progress / 100)}
               formatText={() => {
-                return data?.progress + '%';
+                return progress + '%';
               }}
               textStyle={styles.progressTxt}
               borderWidth={0.4}

@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import {COLORS, icons} from '../../constants';
-import {deleteTask} from '../../redux/reducers/taskReducer';
+import {deleteTask, onTaskStatusChange} from '../../redux/reducers/taskReducer';
 import {ImageLoader} from '../ImageLoader/index';
 import styles from './styles';
 
@@ -21,8 +21,6 @@ const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
 
 const HomeVerticalList = props => {
   const {tasks} = props;
-
-  const bounceRef = useRef();
 
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
@@ -68,16 +66,19 @@ const HomeVerticalList = props => {
         <Swipeable renderLeftActions={leftSwipe}>
           <View style={styles.mainCont}>
             <BouncyCheckbox
-              ref={bounceRef}
               size={25}
-              fillColor={COLORS.lightGreen}
+              fillColor={!item.completed ? COLORS.mainFg : COLORS.lightGreen}
               text={item.tname}
-              unfillColor={COLORS.mainBg}
-              iconStyle={COLORS.mainGrey}
-              innerIconStyle={{borderWidth: 1}}
+              // unfillColor={item.completed ? COLORS.lightGreen : COLORS.mainBg}
+              innerIconStyle={{borderWidth: 10}}
               textStyle={styles.txtStyle}
               onPress={isChecked => {
-                console.log('isChecked', isChecked, item); // check: true, item: tname, item: category
+                dispatch(
+                  onTaskStatusChange({
+                    isChecked,
+                    item,
+                  }),
+                );
               }}
               bouncinessIn={40}
               bounceVelocityIn={0.6}
@@ -97,8 +98,6 @@ const HomeVerticalList = props => {
       );
     }
   };
-
-  console.log('bounceRef', bounceRef);
 
   useEffect(() => {
     reduxDefaultData.forEach(element => {

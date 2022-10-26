@@ -22,7 +22,6 @@ import {useNavigation} from '@react-navigation/native';
 const EditCategory = ({route}) => {
   const {data} = route.params;
 
-  console.log('EDIT DATA', data);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [title, setTitle] = useState(data.name);
@@ -30,15 +29,27 @@ const EditCategory = ({route}) => {
   const [selectColor, setSelectColor] = useState(data.color);
 
   const handleSubmit = () => {
+    let counter = 0;
+
+    data?.task?.map((item, index) => {
+      if (item.completed) {
+        counter = counter + 1;
+      }
+    });
+
     const category = {
       index: data.index,
       name: title,
-      progress: '0',
+      progress:
+        counter != 0 && data.task.length != 0
+          ? (counter / data.task.length) * 100
+          : 0, // extra value
       desc: description,
       color: selectColor,
       task: data.task,
     };
 
+    console.log('cate', category);
     if (
       category.name == undefined ||
       category.desc == undefined ||

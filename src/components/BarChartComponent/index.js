@@ -30,8 +30,6 @@ const BarChartComponent = () => {
     }, [chartData]),
   );
 
-  console.log('bardata', data);
-
   return (
     <View>
       <BarChart

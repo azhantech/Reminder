@@ -5,8 +5,6 @@ const initialState = {
   tasks: null,
 };
 
-console.log('totalData', initialState.totalData);
-
 export const taskSlice = createSlice({
   name: 'task',
   initialState,
@@ -46,6 +44,32 @@ export const taskSlice = createSlice({
       });
     },
 
+    onTaskStatusChange: (state, action) => {
+      if (action.payload.isChecked && !action.payload.item.completed) {
+        state['totalData'].map((item, index) => {
+          if (item.name === action.payload.item.category) {
+            item['task'].map((value, num) => {
+              if (value.tname === action.payload.item.tname) {
+                value.completed = true;
+                return value.completed;
+              }
+            });
+          }
+        });
+      } else if (!action.payload.isChecked && action.payload.item.completed) {
+        state['totalData'].map((item, index) => {
+          if (item.name === action.payload.item.category) {
+            item['task'].map((value, num) => {
+              if (value.tname === action.payload.item.tname) {
+                value.completed = false;
+                return value.completed;
+              }
+            });
+          }
+        });
+      }
+    },
+
     onLoggingOut: state => {
       state.totalData = [];
       state.tasks = null;
@@ -53,7 +77,13 @@ export const taskSlice = createSlice({
   },
 });
 
-export const {addCategory, editCategory, addTask, deleteTask, onLoggingOut} =
-  taskSlice.actions;
+export const {
+  addCategory,
+  editCategory,
+  addTask,
+  deleteTask,
+  onTaskStatusChange,
+  onLoggingOut,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;

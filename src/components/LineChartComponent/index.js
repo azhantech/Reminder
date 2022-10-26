@@ -27,8 +27,6 @@ const LineChartComponent = () => {
     }, [chartData]),
   );
 
-  console.log('linedata', data);
-
   return (
     <View>
       <ProgressChart

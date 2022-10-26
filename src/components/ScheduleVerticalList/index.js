@@ -10,17 +10,26 @@ const ScheduleVerticalList = props => {
   const {category} = props;
 
   const navigation = useNavigation();
-  console.log('dihatsu', category);
 
   const renderItem = ({item}) => {
-    console.log('item', item);
-    if (item.name != 'Nothing to show' && item.task.length != 0) {
+    let counter = 0;
+
+    if (item.task.length != 0) {
+      item?.task?.map((data, ind) => {
+        if (data.completed) {
+          counter = counter + 1;
+        }
+      });
       return (
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
             navigation.navigate('CategoryDetail', {
               data: item,
+              progress:
+                counter != 0 && item.task.length != 0
+                  ? (counter / item.task.length) * 100
+                  : 0,
             });
           }}
           style={styles.listCont}>
@@ -46,9 +55,17 @@ const ScheduleVerticalList = props => {
                     animated={true}
                     thickness={5}
                     strokeCap="round"
-                    progress={Number(item.progress / 100)}
+                    progress={
+                      counter != 0 && item.task.length != 0
+                        ? Number(counter / item.task.length)
+                        : Number(0)
+                    }
                     formatText={() => {
-                      return item.progress + '%';
+                      const valCount =
+                        counter != 0 && item.task.length != 0
+                          ? (counter / item.task.length) * 100
+                          : 0;
+                      return valCount + '%';
                     }}
                     textStyle={styles.progressTxt}
                     borderWidth={0.4}
@@ -62,14 +79,13 @@ const ScheduleVerticalList = props => {
               <View style={styles.calendarMain}>
                 <View style={styles.calendarIconView}>
                   <Image source={icons.calendar} style={styles.calendarStyle} />
-                  {/* <Text style={styles.extraTxt}>{item.tasks[0].date}</Text> */}
+                  <Text style={styles.extraTxt}>{item?.task[0].date}</Text>
                 </View>
                 <View style={styles.checkMain}>
                   <Image source={icons.checkbox} style={styles.calendarStyle} />
 
                   <Text style={styles.extraTxt}>
-                    {Math.floor(item.task.length * (item.progress / 100))}/
-                    {item.task.length}
+                    {counter}/{item.task.length}
                   </Text>
                 </View>
               </View>
@@ -79,7 +95,7 @@ const ScheduleVerticalList = props => {
       );
     } else {
       return (
-        <TouchableOpacity activeOpacity={0.7} style={styles.listCont}>
+        <View activeOpacity={0.7} style={styles.listCont}>
           <View
             style={[
               styles.absoluteView,
@@ -117,18 +133,15 @@ const ScheduleVerticalList = props => {
             <View>
               <View style={styles.calendarMain}>
                 <View style={styles.calendarIconView}>
-                  <Image source={icons.calendar} style={styles.calendarStyle} />
-                  <Text style={styles.extraTxt}></Text>
+                  <Text style={styles.extraTxt}>Add tasks please!</Text>
                 </View>
                 <View style={styles.checkMain}>
-                  <Image source={icons.checkbox} style={styles.calendarStyle} />
-
                   <Text style={styles.extraTxt}></Text>
                 </View>
               </View>
             </View>
           </View>
-        </TouchableOpacity>
+        </View>
       );
     }
   };
@@ -146,7 +159,7 @@ const ScheduleVerticalList = props => {
                   index: Math.floor(Math.random()),
                   name: 'Nothing to show',
                   progress: '0',
-                  tasks: [],
+                  task: [],
                 },
               ]
         }

@@ -22,32 +22,36 @@ const Report = () => {
 
   const handlePercentageCount = data => {
     let counter = 0;
+    let totalLength = 0;
+
+    console.log('ARRAY', JSON.stringify(data));
 
     data.forEach(item => {
-      if (item.progress < 100) {
-        counter += 1;
-      }
+      item.task.forEach(element => {
+        if (!element.completed) {
+          counter += 1;
+        }
+      });
+      totalLength += item.task.length;
     });
 
-    data.forEach(element => {
-      console.log('element', element);
-      if (element.progress != 100) {
-        setNonCompletedPercentage({
-          color: COLORS.mainFg,
-          progress:
-            data.length > 0 ? Math.floor((counter / data.length) * 100) : 0,
-        });
-      } else {
-        setCompletedPercentage({
-          color: COLORS.mainFg,
-          progress:
-            data.length > 0
-              ? 100 - Math.floor((counter / data.length) * 100)
-              : 0,
-        });
-      }
+    console.log('counter', counter); // total non completed tasks
+    console.log('totalLength', totalLength); // total tasks
+
+    setNonCompletedPercentage({
+      color: COLORS.mainFg,
+      progress:
+        totalLength != 0 && counter != 0
+          ? Math.floor((counter / totalLength) * 100)
+          : 0,
     });
-    console.log(completedPercentage);
+
+    console.log('nonCompletedPercentage.progress', nonCompletedPercentage);
+
+    setCompletedPercentage({
+      color: COLORS.mainFg,
+      progress: Math.floor((totalLength - counter / totalLength) * 100),
+    });
   };
 
   useFocusEffect(

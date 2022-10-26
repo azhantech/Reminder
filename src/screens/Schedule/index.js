@@ -5,7 +5,7 @@ import {
   LayoutAnimation,
   UIManager,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import CalendarStrip from 'react-native-calendar-strip';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -37,20 +37,20 @@ const Schedule = () => {
       case 'Ongoing':
         const dat = DATA && DATA.filter(item => item.progress < 100);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-
         setCurrentTab(dat);
         break;
+
       case 'Completed':
         const val = DATA && DATA.filter(item => item.progress == 100);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-
         setCurrentTab(val);
         break;
+
       case 'All':
         setCurrentTab(DATA);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-
         break;
+
       default:
         console.log(`Sorry, we are out of ${expr}.`);
     }

@@ -21,12 +21,9 @@ const Home = () => {
   const handleSelectedTask = value => {
     dataVal.map((item, index) => {
       if (value.name == item.name) {
-        console.log('selected category', value.name);
         setNewTasks(value.name);
         setTask(value);
       } else {
-        console.log('value', value);
-        console.log('item.name', item.name);
       }
     });
   };

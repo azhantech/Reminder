@@ -5,8 +5,7 @@ import {COLORS} from '../../constants';
 
 const ScheduleDataCards = props => {
   console.log('props', props);
-
-  if (props.title != '' && props.progress.progress != '') {
+  if (props.title != '') {
     return (
       <View style={[styles.mainCont, {backgroundColor: props.progress.color}]}>
         <View style={styles.upperCont}>
@@ -20,7 +19,7 @@ const ScheduleDataCards = props => {
     );
   } else {
     return (
-      <View style={[styles.mainCont, {backgroundColor: COLORS.mainFg}]}>
+      <View style={[styles.mainCont, {backgroundColor: COLORS.black}]}>
         <ActivityIndicator size="large" />
       </View>
     );

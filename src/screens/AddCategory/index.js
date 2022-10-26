@@ -52,9 +52,11 @@ const AddCategory = () => {
       console.log('category', category);
       dispatch(addCategory(category));
 
-      setTimeout(() => {
-        // navigation.navigate('HomeStack')
-      }, 2000);
+      setTitle('');
+      setDescription('');
+      setSelectColor('');
+
+      navigation.navigate('Home');
     }
   };
 
