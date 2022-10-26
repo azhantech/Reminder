@@ -50,7 +50,7 @@ const HomeHorizontalCards = props => {
               />
               <Text style={styles.upContOneText}>
                 {counter != 0 && item.task.length != 0
-                  ? (counter / item.task.length) * 100
+                  ? Math.floor((counter / item.task.length) * 100)
                   : 0}
                 %
               </Text>
@@ -78,7 +78,7 @@ const HomeHorizontalCards = props => {
               <Text style={styles.progressText}>progress</Text>
               <Text style={styles.progressText}>
                 {counter != 0 && item.task.length != 0
-                  ? (counter / item.task.length) * 100
+                  ? Math.floor((counter / item.task.length) * 100)
                   : 0}
                 %
               </Text>

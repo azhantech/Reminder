@@ -38,6 +38,11 @@ const Report = () => {
     console.log('counter', counter); // total non completed tasks
     console.log('totalLength', totalLength); // total tasks
 
+    setCompletedPercentage({
+      color: COLORS.mainFg,
+      progress: Math.floor(((totalLength - counter) / totalLength) * 100),
+    });
+
     setNonCompletedPercentage({
       color: COLORS.mainFg,
       progress:
@@ -46,12 +51,10 @@ const Report = () => {
           : 0,
     });
 
-    console.log('nonCompletedPercentage.progress', nonCompletedPercentage);
-
-    setCompletedPercentage({
-      color: COLORS.mainFg,
-      progress: Math.floor((totalLength - counter / totalLength) * 100),
-    });
+    console.log(
+      'nonCompletedPercentage.progress',
+      (totalLength - counter / totalLength) * 100,
+    );
   };
 
   useFocusEffect(
