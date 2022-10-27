@@ -99,15 +99,15 @@ export const taskSlice = createSlice({
       console.log('counter', counter);
       console.log('tasklength', taskLength);
 
-      if (counter == taskLength) {
-        state['totalData'].forEach(element => {
-          if (element.name == action.payload.category) {
+      state['totalData'].forEach(element => {
+        if (element.name == action.payload.category) {
+          if (counter == taskLength) {
             element.progress = 'Completed';
           } else {
             element.progress = 'Ongoing';
           }
-        });
-      }
+        }
+      });
     },
 
     onLoggingOut: state => {
