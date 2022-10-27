@@ -63,7 +63,7 @@ const ScheduleVerticalList = props => {
                     formatText={() => {
                       const valCount =
                         counter != 0 && item.task.length != 0
-                          ? (counter / item.task.length) * 100
+                          ? Math.floor((counter / item.task.length) * 100)
                           : 0;
                       return valCount + '%';
                     }}
@@ -111,7 +111,7 @@ const ScheduleVerticalList = props => {
                   <Text style={styles.descStyle}>{item.desc}</Text>
                 </View>
                 <View style={styles.circleStyle}>
-                  <ProgressCircle
+                  {/* <ProgressCircle
                     size={60}
                     color="white"
                     showsText={true}
@@ -124,7 +124,7 @@ const ScheduleVerticalList = props => {
                     }}
                     textStyle={styles.progressTxt}
                     borderWidth={0.4}
-                  />
+                  /> */}
                 </View>
               </View>
               <View></View>
@@ -158,7 +158,7 @@ const ScheduleVerticalList = props => {
                   desc: 'Add Categories to get started !',
                   index: Math.floor(Math.random()),
                   name: 'Nothing to show',
-                  progress: '0',
+                  progress: '0ngoing',
                   task: [],
                 },
               ]

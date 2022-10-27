@@ -4,11 +4,13 @@ import ProgressBar from 'react-native-progress/Bar';
 import React, {useEffect, useState} from 'react';
 import styles from './style';
 import {COLORS, icons} from '../../constants';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const HomeHorizontalCards = props => {
   const {handleSelectedTask} = props;
+  const dispatch = useDispatch();
   const [data, setData] = useState();
+
   const reduxDefaultData = useSelector(state => state.task.totalData);
 
   useEffect(() => {
@@ -24,6 +26,7 @@ const HomeHorizontalCards = props => {
           counter = counter + 1;
         }
       });
+
       return (
         <TouchableOpacity
           activeOpacity={0.7}

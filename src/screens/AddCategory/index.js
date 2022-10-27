@@ -32,7 +32,7 @@ const AddCategory = () => {
     const category = {
       index: reduxData.length ? reduxData.length + 1 : 1,
       name: title,
-      progress: '0',
+      progress: 'Ongoing',
       desc: description,
       color: selectColor,
       task: [],

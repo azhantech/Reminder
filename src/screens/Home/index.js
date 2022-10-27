@@ -1,9 +1,8 @@
-import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, Text, Image} from 'react-native';
+import React, {useState} from 'react';
 import {Link, useFocusEffect} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import {getData} from '../../redux/reducers/taskReducer';
 import HomeHorizontalCards from '../../components/HomeHorizontalCards';
 import HomeVerticalList from '../../components/HomeVerticalList';
 import styles from './styles';
@@ -14,7 +13,6 @@ const NUM_TASKS = 6;
 const Home = () => {
   const DATA = useSelector(state => state.task.totalData);
   const [dataVal, setDataVal] = useState();
-
   const [task, setTask] = useState();
   const [newTask, setNewTasks] = useState();
 

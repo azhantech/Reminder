@@ -1,19 +1,15 @@
-import {
-  View,
-  Text,
-  FlatList,
-  Animated,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, FlatList, Animated, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import {COLORS, icons} from '../../constants';
-import {deleteTask, onTaskStatusChange} from '../../redux/reducers/taskReducer';
+import {
+  deleteTask,
+  onTaskStatusChange,
+  onCategoryProgressChange,
+} from '../../redux/reducers/taskReducer';
 import {ImageLoader} from '../ImageLoader/index';
 import styles from './styles';
 
@@ -25,7 +21,7 @@ const HomeVerticalList = props => {
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
 
-  console.log('reduxDefaultData ----> ', reduxDefaultData);
+  // console.log('reduxDefaultData ----> ', reduxDefaultData);
 
   const [task, setTask] = useState();
 
@@ -36,7 +32,7 @@ const HomeVerticalList = props => {
   };
 
   const renderItem = ({item}) => {
-    console.log('item.category', item);
+    // console.log('item.category', item);
 
     const leftSwipe = (progress, dragX) => {
       const scale = dragX.interpolate({
@@ -79,6 +75,10 @@ const HomeVerticalList = props => {
                     item,
                   }),
                 );
+
+                setTimeout(() => {
+                  dispatch(onCategoryProgressChange(item));
+                }, 3000);
               }}
               bouncinessIn={40}
               bounceVelocityIn={0.6}

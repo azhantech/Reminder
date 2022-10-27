@@ -8,12 +8,13 @@ import {
 import React, {useState} from 'react';
 import CalendarStrip from 'react-native-calendar-strip';
 import {useFocusEffect} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 
 import ScheduleVerticalList from '../../components/ScheduleVerticalList';
 import styles from './styles';
 import {COLORS} from '../../constants';
+import {updateSelectedDate} from '../../redux/reducers/taskReducer';
 
 if (
   Platform.OS === 'android' &&
@@ -25,6 +26,7 @@ if (
 const Schedule = () => {
   const DATA = useSelector(state => state.task.totalData);
 
+  const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState();
   const [pressedValue, setPressedValue] = useState();
   const [currentTab, setCurrentTab] = useState();
@@ -35,13 +37,13 @@ const Schedule = () => {
     setPressedValue(value);
     switch (value) {
       case 'Ongoing':
-        const dat = DATA && DATA.filter(item => item.progress < 100);
+        const dat = DATA && DATA.filter(item => item.progress == 'Ongoing');
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         setCurrentTab(dat);
         break;
 
       case 'Completed':
-        const val = DATA && DATA.filter(item => item.progress == 100);
+        const val = DATA && DATA.filter(item => item.progress == 'Completed');
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         setCurrentTab(val);
         break;
@@ -62,11 +64,12 @@ const Schedule = () => {
       moment(selectedDateVal).format('dddd[,] MMM Do'),
     );
     setSelectedDate(moment(selectedDateVal).format('dddd[,] MMM Do'));
+    dispatch(updateSelectedDate(moment(selectedDateVal).format('LL')));
   };
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('selector data', DATA);
+      console.log('selector data', JSON.stringify(DATA));
       setCurrentTab(DATA);
     }, [DATA]),
   );

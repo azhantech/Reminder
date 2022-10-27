@@ -40,10 +40,10 @@ const EditCategory = ({route}) => {
     const category = {
       index: data.index,
       name: title,
-      progress:
-        counter != 0 && data.task.length != 0
-          ? (counter / data.task.length) * 100
-          : 0, // extra value
+      progress: data.progress,
+      // counter != 0 && data.task.length != 0
+      //   ? (counter / data.task.length) * 100
+      //   : 0,
       desc: description,
       color: selectColor,
       task: data.task,

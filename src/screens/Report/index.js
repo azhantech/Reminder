@@ -40,7 +40,9 @@ const Report = () => {
 
     setCompletedPercentage({
       color: COLORS.mainFg,
-      progress: Math.floor(((totalLength - counter) / totalLength) * 100),
+      progress: isNaN(Math.floor(((totalLength - counter) / totalLength) * 100))
+        ? 0
+        : Math.floor(((totalLength - counter) / totalLength) * 100),
     });
 
     setNonCompletedPercentage({
