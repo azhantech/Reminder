@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontSize: FONTS.h2.fontSize,
     fontWeight: '500',
-    // marginHorizontal: 20,
   },
   bottomContainer: {
     paddingVertical: 10,

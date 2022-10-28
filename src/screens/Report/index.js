@@ -35,8 +35,8 @@ const Report = () => {
       totalLength += item.task.length;
     });
 
-    console.log('counter', counter); // total non completed tasks
-    console.log('totalLength', totalLength); // total tasks
+    console.log('counter', counter);
+    console.log('totalLength', totalLength);
 
     setCompletedPercentage({
       color: COLORS.mainFg,

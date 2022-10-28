@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const ScheduleVerticalList = props => {
   const {category} = props;
-
+  console.log('CATEGORY => ', category);
   const navigation = useNavigation();
 
   const renderItem = ({item}) => {
@@ -79,7 +79,7 @@ const ScheduleVerticalList = props => {
               <View style={styles.calendarMain}>
                 <View style={styles.calendarIconView}>
                   <Image source={icons.calendar} style={styles.calendarStyle} />
-                  <Text style={styles.extraTxt}>{item?.task[0].date}</Text>
+                  <Text style={styles.extraTxt}>{item?.date}</Text>
                 </View>
                 <View style={styles.checkMain}>
                   <Image source={icons.checkbox} style={styles.calendarStyle} />
@@ -110,22 +110,7 @@ const ScheduleVerticalList = props => {
                   <Text style={styles.nameStyle}>{item.name}</Text>
                   <Text style={styles.descStyle}>{item.desc}</Text>
                 </View>
-                <View style={styles.circleStyle}>
-                  {/* <ProgressCircle
-                    size={60}
-                    color="white"
-                    showsText={true}
-                    animated={true}
-                    thickness={5}
-                    strokeCap="round"
-                    progress={Number(item.progress / 100)}
-                    formatText={() => {
-                      return item.progress + '%';
-                    }}
-                    textStyle={styles.progressTxt}
-                    borderWidth={0.4}
-                  /> */}
-                </View>
+                <View style={styles.circleStyle}></View>
               </View>
               <View></View>
             </View>
@@ -155,7 +140,7 @@ const ScheduleVerticalList = props => {
             : [
                 {
                   color: COLORS.mainFg,
-                  desc: 'Add Categories to get started !',
+                  desc: '',
                   index: Math.floor(Math.random()),
                   name: 'Nothing to show',
                   progress: '0ngoing',

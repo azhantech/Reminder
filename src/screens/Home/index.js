@@ -21,7 +21,6 @@ const Home = () => {
       if (value.name == item.name) {
         setNewTasks(value.name);
         setTask(value);
-      } else {
       }
     });
   };

@@ -1,10 +1,9 @@
-import {View, Text, Dimensions} from 'react-native';
-import React, {useEffect} from 'react';
-import {LineChart, ProgressChart} from 'react-native-chart-kit';
+import {View, Dimensions} from 'react-native';
+import React from 'react';
+import {ProgressChart} from 'react-native-chart-kit';
 import {useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 
-import styles from './style';
 import {COLORS} from '../../constants';
 
 let label = [];
@@ -59,30 +58,6 @@ const LineChartComponent = () => {
         }}
         hideLegend={true}
       />
-      {/* <LineChart
-        data={data}
-        width={Dimensions.get('window').width * 0.89} // from react-native
-        height={220}
-        chartConfig={{
-          backgroundColor: COLORS.mainFg,
-          backgroundGradientFrom: '#4b51d7',
-          backgroundGradientTo: '#b6b9f3',
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: '6',
-            strokeWidth: '2',
-            stroke: COLORS.lightGreen,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      /> */}
     </View>
   );
 };

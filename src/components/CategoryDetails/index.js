@@ -104,7 +104,7 @@ const CategoryDetails = ({route, navigation}) => {
               strokeCap="round"
               progress={Number(progress / 100)}
               formatText={() => {
-                return progress + '%';
+                return Math.floor(progress) + '%';
               }}
               textStyle={styles.progressTxt}
               borderWidth={0.4}

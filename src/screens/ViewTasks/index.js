@@ -1,10 +1,8 @@
 import {View, Text, FlatList} from 'react-native';
 import React, {useState} from 'react';
-import {DATA} from '../../constants/data';
 import styles from './styles';
 import BackButon from '../../components/BackButon';
 import {useFocusEffect} from '@react-navigation/native';
-import {COLORS} from '../../constants';
 import {useSelector} from 'react-redux';
 
 const ViewTasks = ({route, navigation}) => {

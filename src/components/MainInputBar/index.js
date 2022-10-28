@@ -1,6 +1,5 @@
 import {View, TextInput} from 'react-native';
 import React from 'react';
-
 import styles from './styles';
 
 const MainInputBar = ({placeholder, value, onChangeText}) => {
@@ -11,7 +10,6 @@ const MainInputBar = ({placeholder, value, onChangeText}) => {
           autoCapitalize="sentences"
           multiline={true}
           style={styles.otherTextInputStyle}
-          // placeholder={placeholder}
           value={value}
           onChangeText={onChangeText}
         />

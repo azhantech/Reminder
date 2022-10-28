@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,7 +26,6 @@ const Profile = () => {
       />
       <View style={styles.body}>
         <View style={styles.bodyContent}>
-          {/* <Text style={styles.name}>username</Text> */}
           <Text style={styles.info}>{emailAdd && emailAdd}</Text>
 
           <TouchableOpacity

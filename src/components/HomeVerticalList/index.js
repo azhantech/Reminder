@@ -21,8 +21,6 @@ const HomeVerticalList = props => {
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
 
-  // console.log('reduxDefaultData ----> ', reduxDefaultData);
-
   const [task, setTask] = useState();
 
   const onDelete = (id, category) => {
@@ -32,8 +30,6 @@ const HomeVerticalList = props => {
   };
 
   const renderItem = ({item}) => {
-    // console.log('item.category', item);
-
     const leftSwipe = (progress, dragX) => {
       const scale = dragX.interpolate({
         inputRange: [0, 100],
@@ -65,7 +61,6 @@ const HomeVerticalList = props => {
               size={25}
               fillColor={!item.completed ? COLORS.mainFg : COLORS.lightGreen}
               text={item.tname}
-              // unfillColor={item.completed ? COLORS.lightGreen : COLORS.mainBg}
               innerIconStyle={{borderWidth: 10}}
               textStyle={styles.txtStyle}
               onPress={isChecked => {

@@ -2,6 +2,7 @@ import {createSlice, current} from '@reduxjs/toolkit';
 
 const initialState = {
   totalData: [],
+  specificDateData: [],
   selectedDate: null,
 };
 
@@ -11,6 +12,14 @@ export const taskSlice = createSlice({
   reducers: {
     updateSelectedDate: (state, action) => {
       console.log('UPDATE SELECTED DATE', action);
+      state['selectedDate'] = action.payload;
+      state['totalData'].forEach(element => {
+        console.log('element.date', element.date);
+        if (element.date == action.payload) {
+          console.log('specificDateData', element);
+          state.specificDateData = [element];
+        }
+      });
     },
 
     addCategory: (state, action) => {
@@ -21,7 +30,6 @@ export const taskSlice = createSlice({
     addTask: (state, action) => {
       state['totalData'].map((item, index) => {
         if (item.name === action.payload.category) {
-          // added for ongoing/completed flow
           item.progress = 'Ongoing';
           state['totalData'][index]['task'].push(action.payload);
         }
@@ -51,8 +59,6 @@ export const taskSlice = createSlice({
     },
 
     onTaskStatusChange: (state, action) => {
-      console.log('onTaskStatusChange', action.payload);
-
       if (action.payload.isChecked && !action.payload.item.completed) {
         state['totalData'].map((item, index) => {
           if (item.name === action.payload.item.category) {
@@ -79,8 +85,6 @@ export const taskSlice = createSlice({
     },
 
     onCategoryProgressChange: (state, action) => {
-      console.log('onCategoryProgressChange', action.payload);
-
       let counter = 0;
       let taskLength = 0;
 
@@ -96,8 +100,6 @@ export const taskSlice = createSlice({
           });
         }
       });
-      console.log('counter', counter);
-      console.log('tasklength', taskLength);
 
       state['totalData'].forEach(element => {
         if (element.name == action.payload.category) {
@@ -112,6 +114,7 @@ export const taskSlice = createSlice({
 
     onLoggingOut: state => {
       state.totalData = [];
+      state.specificDateData = [];
       state.tasks = null;
     },
   },

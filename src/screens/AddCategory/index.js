@@ -5,11 +5,13 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
+import DatePicker from 'react-native-date-picker';
 
 import {addCategory} from '../../redux/reducers/taskReducer';
 import BackButon from '../../components/BackButon';
@@ -18,6 +20,7 @@ import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 const AddCategory = () => {
   const reduxData = useSelector(state => state.task.totalData);
@@ -25,6 +28,9 @@ const AddCategory = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [title, setTitle] = useState();
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [dateAdv, setDateAdv] = useState();
   const [description, setDescription] = useState();
   const [selectColor, setSelectColor] = useState();
 
@@ -32,6 +38,7 @@ const AddCategory = () => {
     const category = {
       index: reduxData.length ? reduxData.length + 1 : 1,
       name: title,
+      date: dateAdv,
       progress: 'Ongoing',
       desc: description,
       color: selectColor,
@@ -41,7 +48,8 @@ const AddCategory = () => {
     if (
       category.name == undefined ||
       category.desc == undefined ||
-      category.color == undefined
+      category.color == undefined ||
+      category.date == undefined
     ) {
       Toast.show({
         type: 'error',
@@ -54,6 +62,8 @@ const AddCategory = () => {
 
       setTitle('');
       setDescription('');
+      setDateAdv('');
+
       setSelectColor('');
 
       navigation.navigate('Home');
@@ -107,6 +117,42 @@ const AddCategory = () => {
             onChangeText={value => setDescription(value)}
           />
         </View>
+        <View>
+          <Text style={styles.labelStyle}>Date</Text>
+
+          <View style={styles.touchableCont}>
+            {dateAdv ? (
+              <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
+            ) : (
+              <TextInput
+                style={styles.otherTwoTextInputStyle}
+                value={dateAdv}
+              />
+            )}
+
+            <TouchableOpacity
+              onPress={() => setOpen(true)}
+              style={styles.opacStyle}>
+              <Image source={icons.calendar} style={styles.imgStyle} />
+            </TouchableOpacity>
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              mode="date"
+              theme="light"
+              onConfirm={date => {
+                setOpen(false);
+                setDate(date);
+                setDateAdv(moment(date).format('LL'));
+              }}
+              onCancel={() => {
+                setOpen(false);
+              }}
+            />
+          </View>
+        </View>
+
         <View>
           <Text style={styles.labelStyle}></Text>
           <FlatList

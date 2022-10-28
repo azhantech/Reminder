@@ -1,12 +1,4 @@
-import {
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  FlatList,
-} from 'react-native';
+import {Text, View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
@@ -17,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
-import {COLORS, icons} from '../../constants';
+import {COLORS} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
 
 const AddTask = () => {
@@ -29,7 +21,6 @@ const AddTask = () => {
   const [description, setDescription] = useState();
   const [date, setDate] = useState(new Date());
   const [dateAdv, setDateAdv] = useState();
-  const [open, setOpen] = useState(false); // flag
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [step, setStep] = useState({
@@ -42,7 +33,6 @@ const AddTask = () => {
       category: step?.value,
       tname: title,
       desc: description,
-      date: dateAdv,
       start_time: startTime,
       end_time: endTime,
       completed: false,
@@ -52,7 +42,6 @@ const AddTask = () => {
       if (
         task.tname == '' ||
         task.desc == '' ||
-        task.date == '' ||
         task.start_time == '' ||
         task.end_time == '' ||
         task.category == ''
@@ -140,47 +129,9 @@ const AddTask = () => {
       <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>
         <View>
           <Text style={styles.labelStyle}>Title</Text>
-          <MainInputBar
-            // placeholder="Enter Title"
-            value={title}
-            onChangeText={value => setTitle(value)}
-          />
+          <MainInputBar value={title} onChangeText={value => setTitle(value)} />
         </View>
-        <View>
-          <Text style={styles.labelStyle}>Date</Text>
 
-          <View style={styles.touchableCont}>
-            {dateAdv ? (
-              <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
-            ) : (
-              <TextInput
-                style={styles.otherTwoTextInputStyle}
-                value={dateAdv}
-              />
-            )}
-
-            <TouchableOpacity
-              onPress={() => setOpen(true)}
-              style={styles.opacStyle}>
-              <Image source={icons.calendar} style={styles.imgStyle} />
-            </TouchableOpacity>
-            <DatePicker
-              modal
-              open={open}
-              date={date}
-              mode="date"
-              theme="light"
-              onConfirm={date => {
-                setOpen(false);
-                setDate(date);
-                setDateAdv(moment(date).format('LL'));
-              }}
-              onCancel={() => {
-                setOpen(false);
-              }}
-            />
-          </View>
-        </View>
         <View>
           <Text style={styles.labelStyle}>Time</Text>
           <View style={styles.timeInpStyle}>
@@ -210,7 +161,6 @@ const AddTask = () => {
         <View>
           <Text style={styles.labelStyle}>Description</Text>
           <MainInputBar
-            // placeholder="Enter Task Description"
             value={description}
             onChangeText={value => setDescription(value)}
           />

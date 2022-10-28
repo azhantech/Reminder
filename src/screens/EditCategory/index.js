@@ -11,7 +11,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 
 import styles from './styles';
-import BackButon from '../../components/BackButon';
 import MainInputBar from '../../components/MainInputBar';
 import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
@@ -41,9 +40,6 @@ const EditCategory = ({route}) => {
       index: data.index,
       name: title,
       progress: data.progress,
-      // counter != 0 && data.task.length != 0
-      //   ? (counter / data.task.length) * 100
-      //   : 0,
       desc: description,
       color: selectColor,
       task: data.task,

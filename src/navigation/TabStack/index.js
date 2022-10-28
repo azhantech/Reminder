@@ -60,16 +60,6 @@ class TabStack extends React.PureComponent {
           component={AddTaskStack}
           options={{
             tabBarIcon: ({focused}) => (
-              // <Image
-              //   source={icons.plus}
-              //   resizeMode="contain"
-              //   style={{
-              //     width: 70,
-              //     height: 70,
-              //     // tintColor: focused ? '' : COLORS.mainFg,
-              //   }}
-              // />
-
               <Image
                 source={require('../../assets/icons/cross.png')}
                 style={{

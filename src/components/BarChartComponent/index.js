@@ -1,4 +1,4 @@
-import {View, Text, Dimensions, ActivityIndicator} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import React from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 

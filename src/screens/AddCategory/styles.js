@@ -7,8 +7,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.mainBg,
   },
   upperCont: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
     justifyContent: 'space-around',
     marginTop: 10,
     flexDirection: 'row',
@@ -16,7 +14,6 @@ const styles = StyleSheet.create({
   mainText: {
     marginVertical: 20,
     color: COLORS.black,
-    // alignSelf: 'center',
     left: -50,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -59,6 +56,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 40,
     borderRadius: 12,
+  },
+  touchableCont: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  otherTextInputStyle: {
+    color: 'black',
+    borderColor: COLORS.mainFg,
+    paddingVertical: 2,
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
+    marginVertical: 15,
+    paddingRight: 70,
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  otherTwoTextInputStyle: {
+    borderColor: COLORS.mainBg,
+    paddingVertical: 2,
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
+    marginVertical: 15,
+    paddingRight: 70,
+  },
+  opacStyle: {
+    paddingTop: 20,
+    marginRight: 20,
+  },
+  imgStyle: {
+    height: 25,
+    width: 25,
+    tintColor: COLORS.mainFg,
   },
 });
 
