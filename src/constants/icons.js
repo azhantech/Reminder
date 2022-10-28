@@ -14,8 +14,6 @@ const password = require('../assets/icons/key.png');
 const search = require('../assets/icons/search.png');
 const edit = require('../assets/icons/edit.png');
 const onBoarding = require('../assets/icons/onBoarding.png');
-const onBoardingTwo = require('../assets/icons/onBoardingTwo.png');
-const onBoardingThree = require('../assets/icons/onBoardingThree.png');
 const calendar = require('../assets/icons/calendar.png');
 const plus = require('../assets/icons/plus.png');
 const avatar = require('../assets/icons/avatar.jpg');
@@ -45,8 +43,6 @@ export default {
   search,
   edit,
   onBoarding,
-  onBoardingTwo,
-  onBoardingThree,
   calendar,
   plus,
   avatar,
