@@ -30,7 +30,7 @@ PushNotification.getChannels(function (channel_ids) {
   console.log(channel_ids); // ['channel_id_1']
 });
 
-export const LocalNotification = (id, date, start_time) => {
+export const LocalNotification = (id, date, start_time, text) => {
   const dateVal = moment(date, 'LL');
   const startVal = moment(start_time, 'LT');
 
@@ -42,12 +42,10 @@ export const LocalNotification = (id, date, start_time) => {
 
   PushNotification.localNotificationSchedule({
     channelId: 'channel-id',
-    channelNameL: 'my channel',
+    channelName: 'my channel',
     autoCancel: true,
-    bigText: 'This is Local Demo Notification',
-    subText: 'Local Notification demo',
-    title: 'Local Notification Title',
-    message: 'hey, expand me!!',
+    bigText: `Time to do ${text}`,
+    title: `Start doing ${text}!`,
     date: updatedVal?.toDate(),
     playSound: true,
     soundName: 'default',

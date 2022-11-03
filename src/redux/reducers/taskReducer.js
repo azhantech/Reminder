@@ -35,6 +35,17 @@ export const taskSlice = createSlice({
       });
     },
 
+    editTask: (state, action) => {
+      state['totalData'].map((item, index) => {
+        if (item.name === action.payload.category) {
+          item['task'].map((value, number) => {
+            if (value.category === action.payload.category) {
+              state['totalData'][index]['task'][number] = action.payload;
+            }
+          });
+        }
+      });
+    },
     editCategory: (state, action) => {
       state['totalData'].map((item, index) => {
         if (item.index === action.payload.index) {
@@ -125,6 +136,7 @@ export const {
   addCategory,
   editCategory,
   addTask,
+  editTask,
   deleteTask,
   onTaskStatusChange,
   onLoggingOut,

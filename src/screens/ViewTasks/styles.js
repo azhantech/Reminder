@@ -61,6 +61,21 @@ const styles = StyleSheet.create({
     elevation: 2,
     opacity: 0.85,
   },
+  btnView: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: COLORS.mainBg,
+    borderRadius: 20,
+    marginHorizontal: 80,
+    paddingVertical: 10,
+    opacity: 0.8,
+  },
+  imgView: {
+    tintColor: COLORS.mainBg,
+    width: 20,
+    height: 20,
+  },
 });
 
 export default styles;

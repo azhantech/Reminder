@@ -27,6 +27,7 @@ const time = require('../assets/icons/time.png');
 const trash = require('../assets/icons/trash.png');
 const eye = require('../assets/icons/eye.png');
 const hidden = require('../assets/icons/hidden.png');
+const pencil = require('../assets/icons/pencil.png');
 export default {
   briefcase,
   close,
@@ -57,4 +58,5 @@ export default {
   trash,
   eye,
   hidden,
+  pencil,
 };

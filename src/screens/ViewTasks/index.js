@@ -1,11 +1,16 @@
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import styles from './styles';
 import BackButon from '../../components/BackButon';
+import {useNavigation} from '@react-navigation/native';
+
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import {COLORS, icons} from '../../constants';
 
-const ViewTasks = ({route, navigation}) => {
+const ViewTasks = ({route}) => {
+  const navigation = useNavigation();
+
   const DATA = useSelector(state => state.task.totalData);
   const {id} = route.params;
   console.log('id', id);
@@ -24,6 +29,16 @@ const ViewTasks = ({route, navigation}) => {
           <Text style={styles.timeTxt}>{item.start_time}</Text>
           <Text style={styles.timeTxt}>{item.end_time}</Text>
         </View>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('EditTask', {
+              data: item,
+            });
+          }}
+          style={styles.btnView}>
+          <Image source={icons.pencil} style={styles.imgView} />
+        </TouchableOpacity>
       </View>
     );
   };

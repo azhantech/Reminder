@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  FlatList,
   Image,
   TextInput,
 } from 'react-native';
@@ -19,35 +18,36 @@ import {LocalNotification} from '../../services/LocalPushController';
 import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
-import {addTask} from '../../redux/reducers/taskReducer';
+import {addTask, editTask} from '../../redux/reducers/taskReducer';
 
-const AddTask = () => {
+const EditTask = ({route}) => {
+  const {data} = route.params;
+
+  console.log(data);
+
   const DATA = useSelector(state => state.task.totalData);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
+  const [title, setTitle] = useState(data.tname);
+  const [description, setDescription] = useState(data.desc);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [dateAdv, setDateAdv] = useState();
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
-  const [step, setStep] = useState({
-    index: 0,
-    value: '',
-  });
+
+  const [dateAdv, setDateAdv] = useState(data.date);
+  const [startTime, setStartTime] = useState(data.start_time);
+  const [endTime, setEndTime] = useState(data.end_time);
 
   const handleSubmit = () => {
     const task = {
-      category: step?.value,
+      category: data.category,
       tname: title,
       date: dateAdv,
       desc: description,
       start_time: startTime,
       end_time: endTime,
-      completed: false,
-      notId: Math.floor(Math.random() * 255),
+      completed: data.completed,
+      notId: data.notId,
     };
     console.log('DATA addTask', DATA.length);
     if (DATA.length != 0) {
@@ -68,26 +68,22 @@ const AddTask = () => {
         if (task.start_time != task.end_time) {
           console.log('task', task);
 
-          LocalNotification(
-            task?.notId,
-            task?.date,
-            task?.start_time,
-            task?.tname,
-          );
+          //   LocalNotification(
+          //     task?.notId,
+          //     task?.date,
+          //     task?.start_time,
+          //     task?.tname,
+          //   );
 
-          dispatch(addTask(task));
+          dispatch(editTask(task));
 
-          navigation.navigate('HomeStack');
+          navigation.navigate('Home');
 
           setTitle('');
           setDescription('');
           setDateAdv('');
           setStartTime('');
           setEndTime('');
-          setStep({
-            index: 0,
-            value: '',
-          });
         } else {
           Toast.show({
             type: 'error',
@@ -104,55 +100,11 @@ const AddTask = () => {
       });
     }
   };
-  const renderItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() =>
-          setStep({
-            index: item.index,
-            value: item.name,
-          })
-        }
-        style={[
-          {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            backgroundColor: COLORS.mainBg,
-            borderWidth: 2,
-            borderColor: item.color,
-            marginHorizontal: 10,
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            borderRadius: 12,
-          },
-
-          item?.index == step.index && {
-            backgroundColor: item.color,
-          },
-        ]}>
-        <View>
-          <Text
-            style={[
-              {
-                color: item.color,
-              },
-              item?.index == step.index && {
-                color: COLORS.mainBg,
-                fontWeight: 'bold',
-              },
-            ]}>
-            {item.name}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
 
   return (
     <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>
       <View style={styles.upperCont}>
-        <Text style={styles.mainText}>Add Task</Text>
+        <Text style={styles.mainText}>Edit Task</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>
         <View>
@@ -226,22 +178,20 @@ const AddTask = () => {
             onChangeText={value => setDescription(value)}
           />
         </View>
-        <Text style={styles.labelStyle}>Category</Text>
-
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => item?.index.toString()}
-        />
 
         <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>
           <Text style={styles.subTitleTwo}>ADD</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={styles.btnThree}>
+          <Text style={styles.subTitleTwo}>CANCEL</Text>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAwareScrollView>
   );
 };
 
-export default AddTask;
+export default EditTask;
