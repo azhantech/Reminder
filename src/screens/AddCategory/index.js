@@ -54,7 +54,7 @@ const AddCategory = () => {
       Toast.show({
         type: 'error',
         visibilityTime: 2000,
-        text1: 'Kindly fill all the fields 👋',
+        text1: 'Kindly fill all the fields',
       });
     } else {
       console.log('category', category);
@@ -124,10 +124,7 @@ const AddCategory = () => {
             {dateAdv ? (
               <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
             ) : (
-              <TextInput
-                style={styles.otherTwoTextInputStyle}
-                value={dateAdv}
-              />
+              <View style={styles.otherTwoTextInputStyle}></View>
             )}
 
             <TouchableOpacity

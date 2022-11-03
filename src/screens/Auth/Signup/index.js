@@ -1,21 +1,30 @@
-import React, {useState} from 'react';
-import {View, Text, ToastAndroid, TouchableOpacity} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, Text, TouchableOpacity, Pressable, Image} from 'react-native';
 
 import {Link, useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 
+import {SpinLoader} from '../../../components/SpinLoader';
+import {useTogglePasswordVisibility} from '../../../hooks/useTogglePasswordVisibility';
 import {ImageLoader} from '../../../components/ImageLoader';
-import InputFields from '../../../components/InputFields';
+import {InputFields} from '../../../components/InputFields';
 import HeadingAuth from '../../../components/HeadingAuth';
 import styles from './styles';
+import {COLORS, icons} from '../../../constants';
 
 const Signup = () => {
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const emailRef = useRef();
+  const passRef = useRef();
+
+  const {passwordVisibility, rightIcon, handlePasswordVisibility} =
+    useTogglePasswordVisibility();
 
   const validateEmail = async text => {
     let reg = /\S+@\S+\.\S+/;
@@ -39,11 +48,19 @@ const Signup = () => {
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
+            Toast.show({
+              type: 'error',
+              visibilityTime: 2000,
+              text1: 'That email address is already in use!',
+            });
           }
 
           if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
+            Toast.show({
+              type: 'error',
+              visibilityTime: 2000,
+              text1: 'That email address is invalid!',
+            });
           }
 
           console.error(error);
@@ -53,10 +70,10 @@ const Signup = () => {
 
   const showToast = () => {
     Toast.show({
-      type: 'success',
+      type: 'error',
       visibilityTime: 2000,
 
-      text1: 'Kindly fill all the fields 👋',
+      text1: 'Kindly fill all the fields',
     });
   };
 
@@ -80,49 +97,114 @@ const Signup = () => {
         <HeadingAuth type="Sign Up" />
         <View style={styles.scrollContainer}>
           <InputFields
-            placeholder="Enter name"
+            placeholder="Enter Name"
             value={name}
             onChangeText={val => setName(val)}
+            onSubmitEditing={() => {
+              emailRef.current.focus();
+            }}
           />
           <InputFields
-            placeholder="Enter email"
+            ref={emailRef}
+            placeholder="Enter Email"
             value={email}
             onChangeText={value => setEmail(value)}
             isEmail={true}
+            onSubmitEditing={() => {
+              passRef.current.focus();
+            }}
+            // autoFocus={true}
+            // returnKeyType="next"
+            // onSubmitEditing={() => nameRef.current.focus()}
+            // ref={emailRef}
           />
-          <InputFields
-            placeholder="Enter password"
-            value={password}
-            onChangeText={value => setPassword(value)}
-            isPassword={true}
-          />
-          <Text style={styles.addText}>
-            Before joining us, you're agree to our
-            <Link to={{screen: 'Login'}}>
-              <Text style={styles.termsText}> Terms </Text>
-            </Link>
-            &{' '}
-            <Link to={{screen: 'Login'}}>
-              <Text style={styles.policyText}>Policies</Text>
-            </Link>
-          </Text>
+
+          {rightIcon == 'eye' ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <InputFields
+                ref={passRef}
+                placeholder="Enter Password"
+                value={password}
+                onChangeText={value => setPassword(value)}
+                isPassword={true}
+                secureTextEntry={passwordVisibility}
+                enablesReturnKeyAutomatically
+              />
+              <Pressable
+                style={{
+                  right: 40,
+                }}
+                onPress={handlePasswordVisibility}>
+                <Image
+                  source={icons.eye}
+                  style={{
+                    tintColor: COLORS.mainFg,
+                    height: 25,
+                    width: 25,
+                    marginTop: 10,
+                  }}
+                />
+              </Pressable>
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <InputFields
+                ref={passRef}
+                placeholder="Enter Password"
+                value={password}
+                onChangeText={value => setPassword(value)}
+                isPassword={true}
+                secureTextEntry={passwordVisibility}
+                enablesReturnKeyAutomatically
+              />
+              <Pressable
+                style={{
+                  right: 40,
+                }}
+                onPress={handlePasswordVisibility}>
+                <Image
+                  source={icons.hidden}
+                  style={{
+                    tintColor: COLORS.mainFg,
+                    height: 25,
+                    width: 25,
+                    marginTop: 10,
+                  }}
+                />
+              </Pressable>
+            </View>
+          )}
         </View>
 
-        <View style={styles.bottomContainer}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.btnTwo}
-            onPress={handleSubmit}>
-            <Text style={styles.subTitleTwo}>Sign Up</Text>
-          </TouchableOpacity>
+        <Text style={styles.addText}>
+          Before joining us, you're agree to our Terms & Policies
+          <Text style={styles.termsText}> </Text>
+          <Text style={styles.policyText}> </Text>
+        </Text>
+      </View>
 
-          <Text style={styles.bottomMostText}>
-            Joined us before ?{' '}
-            <Link to={{screen: 'Login'}}>
-              <Text style={styles.linkText}>Login</Text>
-            </Link>
-          </Text>
-        </View>
+      <View style={styles.bottomContainer}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.btnTwo}
+          onPress={handleSubmit}>
+          <Text style={styles.subTitleTwo}>Sign Up</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.bottomMostText}>
+          Joined us before ?{' '}
+          <Link to={{screen: 'Login'}}>
+            <Text style={styles.linkText}>Login</Text>
+          </Link>
+        </Text>
       </View>
     </KeyboardAwareScrollView>
   );

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   contUpStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   flatStyle: {
     marginHorizontal: 20,

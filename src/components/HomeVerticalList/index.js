@@ -94,6 +94,13 @@ const HomeVerticalList = props => {
     }
   };
 
+  const renderEmptyComponent = () => {
+    return (
+      <View style={styles.mainCont2}>
+        <Text style={styles.emptyText}>No Tasks to show</Text>
+      </View>
+    );
+  };
   useEffect(() => {
     reduxDefaultData.forEach(element => {
       if (element.name == tasks) {
@@ -104,41 +111,19 @@ const HomeVerticalList = props => {
 
   return (
     <View style={styles.listCont}>
-      {reduxDefaultData.length > 0 ? (
-        <AnimatedFlatlist
-          scrollEventThrottle={16}
-          data={task ? task : reduxDefaultData[0].task}
-          bounces={true}
-          horizontal={false}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: 150,
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      ) : (
-        <AnimatedFlatlist
-          scrollEventThrottle={16}
-          data={[
-            {
-              tname: 'No Tasks to show',
-              date: '',
-              start_time: '',
-              end_time: '',
-              desc: '',
-            },
-          ]}
-          bounces={true}
-          horizontal={false}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: 150,
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      )}
+      <AnimatedFlatlist
+        scrollEventThrottle={16}
+        data={task ? task : reduxDefaultData[0]?.task}
+        bounces={true}
+        horizontal={false}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={renderEmptyComponent}
+        contentContainerStyle={{
+          paddingBottom: 150,
+        }}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </View>
   );
 };

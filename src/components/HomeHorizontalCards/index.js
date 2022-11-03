@@ -117,7 +117,7 @@ const HomeHorizontalCards = props => {
               animated={true}
               width={250}
               height={8}
-              indeterminate={item.color != COLORS.mainFg ? false : true}
+              // indeterminate={item.color != COLORS.mainFg ? false : true}
               animationType="spring"
               color="#FFFFFF"
               borderWidth={0.5}

@@ -1,16 +1,24 @@
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Pressable,
+  Image,
+} from 'react-native';
 import {Link, useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {useDispatch} from 'react-redux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 
-import {COLORS} from '../../../constants';
-
+import {useTogglePasswordVisibility} from '../../../hooks/useTogglePasswordVisibility';
+import {SpinLoader} from '../../../components/SpinLoader';
+import {COLORS, icons} from '../../../constants';
 import {ImageLoader} from '../../../components/ImageLoader';
 import HeadingAuth from '../../../components/HeadingAuth';
-import InputFields from '../../../components/InputFields';
+import {InputFields} from '../../../components/InputFields';
 
 import styles from './styles';
 import {changeLogIn} from '../../../redux/reducers/authReducer';
@@ -20,6 +28,11 @@ const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const {passwordVisibility, rightIcon, handlePasswordVisibility} =
+    useTogglePasswordVisibility();
+
+  const passRef = useRef();
 
   const validateEmail = async text => {
     console.log(text);
@@ -69,7 +82,7 @@ const Login = () => {
     Toast.show({
       type: 'success',
       visibilityTime: 2000,
-      text1: 'Kindly fill all the fields 👋',
+      text1: 'Kindly fill all the fields',
     });
   };
 
@@ -85,16 +98,75 @@ const Login = () => {
       <ScrollView>
         <View style={styles.scrollContainer}>
           <InputFields
-            placeholder="Enter email"
+            placeholder="Enter Email"
             value={email}
             onChangeText={value => setEmail(value)}
+            onSubmitEditing={() => {
+              passRef.current.focus();
+            }}
           />
-          <InputFields
-            placeholder="Enter password"
-            value={password}
-            onChangeText={value => setPassword(value)}
-            isPassword={true}
-          />
+          {rightIcon == 'eye' ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <InputFields
+                ref={passRef}
+                placeholder="Enter Password"
+                value={password}
+                onChangeText={value => setPassword(value)}
+                isPassword={true}
+                secureTextEntry={passwordVisibility}
+              />
+              <Pressable
+                style={{
+                  right: 40,
+                }}
+                onPress={handlePasswordVisibility}>
+                <Image
+                  source={icons.eye}
+                  style={{
+                    tintColor: COLORS.mainFg,
+                    height: 25,
+                    width: 25,
+                    marginTop: 10,
+                  }}
+                />
+              </Pressable>
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <InputFields
+                ref={passRef}
+                placeholder="Enter Password"
+                value={password}
+                onChangeText={value => setPassword(value)}
+                isPassword={true}
+                secureTextEntry={passwordVisibility}
+                enablesReturnKeyAutomatically
+              />
+              <Pressable
+                style={{
+                  right: 40,
+                }}
+                onPress={handlePasswordVisibility}>
+                <Image
+                  source={icons.hidden}
+                  style={{
+                    tintColor: COLORS.mainFg,
+                    height: 25,
+                    width: 25,
+                    marginTop: 10,
+                  }}
+                />
+              </Pressable>
+            </View>
+          )}
         </View>
 
         <View style={styles.scrollContainerTwo}>

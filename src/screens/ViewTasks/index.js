@@ -22,7 +22,6 @@ const ViewTasks = ({route, navigation}) => {
         </View>
         <View style={styles.contUpStyle}>
           <Text style={styles.timeTxt}>{item.start_time}</Text>
-          <Text style={styles.timeTxt}>{item.date}</Text>
           <Text style={styles.timeTxt}>{item.end_time}</Text>
         </View>
       </View>

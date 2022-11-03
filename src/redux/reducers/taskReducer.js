@@ -23,7 +23,6 @@ export const taskSlice = createSlice({
     },
 
     addCategory: (state, action) => {
-      // state.totalData = [];
       state['totalData'].push(action.payload);
     },
 

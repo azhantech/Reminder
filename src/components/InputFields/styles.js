@@ -8,8 +8,9 @@ const styles = StyleSheet.create({
     outline: 'none',
     borderBottomWidth: 1,
     marginHorizontal: 20,
-    marginVertical: 15,
+    marginVertical: 12,
     fontWeight: 'bold',
+    width: 285,
   },
   otherTextInputStyle: {
     color: COLORS.mainFg,
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     outline: 'none',
     borderBottomWidth: 1,
     marginHorizontal: 20,
-    marginVertical: 20,
+    marginVertical: 12,
     fontWeight: 'bold',
   },
 });

@@ -25,7 +25,8 @@ const checkbox = require('../assets/icons/checkbox.png');
 const checked = require('../assets/icons/checked.png');
 const time = require('../assets/icons/time.png');
 const trash = require('../assets/icons/trash.png');
-
+const eye = require('../assets/icons/eye.png');
+const hidden = require('../assets/icons/hidden.png');
 export default {
   briefcase,
   close,
@@ -54,4 +55,6 @@ export default {
   checked,
   time,
   trash,
+  eye,
+  hidden,
 };

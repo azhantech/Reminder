@@ -7,13 +7,19 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeLogOut} from '../../redux/reducers/authReducer';
 import {onLoggingOut} from '../../redux/reducers/taskReducer';
 import {ImageLoader} from '../../components/ImageLoader';
-
-import styles from './styles';
+import {LocalNotification} from '../../services/LocalPushController';
 import {COLORS} from '../../constants';
+import styles from './styles';
+
 const Profile = () => {
   const emailAdd = useSelector(state => state.auth.emailId);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const handleButtonPress = () => {
+    console.log('dshhsdhjsd');
+    LocalNotification();
+  };
 
   return (
     <View style={styles.container}>
@@ -33,12 +39,11 @@ const Profile = () => {
             style={styles.buttonContainer}
             onPress={() => {
               dispatch(changeLogOut());
-
               dispatch(onLoggingOut());
-
               setTimeout(() => {
                 navigation.navigate('Login');
               }, 3000);
+              // handleButtonPress();
             }}>
             <Text style={styles.btnStyle}>Log Out</Text>
           </TouchableOpacity>

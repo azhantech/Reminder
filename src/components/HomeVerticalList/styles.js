@@ -43,6 +43,24 @@ const styles = StyleSheet.create({
     tintColor: COLORS.mainFg,
     transform: [{rotateY: '145deg'}, {rotateZ: '145deg'}],
   },
+  mainCont2: {
+    flex: 1,
+    borderRadius: 10,
+    backgroundColor: COLORS.mainBg,
+    marginVertical: 10,
+    paddingHorizontal: 20,
+    paddingLeft: 10,
+    marginVertical: 12,
+    marginHorizontal: 25,
+    paddingVertical: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontWeight: '600',
+    fontSize: FONTS.body2.fontSize,
+  },
 });
 
 export default styles;

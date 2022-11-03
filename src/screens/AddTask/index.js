@@ -1,4 +1,12 @@
-import {Text, View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  TextInput,
+} from 'react-native';
 import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
@@ -7,9 +15,10 @@ import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
+import {LocalNotification} from '../../services/LocalPushController';
 import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
-import {COLORS} from '../../constants';
+import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
 
 const AddTask = () => {
@@ -19,6 +28,7 @@ const AddTask = () => {
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  const [open, setOpen] = useState(false);
   const [date, setDate] = useState(new Date());
   const [dateAdv, setDateAdv] = useState();
   const [startTime, setStartTime] = useState();
@@ -32,10 +42,12 @@ const AddTask = () => {
     const task = {
       category: step?.value,
       tname: title,
+      date: dateAdv,
       desc: description,
       start_time: startTime,
       end_time: endTime,
       completed: false,
+      notId: Math.floor(Math.random() * 255),
     };
     console.log('DATA addTask', DATA.length);
     if (DATA.length != 0) {
@@ -44,35 +56,46 @@ const AddTask = () => {
         task.desc == '' ||
         task.start_time == '' ||
         task.end_time == '' ||
-        task.category == ''
+        task.category == '' ||
+        task.date == undefined
       ) {
         Toast.show({
           type: 'error',
-          visibilityTime: 2000,
-          text1: 'Kindly fill all the fields 👋',
+          visibilityTime: 1000,
+          text1: 'Kindly fill all the fields',
         });
       } else {
-        console.log('task', task);
+        if (task.start_time != task.end_time) {
+          console.log('task', task);
 
-        dispatch(addTask(task));
+          LocalNotification(task?.notId, task?.date, task?.start_time);
 
-        navigation.navigate('HomeStack');
+          dispatch(addTask(task));
 
-        setTitle('');
-        setDescription('');
-        setDateAdv('');
-        setStartTime('');
-        setEndTime('');
-        setStep({
-          index: 0,
-          value: '',
-        });
+          navigation.navigate('HomeStack');
+
+          setTitle('');
+          setDescription('');
+          setDateAdv('');
+          setStartTime('');
+          setEndTime('');
+          setStep({
+            index: 0,
+            value: '',
+          });
+        } else {
+          Toast.show({
+            type: 'error',
+            visibilityTime: 2000,
+            text1: 'Kindly add proper timing',
+          });
+        }
       }
     } else {
       Toast.show({
         type: 'error',
         visibilityTime: 2000,
-        text1: 'Kindly create the Categories first 👋',
+        text1: 'Kindly create the Categories first',
       });
     }
   };
@@ -130,6 +153,39 @@ const AddTask = () => {
         <View>
           <Text style={styles.labelStyle}>Title</Text>
           <MainInputBar value={title} onChangeText={value => setTitle(value)} />
+        </View>
+
+        <View>
+          <Text style={styles.labelStyle}>Date</Text>
+
+          <View style={styles.touchableCont}>
+            {dateAdv ? (
+              <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
+            ) : (
+              <View style={styles.otherTwoTextInputStyle}></View>
+            )}
+
+            <TouchableOpacity
+              onPress={() => setOpen(true)}
+              style={styles.opacStyle}>
+              <Image source={icons.calendar} style={styles.imgStyle} />
+            </TouchableOpacity>
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              mode="date"
+              theme="light"
+              onConfirm={date => {
+                setOpen(false);
+                setDate(date);
+                setDateAdv(moment(date).format('LL'));
+              }}
+              onCancel={() => {
+                setOpen(false);
+              }}
+            />
+          </View>
         </View>
 
         <View>

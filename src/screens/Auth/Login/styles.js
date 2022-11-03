@@ -43,6 +43,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: COLORS.gray,
   },
+  imgPressable: {
+    tintColor: COLORS.mainFg,
+    height: 25,
+    width: 25,
+    marginTop: 10,
+  },
 });
 
 export default styles;

@@ -1,36 +1,35 @@
-import {View, TextInput} from 'react-native';
+import {View, Text, TextInput, Pressable} from 'react-native';
 import React from 'react';
 
 import {COLORS} from '../../constants';
 import styles from './styles';
 
-const InputFields = ({placeholder, value, onChangeText, isPassword}) => {
+export const InputFields = React.forwardRef((props, ref) => {
   return (
     <>
-      {isPassword ? (
+      {props.isPassword ? (
         <View>
           <TextInput
+            ref={ref}
             style={styles.textInputStyle}
-            placeholder={placeholder}
-            secureTextEntry={true}
-            value={value}
-            onChangeText={onChangeText}
+            blurOnSubmit={false}
             placeholderTextColor={COLORS.transparentBlack1}
+            returnKeyType="next"
+            {...props}
           />
         </View>
       ) : (
         <View>
           <TextInput
+            ref={ref}
             style={styles.otherTextInputStyle}
-            placeholder={placeholder}
-            value={value}
-            onChangeText={onChangeText}
+            blurOnSubmit={false}
             placeholderTextColor={COLORS.transparentBlack1}
+            returnKeyType="next"
+            {...props}
           />
         </View>
       )}
     </>
   );
-};
-
-export default InputFields;
+});
