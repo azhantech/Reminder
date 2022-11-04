@@ -14,7 +14,7 @@ import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 
 import {useTogglePasswordVisibility} from '../../../hooks/useTogglePasswordVisibility';
-import {SpinLoader} from '../../../components/SpinLoader';
+import Loader, {SpinLoader} from '../../../components/SpinLoader';
 import {COLORS, icons} from '../../../constants';
 import {ImageLoader} from '../../../components/ImageLoader';
 import HeadingAuth from '../../../components/HeadingAuth';
@@ -74,6 +74,9 @@ const Login = () => {
     if (email === '' || password === '') {
       showToast();
     } else {
+      // if (!isLogin) {
+      //   <Loader isLoading={isLogin} />;
+      // }
       validateEmail(email);
     }
   };

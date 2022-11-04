@@ -19,6 +19,8 @@ import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask, editTask} from '../../redux/reducers/taskReducer';
+import PushNotification from 'react-native-push-notification';
+import {useEffect} from 'react';
 
 const EditTask = ({route}) => {
   const {data} = route.params;
@@ -37,6 +39,14 @@ const EditTask = ({route}) => {
   const [dateAdv, setDateAdv] = useState(data.date);
   const [startTime, setStartTime] = useState(data.start_time);
   const [endTime, setEndTime] = useState(data.end_time);
+
+  const [id, setId] = useState();
+
+  const getNotificationValue = () => {
+    PushNotification.getScheduledLocalNotifications(nots => {
+      setId(nots);
+    });
+  };
 
   const handleSubmit = () => {
     const task = {
@@ -68,16 +78,30 @@ const EditTask = ({route}) => {
         if (task.start_time != task.end_time) {
           console.log('task', task);
 
-          //   LocalNotification(
-          //     task?.notId,
-          //     task?.date,
-          //     task?.start_time,
-          //     task?.tname,
-          //   );
+          console.log('==============================');
 
-          dispatch(editTask(task));
+          setTimeout(() => {
+            id.map((item, index) => {
+              console.log('--------------------');
+              if (item.id == id) {
+                console.log('item', item.id);
+                PushNotification.cancelLocalNotification(id);
+              }
+            });
 
-          navigation.navigate('Home');
+            console.log('now they');
+
+            LocalNotification(
+              task?.notId,
+              task?.date,
+              task?.start_time,
+              task?.tname,
+            );
+
+            dispatch(editTask(task));
+
+            navigation.navigate('Home');
+          }, 2000);
 
           setTitle('');
           setDescription('');
@@ -100,6 +124,11 @@ const EditTask = ({route}) => {
       });
     }
   };
+
+  useEffect(() => {
+    getNotificationValue();
+    console.log('id', id);
+  }, []);
 
   return (
     <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>

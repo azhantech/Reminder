@@ -24,7 +24,6 @@ const HomeVerticalList = props => {
   const [task, setTask] = useState();
 
   const onDelete = (id, category) => {
-    console.log('dle', category);
     const data = {id, category};
     dispatch(deleteTask(data));
   };

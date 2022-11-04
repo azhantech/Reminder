@@ -20,6 +20,7 @@ import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
+import {useEffect} from 'react';
 
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);

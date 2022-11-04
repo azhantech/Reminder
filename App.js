@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {configureStore} from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -20,6 +20,8 @@ import RootNavigation from './src/navigation';
 import {persistedReducer} from './src/redux/store';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
+import {initiateNotification} from './src/services/LocalPushController';
+
 const App = () => {
   const store = configureStore({
     reducer: persistedReducer,
@@ -33,6 +35,9 @@ const App = () => {
 
   let persistor = persistStore(store);
 
+  useEffect(() => {
+    initiateNotification();
+  }, []);
   return (
     <>
       <Provider store={store}>

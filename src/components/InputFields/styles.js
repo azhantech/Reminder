@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 12,
     fontWeight: 'bold',
-    width: 285,
+    width: 328,
   },
   otherTextInputStyle: {
     color: COLORS.mainFg,
