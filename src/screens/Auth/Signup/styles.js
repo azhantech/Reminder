@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   btnTwo: {
     backgroundColor: COLORS.mainFg,
     width: '50%',
-    height: '13%',
+    height: '20%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,

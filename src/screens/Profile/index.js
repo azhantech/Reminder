@@ -42,23 +42,13 @@ const Profile = () => {
             activeOpacity={0.7}
             style={styles.buttonContainer}
             onPress={() => {
-              // dispatch(changeLogOut());
-              // dispatch(onLoggingOut());
-              // setTimeout(() => {
-              //   navigation.navigate('Login');
-              // }, 3000);
-              handleButtonPress();
+              dispatch(changeLogOut());
+              dispatch(onLoggingOut());
+              setTimeout(() => {
+                navigation.navigate('Login');
+              }, 3000);
             }}>
             <Text style={styles.btnStyle}>Log Out</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={styles.buttonContainer}
-            onPress={() => {
-              handleButtonPress();
-            }}>
-            <Text style={styles.btnStyle}> getNotification</Text>
           </TouchableOpacity>
         </View>
       </View>

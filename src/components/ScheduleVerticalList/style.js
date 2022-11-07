@@ -67,6 +67,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     marginTop: -30,
   },
+  mainCont2: {
+    position: 'absolute',
+    borderRadius: 10,
+    backgroundColor: COLORS.mainBg,
+    marginVertical: 10,
+    marginVertical: 12,
+    paddingVertical: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontWeight: '600',
+    fontSize: FONTS.body2.fontSize,
+    color: COLORS.lightGray,
+  },
   extraTxt: {color: COLORS.white},
 });
 

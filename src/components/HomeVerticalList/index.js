@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Animated, TouchableOpacity} from 'react-native';
+import {View, Text, Animated, TouchableOpacity, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -12,8 +12,6 @@ import {
 } from '../../redux/reducers/taskReducer';
 import {ImageLoader} from '../ImageLoader/index';
 import styles from './styles';
-
-const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
 
 const HomeVerticalList = props => {
   const {tasks} = props;
@@ -110,7 +108,7 @@ const HomeVerticalList = props => {
 
   return (
     <View style={styles.listCont}>
-      <AnimatedFlatlist
+      <FlatList
         scrollEventThrottle={16}
         data={task ? task : reduxDefaultData[0]?.task}
         bounces={true}

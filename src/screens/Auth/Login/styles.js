@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   btnTwo: {
     backgroundColor: COLORS.mainFg,
     width: '50%',
-    height: '30%',
+    height: '40%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   subTitleTwo: {fontWeight: 'bold', color: COLORS.mainBg},
   bottomText: {
     marginVertical: 10,
+    marginBottom: 20,
     color: COLORS.gray,
   },
   imgPressable: {

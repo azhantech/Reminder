@@ -59,7 +59,9 @@ const EditTask = ({route}) => {
       completed: data.completed,
       notId: data.notId,
     };
+
     console.log('DATA addTask', DATA.length);
+
     if (DATA.length != 0) {
       if (
         task.tname == '' ||

@@ -131,6 +131,14 @@ const ScheduleVerticalList = props => {
     }
   };
 
+  const renderEmptyComponent = () => {
+    return (
+      <View style={styles.mainCont2}>
+        <Text style={styles.emptyText}>Nothing to show</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.mainCont}>
       <FlatList
@@ -152,6 +160,7 @@ const ScheduleVerticalList = props => {
         horizontal={false}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={renderEmptyComponent}
         contentContainerStyle={{
           paddingBottom: 550,
         }}
