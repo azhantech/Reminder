@@ -1,8 +1,9 @@
 import {View, TextInput} from 'react-native';
 import React from 'react';
 import styles from './styles';
+import {COLORS} from '../../constants';
 
-const MainInputBar = ({placeholder, value, onChangeText}) => {
+const MainInputBar = props => {
   return (
     <>
       <View>
@@ -10,8 +11,10 @@ const MainInputBar = ({placeholder, value, onChangeText}) => {
           autoCapitalize="sentences"
           multiline={true}
           style={styles.otherTextInputStyle}
-          value={value}
-          onChangeText={onChangeText}
+          value={props.value}
+          onChangeText={props.onChangeText}
+          placeholderTextColor={'gray'}
+          {...props}
         />
       </View>
     </>

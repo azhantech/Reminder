@@ -6,7 +6,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
@@ -20,7 +20,6 @@ import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask, editTask} from '../../redux/reducers/taskReducer';
 import PushNotification from 'react-native-push-notification';
-import {useEffect} from 'react';
 
 const EditTask = ({route}) => {
   const {data} = route.params;
@@ -41,6 +40,7 @@ const EditTask = ({route}) => {
   const [endTime, setEndTime] = useState(data.end_time);
 
   const [id, setId] = useState();
+  const [isFlag, setIsFlag] = useState(true);
 
   const getNotificationValue = () => {
     PushNotification.getScheduledLocalNotifications(nots => {
@@ -48,82 +48,95 @@ const EditTask = ({route}) => {
     });
   };
 
+  const checkLoader = () => {
+    if (isFlag && (title == '') & (description == '')) {
+      return <ActivityIndicator color="black" />;
+    }
+  };
+
   const handleSubmit = () => {
-    const task = {
-      category: data.category,
-      tname: title,
-      date: dateAdv,
-      desc: description,
-      start_time: startTime,
-      end_time: endTime,
-      completed: data.completed,
-      notId: data.notId,
-    };
+    try {
+      const task = {
+        category: data.category,
+        tname: title,
+        date: dateAdv,
+        desc: description,
+        start_time: startTime,
+        end_time: endTime,
+        completed: data.completed,
+        notId: data.notId,
+      };
 
-    console.log('DATA addTask', DATA.length);
+      console.log('DATA addTask', DATA.length);
 
-    if (DATA.length != 0) {
-      if (
-        task.tname == '' ||
-        task.desc == '' ||
-        task.start_time == '' ||
-        task.end_time == '' ||
-        task.category == '' ||
-        task.date == undefined
-      ) {
-        Toast.show({
-          type: 'error',
-          visibilityTime: 1000,
-          text1: 'Kindly fill all the fields',
-        });
-      } else {
-        if (task.start_time != task.end_time) {
-          console.log('task', task);
-
-          console.log('==============================');
-
-          setTimeout(() => {
-            id.map((item, index) => {
-              console.log('--------------------');
-              if (item.id == id) {
-                console.log('item', item.id);
-                PushNotification.cancelLocalNotification(id);
-              }
-            });
-
-            console.log('now they');
-
-            LocalNotification(
-              task?.notId,
-              task?.date,
-              task?.start_time,
-              task?.tname,
-            );
-
-            dispatch(editTask(task));
-
-            navigation.navigate('Home');
-          }, 2000);
-
-          setTitle('');
-          setDescription('');
-          setDateAdv('');
-          setStartTime('');
-          setEndTime('');
-        } else {
+      if (DATA.length != 0) {
+        if (
+          task.tname == '' ||
+          task.desc == '' ||
+          task.start_time == '' ||
+          task.end_time == '' ||
+          task.category == '' ||
+          task.date == undefined
+        ) {
           Toast.show({
             type: 'error',
-            visibilityTime: 2000,
-            text1: 'Kindly add proper timing',
+            visibilityTime: 1000,
+            text1: 'Kindly fill all the fields',
           });
+        } else {
+          if (task.start_time != task.end_time) {
+            console.log('task', task);
+
+            console.log('==============================');
+
+            checkLoader();
+
+            setTimeout(() => {
+              id.map((item, index) => {
+                console.log('--------------------');
+                if (item.id == id) {
+                  console.log('item', item.id);
+                  PushNotification.cancelLocalNotification(id);
+                }
+              });
+
+              console.log('now they');
+
+              // LocalNotification(
+              //   task?.notId,
+              //   task?.date,
+              //   task?.start_time,
+              //   task?.tname,
+              // );
+
+              console.log('****', task);
+              dispatch(editTask(task));
+              setIsFlag(false);
+              navigation.navigate('Home');
+            }, 2000);
+
+            setTitle('');
+            setDescription('');
+            setDateAdv('');
+            // setStartTime('');
+            // setEndTime('');
+          } else {
+            Toast.show({
+              type: 'error',
+              visibilityTime: 2000,
+              text1: 'Kindly add proper timing',
+            });
+          }
         }
+      } else {
+        Toast.show({
+          type: 'error',
+          visibilityTime: 2000,
+          text1: 'Kindly create the Categories first',
+        });
       }
-    } else {
-      Toast.show({
-        type: 'error',
-        visibilityTime: 2000,
-        text1: 'Kindly create the Categories first',
-      });
+    } catch (e) {
+      console.log('error', e);
     }
   };
 
@@ -131,6 +144,8 @@ const EditTask = ({route}) => {
     getNotificationValue();
     console.log('id', id);
   }, []);
+
+  console.log(endTime, 'end time');
 
   return (
     <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>
@@ -177,29 +192,37 @@ const EditTask = ({route}) => {
         </View>
 
         <View>
-          <Text style={styles.labelStyle}>Time</Text>
+          {/* <Text style={styles.labelStyle}>Time</Text> */}
           <View style={styles.timeInpStyle}>
-            <DatePicker
-              date={date}
-              mode="time"
-              theme="light"
-              style={styles.datePickerTxt}
-              onDateChange={val => {
-                console.log(moment(val).format('LT'));
-                setStartTime(moment(val).format('LT'));
-              }}
-            />
+            <View>
+              <Text style={styles.labelStyle}>Start Time</Text>
 
-            <DatePicker
-              date={date}
-              mode="time"
-              theme="light"
-              style={styles.datePickerTxt}
-              onDateChange={val => {
-                console.log(moment(val).format('LT'));
-                setEndTime(moment(val).format('LT'));
-              }}
-            />
+              <DatePicker
+                date={moment(startTime, 'hh:mm A').toDate()}
+                mode="time"
+                theme="light"
+                style={styles.datePickerTxt}
+                onDateChange={val => {
+                  console.log(moment(val).format('LT'));
+                  setStartTime(moment(val).format('LT'));
+                }}
+              />
+            </View>
+
+            <View>
+              <Text style={styles.labelStyle}>End Time</Text>
+
+              <DatePicker
+                date={moment(endTime, 'hh:mm A').toDate()}
+                mode="time"
+                theme="light"
+                style={styles.datePickerTxt}
+                onDateChange={val => {
+                  console.log(moment(val).format('LT'));
+                  setEndTime(moment(val).format('LT'));
+                }}
+              />
+            </View>
           </View>
         </View>
         <View>

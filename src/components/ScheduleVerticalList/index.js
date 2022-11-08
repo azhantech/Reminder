@@ -23,15 +23,15 @@ const ScheduleVerticalList = props => {
       return (
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => {
-            navigation.navigate('CategoryDetail', {
-              data: item,
-              progress:
-                counter != 0 && item.task.length != 0
-                  ? (counter / item.task.length) * 100
-                  : 0,
-            });
-          }}
+          // onPress={() => {
+          //   navigation.navigate('CategoryDetail', {
+          //     data: item,
+          //     progress:
+          //       counter != 0 && item.task.length != 0
+          //         ? (counter / item.task.length) * 100
+          //         : 0,
+          //   });
+          // }}
           style={styles.listCont}>
           <View
             style={[

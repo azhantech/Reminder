@@ -86,6 +86,11 @@ const Schedule = () => {
 
           <CalendarStrip
             scrollable
+            selectedDate={
+              selectedDate
+                ? moment(selectedDate, 'dddd, MMM Do').format()
+                : new Date()
+            }
             scrollToOnSetSelectedDate={true}
             style={styles.calendarStripStyle}
             onDateSelected={handleOnDateSelected}

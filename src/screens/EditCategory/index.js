@@ -61,7 +61,7 @@ const EditCategory = ({route}) => {
       dispatch(editCategory(category));
 
       setTimeout(() => {
-        navigation.navigate('Schedule');
+        navigation.navigate('Home');
       }, 500);
     }
   };

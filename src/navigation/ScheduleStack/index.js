@@ -17,7 +17,6 @@ const ScheduleStack = () => {
       }}>
       <Stack.Screen name="Schedule" component={Schedule} />
       <Stack.Screen name="CategoryDetail" component={CategoryDetails} />
-      <Stack.Screen name="EditCategory" component={EditCategory} />
     </Stack.Navigator>
   );
 };

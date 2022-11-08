@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     fontSize: FONTS.body3.fontSize,
     marginHorizontal: 20,
     marginBottom: 15,
+    marginTop: 10,
   },
   touchableCont: {
     flexDirection: 'row',

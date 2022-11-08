@@ -158,7 +158,11 @@ const AddTask = () => {
       <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>
         <View>
           <Text style={styles.labelStyle}>Title</Text>
-          <MainInputBar value={title} onChangeText={value => setTitle(value)} />
+          <MainInputBar
+            value={title}
+            onChangeText={value => setTitle(value)}
+            placeholder="Enter Title"
+          />
         </View>
 
         <View>
@@ -168,7 +172,12 @@ const AddTask = () => {
             {dateAdv ? (
               <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
             ) : (
-              <View style={styles.otherTwoTextInputStyle}></View>
+              <TextInput
+                style={styles.otherTextInputStyle}
+                editable={false}
+                placeholder="Pick Date"
+                placeholderTextColor={'grey'}
+              />
             )}
 
             <TouchableOpacity
@@ -195,29 +204,37 @@ const AddTask = () => {
         </View>
 
         <View>
-          <Text style={styles.labelStyle}>Time</Text>
+          {/* <Text style={styles.labelStyle}>Time</Text> */}
           <View style={styles.timeInpStyle}>
-            <DatePicker
-              date={date}
-              mode="time"
-              theme="light"
-              style={styles.datePickerTxt}
-              onDateChange={val => {
-                console.log(moment(val).format('LT'));
-                setStartTime(moment(val).format('LT'));
-              }}
-            />
+            <View>
+              <Text style={styles.labelStyle}>Start Time</Text>
 
-            <DatePicker
-              date={date}
-              mode="time"
-              theme="light"
-              style={styles.datePickerTxt}
-              onDateChange={val => {
-                console.log(moment(val).format('LT'));
-                setEndTime(moment(val).format('LT'));
-              }}
-            />
+              <DatePicker
+                date={date}
+                mode="time"
+                theme="light"
+                style={styles.datePickerTxt}
+                onDateChange={val => {
+                  console.log(moment(val).format('LT'));
+                  setStartTime(moment(val).format('LT'));
+                }}
+              />
+            </View>
+
+            <View>
+              <Text style={styles.labelStyle}>End Time</Text>
+
+              <DatePicker
+                date={date}
+                mode="time"
+                theme="light"
+                style={styles.datePickerTxt}
+                onDateChange={val => {
+                  console.log(moment(val).format('LT'));
+                  setEndTime(moment(val).format('LT'));
+                }}
+              />
+            </View>
           </View>
         </View>
         <View>
@@ -225,6 +242,7 @@ const AddTask = () => {
           <MainInputBar
             value={description}
             onChangeText={value => setDescription(value)}
+            placeholder="Enter Description"
           />
         </View>
         <Text style={styles.labelStyle}>Category</Text>

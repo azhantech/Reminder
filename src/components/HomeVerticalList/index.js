@@ -12,10 +12,11 @@ import {
 } from '../../redux/reducers/taskReducer';
 import {ImageLoader} from '../ImageLoader/index';
 import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeVerticalList = props => {
   const {tasks} = props;
-
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
 
@@ -53,7 +54,14 @@ const HomeVerticalList = props => {
     ) {
       return (
         <Swipeable renderLeftActions={leftSwipe}>
-          <View style={styles.mainCont}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('EditTask', {
+                data: item,
+              });
+            }}
+            activeOpacity={0.77}
+            style={styles.mainCont}>
             <BouncyCheckbox
               size={25}
               fillColor={!item.completed ? COLORS.mainFg : COLORS.lightGreen}
@@ -76,7 +84,7 @@ const HomeVerticalList = props => {
               bounceVelocityIn={0.6}
               bounceEffectIn={0.9}
             />
-          </View>
+          </TouchableOpacity>
         </Swipeable>
       );
     } else {
@@ -99,11 +107,18 @@ const HomeVerticalList = props => {
     );
   };
   useEffect(() => {
+    let arr = [];
     reduxDefaultData.forEach(element => {
       if (element.name == tasks) {
         setTask(element.task);
       }
     });
+
+    reduxDefaultData.forEach(element => {
+      arr.push(element.task);
+    });
+
+    console.log('ARRAY ======> ', arr);
   }, [reduxDefaultData, tasks]);
 
   return (
@@ -116,9 +131,15 @@ const HomeVerticalList = props => {
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmptyComponent}
-        contentContainerStyle={{
-          paddingBottom: 150,
-        }}
+        contentContainerStyle={
+          task?.length > 2
+            ? {
+                paddingBottom: 100,
+              }
+            : {
+                paddingBottom: 68,
+              }
+        }
         keyExtractor={(item, index) => index.toString()}
       />
     </View>

@@ -5,9 +5,11 @@ import React, {useEffect, useState} from 'react';
 import styles from './style';
 import {COLORS, icons} from '../../constants';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeHorizontalCards = props => {
   const {handleSelectedTask} = props;
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [data, setData] = useState();
 
@@ -32,6 +34,13 @@ const HomeHorizontalCards = props => {
           activeOpacity={0.7}
           onPress={() => {
             handleSelectedTask(item);
+            navigation.navigate('CategoryDetail', {
+              data: item,
+              progress:
+                counter != 0 && item.task.length != 0
+                  ? (counter / item.task.length) * 100
+                  : 0,
+            });
           }}
           style={[
             styles.mainContainer,

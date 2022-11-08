@@ -113,10 +113,6 @@ const Signup = () => {
             onSubmitEditing={() => {
               passRef.current.focus();
             }}
-            // autoFocus={true}
-            // returnKeyType="next"
-            // onSubmitEditing={() => nameRef.current.focus()}
-            // ref={emailRef}
           />
 
           {rightIcon == 'eye' ? (
@@ -132,6 +128,7 @@ const Signup = () => {
                 onChangeText={value => setPassword(value)}
                 isPassword={true}
                 secureTextEntry={passwordVisibility}
+                onSubmitEditing={handleSubmit}
                 enablesReturnKeyAutomatically
               />
               <Pressable
@@ -163,6 +160,7 @@ const Signup = () => {
                 onChangeText={value => setPassword(value)}
                 isPassword={true}
                 secureTextEntry={passwordVisibility}
+                onSubmitEditing={handleSubmit}
                 enablesReturnKeyAutomatically
               />
               <Pressable

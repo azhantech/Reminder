@@ -124,7 +124,12 @@ const AddCategory = () => {
             {dateAdv ? (
               <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
             ) : (
-              <View style={styles.otherTwoTextInputStyle}></View>
+              <TextInput
+                style={styles.otherTextInputStyle}
+                editable={false}
+                placeholder="Pick Date"
+                placeholderTextColor={'grey'}
+              />
             )}
 
             <TouchableOpacity

@@ -121,6 +121,7 @@ const Login = () => {
                 onChangeText={value => setPassword(value)}
                 isPassword={true}
                 secureTextEntry={passwordVisibility}
+                onSubmitEditing={handleSubmit}
               />
               <Pressable
                 style={{
@@ -152,6 +153,7 @@ const Login = () => {
                 isPassword={true}
                 secureTextEntry={passwordVisibility}
                 enablesReturnKeyAutomatically
+                onSubmitEditing={handleSubmit}
               />
               <Pressable
                 style={{

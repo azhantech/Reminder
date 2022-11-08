@@ -12,6 +12,7 @@ const CategoryDetails = ({route, navigation}) => {
   const {data, progress} = route.params;
 
   console.log('progress', progress);
+  console.log('data', data);
 
   animatedValue.addListener(({value}) => {
     currentValue = value;
@@ -67,10 +68,19 @@ const CategoryDetails = ({route, navigation}) => {
           flexDirection: 'row',
           marginVertical: 25,
           justifyContent: 'space-between',
-          paddingHorizontal: 40,
+          marginHorizontal: 10,
         }}>
         <Text style={styles.txtFt}>{item.tname}</Text>
 
+        <View
+          style={{
+            marginHorizontal: 2,
+          }}>
+          <Text style={styles.trySty}>{item.date}</Text>
+          <Text style={styles.trySty}>
+            {item.completed ? 'Finished' : 'Ongoing'}
+          </Text>
+        </View>
         <View style={{flexDirection: 'column'}}>
           <Text style={styles.timeTxt}>{item.start_time}</Text>
           <Text style={styles.timeTxt}>{item.end_time}</Text>

@@ -92,6 +92,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     borderRadius: 12,
   },
+  trySty: {
+    color: COLORS.mainBg,
+  },
 });
 
 export default styles;
