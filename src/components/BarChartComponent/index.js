@@ -1,4 +1,4 @@
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions, ActivityIndicator} from 'react-native';
 import React from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -12,8 +12,9 @@ let dataVal = [];
 const BarChartComponent = () => {
   const chartData = useSelector(state => state.task.totalData);
 
+  console.log('LABEL', label);
   const data = {
-    // labels: label,
+    labels: label,
     datasets: [
       {
         data: dataVal,
@@ -30,40 +31,58 @@ const BarChartComponent = () => {
     }, [chartData]),
   );
 
-  return (
-    <View>
-      <BarChart
-        data={data}
-        width={Dimensions.get('window').width * 0.89}
-        height={250}
-        verticalLabelRotation={-80}
-        chartConfig={{
-          backgroundColor: COLORS.mainFg,
-          backgroundGradientFrom: '#4b51d7',
-          backgroundGradientTo: '#b6b9f3',
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          fillShadowGradient: COLORS.lightGreen, // THIS
-          fillShadowGradientOpacity: 1, // THIS
-          propsForDots: {
-            r: '6',
-            strokeWidth: '2',
-            stroke: '#ffa726',
-          },
-          barPercentage: 0.4,
-        }}
+  if (dataVal.length == 0) {
+    return (
+      <View
         style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-        showBarTops={true}
-        showValuesOnTopOfBars={true}
-      />
-    </View>
-  );
+          backgroundColor: COLORS.mainFg,
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          borderRadius: 10,
+          width: '100%',
+        }}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
+  } else {
+    return (
+      <View>
+        <BarChart
+          data={data}
+          width={Dimensions.get('window').width * 0.89}
+          height={250}
+          verticalLabelRotation={-50}
+          chartConfig={{
+            backgroundColor: COLORS.mainFg,
+            backgroundGradientFrom: '#4b51d7',
+            backgroundGradientTo: '#b6b9f3',
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16,
+              marginBottom: 10,
+            },
+            fillShadowGradient: COLORS.lightGreen, // THIS
+            fillShadowGradientOpacity: 1, // THIS
+            propsForDots: {
+              r: '6',
+              strokeWidth: '2',
+              stroke: '#ffa726',
+            },
+            barPercentage: 0.4,
+          }}
+          style={{
+            marginBottom: 16,
+            borderRadius: 16,
+          }}
+          showBarTops={true}
+          showValuesOnTopOfBars={true}
+        />
+      </View>
+    );
+  }
 };
 
 export default BarChartComponent;

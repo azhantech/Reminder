@@ -39,7 +39,7 @@ export const taskSlice = createSlice({
       state['totalData'].map((item, index) => {
         if (item.name === action.payload.category) {
           item['task'].map((value, number) => {
-            if (value.category === action.payload.category) {
+            if (value.notId === action.payload.notId) {
               state['totalData'][index]['task'][number] = action.payload;
             }
           });

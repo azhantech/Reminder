@@ -50,24 +50,25 @@ const AddTask = () => {
       completed: false,
       notId: Math.floor(Math.random() * 255),
     };
-    console.log('DATA addTask', DATA.length);
+    console.log('DATA addTask', typeof task.start_time);
+    console.log('DATA addTask', typeof task.end_time);
+    console.log('DATE adTask', typeof task.date);
+
     if (DATA.length != 0) {
       if (
-        task.tname == '' ||
-        task.desc == '' ||
-        task.start_time == '' ||
-        task.end_time == '' ||
-        task.category == '' ||
-        task.date == undefined
+        task.tname != '' &&
+        task.desc != '' &&
+        typeof task.start_time !== undefined &&
+        typeof task.end_time !== undefined &&
+        task.category != '' &&
+        task.date != ''
       ) {
-        Toast.show({
-          type: 'error',
-          visibilityTime: 1000,
-          text1: 'Kindly fill all the fields',
-        });
-      } else {
-        if (task.start_time != task.end_time) {
-          console.log('task', task);
+        if (
+          task.start_time != task.end_time &&
+          task.start_time[2] == task.end_time[2] &&
+          task.start_time[0] >= task.end_time[0]
+        ) {
+          console.log('TYPE', typeof task.start_time);
 
           LocalNotification(
             task?.notId,
@@ -96,6 +97,12 @@ const AddTask = () => {
             text1: 'Kindly add proper timing',
           });
         }
+      } else {
+        Toast.show({
+          type: 'error',
+          visibilityTime: 1000,
+          text1: 'Kindly fill all the fields',
+        });
       }
     } else {
       Toast.show({

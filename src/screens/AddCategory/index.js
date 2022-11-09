@@ -11,7 +11,6 @@ import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
-import DatePicker from 'react-native-date-picker';
 
 import {addCategory} from '../../redux/reducers/taskReducer';
 import BackButon from '../../components/BackButon';
@@ -28,9 +27,6 @@ const AddCategory = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [title, setTitle] = useState();
-  const [open, setOpen] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [dateAdv, setDateAdv] = useState();
   const [description, setDescription] = useState();
   const [selectColor, setSelectColor] = useState();
 
@@ -38,7 +34,6 @@ const AddCategory = () => {
     const category = {
       index: reduxData.length ? reduxData.length + 1 : 1,
       name: title,
-      date: dateAdv,
       progress: 'Ongoing',
       desc: description,
       color: selectColor,
@@ -48,8 +43,7 @@ const AddCategory = () => {
     if (
       category.name == undefined ||
       category.desc == undefined ||
-      category.color == undefined ||
-      category.date == undefined
+      category.color == undefined
     ) {
       Toast.show({
         type: 'error',
@@ -62,7 +56,6 @@ const AddCategory = () => {
 
       setTitle('');
       setDescription('');
-      setDateAdv('');
 
       setSelectColor('');
 
@@ -116,43 +109,6 @@ const AddCategory = () => {
             value={description}
             onChangeText={value => setDescription(value)}
           />
-        </View>
-        <View>
-          <Text style={styles.labelStyle}>Date</Text>
-
-          <View style={styles.touchableCont}>
-            {dateAdv ? (
-              <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
-            ) : (
-              <TextInput
-                style={styles.otherTextInputStyle}
-                editable={false}
-                placeholder="Pick Date"
-                placeholderTextColor={'grey'}
-              />
-            )}
-
-            <TouchableOpacity
-              onPress={() => setOpen(true)}
-              style={styles.opacStyle}>
-              <Image source={icons.calendar} style={styles.imgStyle} />
-            </TouchableOpacity>
-            <DatePicker
-              modal
-              open={open}
-              date={date}
-              mode="date"
-              theme="light"
-              onConfirm={date => {
-                setOpen(false);
-                setDate(date);
-                setDateAdv(moment(date).format('LL'));
-              }}
-              onCancel={() => {
-                setOpen(false);
-              }}
-            />
-          </View>
         </View>
 
         <View>

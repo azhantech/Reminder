@@ -87,7 +87,7 @@ const HomeHorizontalCards = props => {
             />
 
             <View style={styles.bottomBelowContainer}>
-              <Text style={styles.progressText}>{item.date}</Text>
+              <Text style={styles.progressText}>{item.desc}</Text>
               <Text style={styles.progressText}>
                 {counter != 0 && item.task.length != 0
                   ? Math.floor((counter / item.task.length) * 100)

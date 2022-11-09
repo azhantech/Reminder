@@ -49,7 +49,7 @@ export const LocalNotification = (id, date, start_time, text) => {
     autoCancel: true,
     message: `Time to do ${text}`,
     title: `Start doing ${text}!`,
-    date: new Date(Date.now() + 60 * 1000),
+    date: updatedVal?.toDate(),
     playSound: true,
     soundName: 'default',
     importance: Importance.HIGH,

@@ -11,7 +11,9 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
 
-import ScheduleVerticalList from '../../components/ScheduleVerticalList';
+// import ScheduleVerticalList from '../../components/ScheduleVerticalList';
+import ScheduleTaskList from '../../components/ScheduleTaskList';
+
 import styles from './styles';
 import {COLORS} from '../../constants';
 
@@ -31,38 +33,51 @@ const Schedule = () => {
   const [ongoingData, setOngoingData] = useState();
   const [completedData, setCompletedData] = useState();
 
-  console.log('selectedDate ==> ', selectedDate);
-
   const handleOnDateSelected = selectedDateVal => {
     setSelectedDate(moment(selectedDateVal).format('dddd[,] MMM Do'));
 
     const date = moment(selectedDateVal, 'dddd, MMM Do').format('LL');
 
-    console.log('date ===>', date);
+    let arr = [];
+    let newArr = [];
+    let finArr = [];
 
-    const dataMain = DATA && DATA.filter(item => item.date == date);
+    DATA.forEach(element => {
+      arr.push(element.task);
+    });
 
-    console.log('dataMain ===>', JSON.stringify(dataMain));
+    arr.forEach(element => {
+      newArr = [...newArr, ...element];
+    });
+    newArr.forEach(element => {
+      if (element.date == date) {
+        finArr.push(element);
+      }
+    });
 
-    const onData =
-      dataMain && dataMain.filter(item => item.progress == 'Ongoing');
+    console.log('FIN ARR --> ', finArr);
 
-    const compData =
-      dataMain && dataMain.filter(item => item.progress == 'Completed');
+    // const dataMain = DATA && DATA.filter(item => item.date == date);
+    // const onData =
+    //   dataMain && dataMain.filter(item => item.progress == 'Ongoing');
+    // const compData =
+    //   dataMain && dataMain.filter(item => item.progress == 'Completed');
+
+    const onData = finArr && finArr.filter(item => !item.completed);
+
+    const compData = finArr && finArr.filter(item => item.completed);
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     setOngoingData(onData);
-    console.log('onData', JSON.stringify(onData));
+    // console.log('onData', JSON.stringify(onData));
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     setCompletedData(compData);
-    console.log('compData', JSON.stringify(compData));
+    // console.log('compData', JSON.stringify(compData));
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    setAllData(dataMain);
+    setAllData(finArr);
     console.log('alData', JSON.stringify(allData));
-
-    console.log('Pressed value', pressedValue);
   };
 
   useFocusEffect(
@@ -170,7 +185,7 @@ const Schedule = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ScheduleVerticalList
+        <ScheduleTaskList
           category={
             (pressedValue == 'All' && allData) ||
             (pressedValue == 'Ongoing' && ongoingData) ||

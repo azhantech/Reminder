@@ -85,9 +85,16 @@ const Report = () => {
             />
           </View>
         </View>
-        <View>
+        <View
+          style={{
+            left: 5,
+            right: 2,
+          }}>
           <BarChartComponent />
-
+          <View
+            style={{
+              marginVertical: 10,
+            }}></View>
           <LineChartComponent />
         </View>
       </View>

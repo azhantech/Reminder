@@ -14,8 +14,10 @@ import {ImageLoader} from '../ImageLoader/index';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 
-const HomeVerticalList = props => {
-  const {tasks} = props;
+const ScheduleTaskList = props => {
+  const {category} = props;
+  console.log('CATEGORY => ', category);
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
@@ -58,7 +60,7 @@ const HomeVerticalList = props => {
             onPress={() => {
               navigation.navigate('EditTask', {
                 data: item,
-                nav: 'Home',
+                nav: 'Schedule',
               });
             }}
             activeOpacity={0.77}
@@ -107,53 +109,35 @@ const HomeVerticalList = props => {
       </View>
     );
   };
-  useEffect(() => {
-    let arr = [];
-    let newArr = [];
 
-    // for specific category's tasks
-    // reduxDefaultData.forEach(element => {
-    //   if (element.name == tasks) {
-    //     setTask(element.task);
-    //   }
-    // });
+  //   useEffect(() => {
+  //     //   for specific category's tasks
+  //     reduxDefaultData.forEach(element => {
+  //       // main game
 
-    reduxDefaultData.forEach(element => {
-      arr.push(element.task);
-    });
-
-    console.log('array ---> ', arr);
-    arr.forEach(element => {
-      newArr = [...newArr, ...element];
-    });
-
-    console.log('ARRAY ======> ', newArr);
-    setTask(newArr);
-  }, [reduxDefaultData, tasks]);
+  //       if (element.name == tasks) {
+  //         setTask(element.task);
+  //       }
+  //     });
+  //   }, [reduxDefaultData, category]);
 
   return (
     <View style={styles.listCont}>
       <FlatList
         scrollEventThrottle={16}
-        data={task ? task : reduxDefaultData[0]?.task}
+        data={category ? category : reduxDefaultData[0]?.task}
         bounces={true}
         horizontal={false}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmptyComponent}
-        contentContainerStyle={
-          task?.length > 2
-            ? {
-                paddingBottom: 100,
-              }
-            : {
-                paddingBottom: 68,
-              }
-        }
+        contentContainerStyle={{
+          paddingBottom: 100,
+        }}
         keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );
 };
 
-export default HomeVerticalList;
+export default ScheduleTaskList;
