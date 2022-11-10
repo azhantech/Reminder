@@ -21,19 +21,19 @@ export const InputFields = React.forwardRef((props, ref) => {
           blurOnSubmit={false}
           placeholderTextColor={COLORS.transparentBlack1}
           secureTextEntry={passwordVisibility}
-          returnKeyType="next"
           {...props}
         />
         {rightIcon == 'eye' ? (
           <Pressable
             style={{
-              right: 40,
+              right: 45,
             }}
             onPress={handlePasswordVisibility}>
             <Image
               source={icons.eye}
               style={{
                 tintColor: COLORS.mainFg,
+                marginTop: 12,
                 height: 25,
                 width: 25,
                 marginRight: 20,
@@ -44,13 +44,14 @@ export const InputFields = React.forwardRef((props, ref) => {
         ) : (
           <Pressable
             style={{
-              right: 40,
+              right: 45,
             }}
             onPress={handlePasswordVisibility}>
             <Image
               source={icons.hidden}
               style={{
                 tintColor: COLORS.mainFg,
+                marginTop: 12,
                 height: 25,
                 width: 25,
                 marginRight: 20,
@@ -72,7 +73,6 @@ export const InputFields = React.forwardRef((props, ref) => {
           style={styles.otherTextInputStyle}
           blurOnSubmit={false}
           placeholderTextColor={COLORS.transparentBlack1}
-          returnKeyType="next"
           {...props}
         />
       </View>

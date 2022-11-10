@@ -3,8 +3,8 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Pressable,
-  Image,
+  Keyboard,
+  ActivityIndicator,
 } from 'react-native';
 import {Link, useNavigation} from '@react-navigation/native';
 import React, {useState, useRef} from 'react';
@@ -13,14 +13,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 
-import {useTogglePasswordVisibility} from '../../../hooks/useTogglePasswordVisibility';
+import HeadingAuth from '../../../components/HeadingAuth';
 import {COLORS} from '../../../constants';
 import {ImageLoader} from '../../../components/ImageLoader';
-import HeadingAuth from '../../../components/HeadingAuth';
 import {InputFields} from '../../../components/InputFields';
-
-import styles from './styles';
 import {changeLogIn} from '../../../redux/reducers/authReducer';
+import {HideKeyboard} from '../../../util/HideKeyboard';
+import styles from './styles';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,28 +27,34 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {passwordVisibility, rightIcon, handlePasswordVisibility} =
-    useTogglePasswordVisibility();
+  const [isLoading, setIsLoading] = useState(false);
 
   const passRef = useRef();
+
+  const showToast = text => {
+    Toast.show({
+      type: 'error',
+      visibilityTime: 2000,
+      text1: text,
+    });
+  };
 
   const validateEmail = async text => {
     console.log(text);
     let reg = /\S+@\S+\.\S+/;
 
     if (reg.test(text) === false) {
-      console.log('Email is Not Correct');
-      Toast.show({
-        type: 'error',
-        text1: 'Email is Not Correct',
-      });
+      showToast('Email is Not Correct');
     } else {
-      console.log('Email is Correct');
+      setIsLoading(true);
 
       auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('User account signed in!');
+        .then(userCredential => {
+          console.log(
+            'userCredential.user',
+            JSON.stringify(userCredential.user),
+          );
           dispatch(changeLogIn(email));
           setTimeout(() => {
             navigation.navigate('TabStack');
@@ -57,12 +62,21 @@ const Login = () => {
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
+            showToast('That email address is already in use!');
           }
 
           if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
+            showToast('That email address is invalid!');
           }
+
+          if (error.code === 'auth/user-not-found') {
+            showToast('The user does not exist!');
+          }
+
+          if (error.code === 'auth/wrong-password') {
+            showToast('Please enter correct password');
+          }
+          setIsLoading(false);
 
           console.error(error);
         });
@@ -70,71 +84,77 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
-    if (email === '' || password === '') {
-      showToast();
+    if (email === '' && password === '') {
+      showToast('Kindly fill all the fields');
+    } else if (email === '') {
+      showToast('Kindly enter Email');
+    } else if (password === '') {
+      showToast('Kindly enter Password');
     } else {
-      // if (!isLogin) {
-      //   <Loader isLoading={isLogin} />;
-      // }
       validateEmail(email);
     }
   };
 
-  const showToast = () => {
-    Toast.show({
-      type: 'error',
-      visibilityTime: 2000,
-      text1: 'Kindly fill all the fields',
-    });
-  };
-
   return (
-    <KeyboardAwareScrollView bounces={false} style={styles.mainContainer}>
-      <View style={styles.oneContainer}>
-        <ImageLoader
-          source={require('../../../assets/icons/edit.png')}
-          style={styles.imgOne}
-        />
-      </View>
-      <HeadingAuth type="Login" />
-      <ScrollView>
-        <View style={styles.scrollContainer}>
-          <InputFields
-            placeholder="Enter Email"
-            value={email}
-            onChangeText={value => setEmail(value)}
-            onSubmitEditing={() => {
-              passRef.current.focus();
-            }}
-          />
-
-          <InputFields
-            ref={passRef}
-            placeholder="Enter Password"
-            value={password}
-            onChangeText={value => setPassword(value)}
-            isPassword={true}
-            onSubmitEditing={handleSubmit}
-            enablesReturnKeyAutomatically
+    <HideKeyboard>
+      <KeyboardAwareScrollView bounces={false} style={styles.mainContainer}>
+        <View style={styles.oneContainer}>
+          <ImageLoader
+            source={require('../../../assets/icons/edit.png')}
+            style={styles.imgOne}
           />
         </View>
-        <View style={styles.scrollContainerTwo}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.btnTwo}
-            onPress={handleSubmit}>
-            <Text style={styles.subTitleTwo}>Log In</Text>
-          </TouchableOpacity>
+        <HeadingAuth type="Login" />
+        <ScrollView>
+          <View style={styles.scrollContainer}>
+            <InputFields
+              placeholder="Enter Email"
+              value={email}
+              onChangeText={value => setEmail(value)}
+              returnKeyType="next"
+              keyboardType="email-address"
+              onSubmitEditing={() => {
+                passRef.current.focus();
+              }}
+            />
 
-          <Text style={styles.bottomText}>
-            New to Application ?{' '}
-            <Link to={{screen: 'Register'}}>
-              <Text style={{color: COLORS.mainFg}}>Register</Text>
-            </Link>
-          </Text>
-        </View>
-      </ScrollView>
-    </KeyboardAwareScrollView>
+            <InputFields
+              ref={passRef}
+              placeholder="Enter Password"
+              value={password}
+              onChangeText={value => setPassword(value)}
+              returnKeyType="default"
+              isPassword={true}
+              onSubmitEditing={() => {
+                Keyboard.dismiss();
+                handleSubmit();
+              }}
+              enablesReturnKeyAutomatically
+            />
+          </View>
+          <View style={styles.scrollContainerTwo}>
+            {isLoading ? (
+              <View style={styles.btnTwo}>
+                <ActivityIndicator color={COLORS.mainBg} size={'large'} />
+              </View>
+            ) : (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.btnTwo}
+                onPress={handleSubmit}>
+                <Text style={styles.subTitleTwo}>Log In</Text>
+              </TouchableOpacity>
+            )}
+            <Text style={styles.bottomText}>
+              New to Application ?{' '}
+              <Link to={{screen: 'Register'}}>
+                <Text style={{color: COLORS.mainFg}}>Register</Text>
+              </Link>
+            </Text>
+          </View>
+        </ScrollView>
+      </KeyboardAwareScrollView>
+    </HideKeyboard>
   );
 };
 

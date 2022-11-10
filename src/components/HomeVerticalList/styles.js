@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: 10,
     backgroundColor: COLORS.mainBg,
-    marginVertical: 10,
     marginVertical: 12,
-    paddingVertical: 20,
+    paddingBottom: 40,
+    height: 100,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   emptyText: {
     textAlign: 'center',
     fontWeight: '600',
+
     fontSize: FONTS.body2.fontSize,
     color: COLORS.lightGray,
   },

@@ -40,7 +40,6 @@ const Home = () => {
         <View style={styles.upperContainer}>
           <View style={styles.upperLevelTxtContainer}>
             <Text style={styles.helloTxtStyle}>Hello!</Text>
-            {/* <Text>You have {NUM_TASKS} task today</Text> */}
           </View>
           <View style={styles.upperLevelImgContainer}>
             <Image source={icons.hand} style={styles.profileImgStyle} />
@@ -49,7 +48,7 @@ const Home = () => {
         <View style={styles.middleContainer}>
           <View style={styles.middleTopContainer}>
             <Text style={styles.catTxtStyle}>My Categories</Text>
-            <Link to={{screen: 'AddCategories'}}>
+            <Link to={{screen: 'AddCategories', params: {nav: 'Home'}}}>
               <Text style={styles.opacTxt}> Add Category </Text>
             </Link>
           </View>

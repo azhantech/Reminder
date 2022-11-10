@@ -41,7 +41,13 @@ const EditTask = ({route}) => {
   const [endTime, setEndTime] = useState(data.end_time);
   const [id, setId] = useState();
 
-  console.log('id', id);
+  const showToast = text => {
+    Toast.show({
+      type: 'error',
+      visibilityTime: 1000,
+      text1: text,
+    });
+  };
 
   const getNotificationValue = () => {
     PushNotification.getScheduledLocalNotifications(nots => {
@@ -64,19 +70,18 @@ const EditTask = ({route}) => {
       };
 
       if (DATA.length != 0) {
-        if (
-          task.tname == '' ||
-          task.desc == '' ||
-          task.start_time == '' ||
-          task.end_time == '' ||
-          task.category == '' ||
-          task.date == undefined
-        ) {
-          Toast.show({
-            type: 'error',
-            visibilityTime: 1000,
-            text1: 'Kindly fill all the fields',
-          });
+        if (task.tname === undefined) {
+          showToast('Kindly enter task name');
+        } else if (task.date === undefined) {
+          showToast('Kindly pick task date');
+        } else if (task.start_time === undefined) {
+          showToast('Kindly pick task start time');
+        } else if (task.end_time === undefined) {
+          showToast('Kindly pick task end time');
+        } else if (task.desc === undefined) {
+          showToast('Kindly enter task description');
+        } else if (task.category == '') {
+          showToast('Kindly select category');
         } else {
           if (task.start_time != task.end_time) {
             setIsLoading(true);
@@ -102,19 +107,11 @@ const EditTask = ({route}) => {
               navigation.navigate(nav);
             }, 2000);
           } else {
-            Toast.show({
-              type: 'error',
-              visibilityTime: 2000,
-              text1: 'Kindly add proper timing',
-            });
+            showToast('Kindly add proper timing');
           }
         }
       } else {
-        Toast.show({
-          type: 'error',
-          visibilityTime: 2000,
-          text1: 'Kindly create the Categories first',
-        });
+        showToast('Kindly create the Categories first');
       }
     } catch (e) {
       console.log('error', e);
@@ -163,10 +160,11 @@ const EditTask = ({route}) => {
               </TouchableOpacity>
               <DatePicker
                 modal
+                theme="auto"
+                androidVariant="iosClone"
                 open={open}
                 date={date}
                 mode="date"
-                theme="light"
                 onConfirm={date => {
                   setOpen(false);
                   setDate(date);

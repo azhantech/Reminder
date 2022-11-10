@@ -20,7 +20,6 @@ import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
-import {useEffect} from 'react';
 
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);
@@ -39,6 +38,13 @@ const AddTask = () => {
     value: '',
   });
 
+  const showToast = text => {
+    Toast.show({
+      type: 'error',
+      visibilityTime: 1000,
+      text1: text,
+    });
+  };
   const handleSubmit = () => {
     const task = {
       category: step?.value,
@@ -55,18 +61,26 @@ const AddTask = () => {
     console.log('DATE adTask', typeof task.date);
 
     if (DATA.length != 0) {
-      if (
-        task.tname != '' &&
-        task.desc != '' &&
-        typeof task.start_time !== undefined &&
-        typeof task.end_time !== undefined &&
-        task.category != '' &&
-        task.date != ''
-      ) {
+      console.log('======', task.start_time);
+
+      if (task.tname === undefined) {
+        showToast('Kindly enter task name');
+      } else if (task.date === undefined) {
+        showToast('Kindly pick task date');
+      } else if (task.start_time === undefined) {
+        showToast('Kindly pick task start time');
+      } else if (task.end_time === undefined) {
+        showToast('Kindly pick task end time');
+      } else if (task.desc === undefined) {
+        showToast('Kindly enter task description');
+      } else if (task.category == '') {
+        showToast('Kindly select category');
+      } else {
         if (
-          task.start_time != task.end_time &&
-          task.start_time[2] == task.end_time[2] &&
-          task.start_time[0] >= task.end_time[0]
+          task.start_time != task.end_time
+          // &&
+          // task.start_time[2] == task.end_time[2] &&
+          // task.start_time[0] >= task.end_time[0]
         ) {
           console.log('TYPE', typeof task.start_time);
 
@@ -91,25 +105,11 @@ const AddTask = () => {
             value: '',
           });
         } else {
-          Toast.show({
-            type: 'error',
-            visibilityTime: 2000,
-            text1: 'Kindly add proper timing',
-          });
+          showToast('Kindly add proper timing');
         }
-      } else {
-        Toast.show({
-          type: 'error',
-          visibilityTime: 1000,
-          text1: 'Kindly fill all the fields',
-        });
       }
     } else {
-      Toast.show({
-        type: 'error',
-        visibilityTime: 2000,
-        text1: 'Kindly create the Categories first',
-      });
+      showToast('Kindly create the categories first');
     }
   };
   const renderItem = ({item}) => {
@@ -194,10 +194,10 @@ const AddTask = () => {
             </TouchableOpacity>
             <DatePicker
               modal
+              theme="auto"
               open={open}
               date={date}
               mode="date"
-              theme="light"
               onConfirm={date => {
                 setOpen(false);
                 setDate(date);
@@ -211,7 +211,6 @@ const AddTask = () => {
         </View>
 
         <View>
-          {/* <Text style={styles.labelStyle}>Time</Text> */}
           <View style={styles.timeInpStyle}>
             <View>
               <Text style={styles.labelStyle}>Start Time</Text>
@@ -254,13 +253,28 @@ const AddTask = () => {
         </View>
         <Text style={styles.labelStyle}>Category</Text>
 
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => item?.index.toString()}
-        />
+        {DATA.length != 0 ? (
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => item?.index.toString()}
+          />
+        ) : (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() =>
+              navigation.navigate('AddCategories', {
+                nav: 'AddTask',
+              })
+            }
+            style={styles.addCatOpac}>
+            <View>
+              <Text style={styles.addTextOpac}>Add Category +</Text>
+            </View>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>
           <Text style={styles.subTitleTwo}>ADD</Text>

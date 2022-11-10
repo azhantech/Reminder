@@ -5,6 +5,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {BarChart} from 'react-native-chart-kit';
 import {COLORS} from '../../constants';
 import {useSelector} from 'react-redux';
+import AnimatedTyping from '../../util/AnimatedTyping';
 
 let label = [];
 let dataVal = [];
@@ -39,11 +40,11 @@ const BarChartComponent = () => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          height: 100,
+          height: 180,
           borderRadius: 10,
           width: '100%',
         }}>
-        <ActivityIndicator size={'large'} />
+        <AnimatedTyping text={['No Data to present !']} />
       </View>
     );
   } else {

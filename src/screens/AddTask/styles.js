@@ -83,6 +83,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     borderRadius: 12,
   },
+  addCatOpac: {
+    backgroundColor: COLORS.mainBg,
+    borderWidth: 2,
+    borderColor: COLORS.mainFg,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginHorizontal: 50,
+    borderRadius: 20,
+  },
+  addTextOpac: {
+    color: COLORS.mainFg,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+  },
 });
 
 export default styles;

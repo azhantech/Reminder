@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 
 import {COLORS} from '../../constants';
+import AnimatedTyping from '../../util/AnimatedTyping';
 
 let label = [];
 let dataVal = [];
@@ -34,11 +35,11 @@ const LineChartComponent = () => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          height: 100,
+          height: 180,
           borderRadius: 10,
           width: '100%',
         }}>
-        <ActivityIndicator size={'large'} />
+        <AnimatedTyping text={['No Data to present !']} />
       </View>
     );
   } else {

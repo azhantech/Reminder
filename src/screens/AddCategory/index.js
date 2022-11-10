@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -19,10 +18,10 @@ import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
-import moment from 'moment';
 
-const AddCategory = () => {
+const AddCategory = ({route}) => {
   const reduxData = useSelector(state => state.task.totalData);
+  const {nav} = route.params;
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -59,7 +58,7 @@ const AddCategory = () => {
 
       setSelectColor('');
 
-      navigation.navigate('Home');
+      navigation.navigate(nav);
     }
   };
 
