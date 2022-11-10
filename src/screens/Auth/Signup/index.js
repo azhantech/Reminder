@@ -115,71 +115,16 @@ const Signup = () => {
             }}
           />
 
-          {rightIcon == 'eye' ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <InputFields
-                ref={passRef}
-                placeholder="Enter Password"
-                value={password}
-                onChangeText={value => setPassword(value)}
-                isPassword={true}
-                secureTextEntry={passwordVisibility}
-                onSubmitEditing={handleSubmit}
-                enablesReturnKeyAutomatically
-              />
-              <Pressable
-                style={{
-                  right: 40,
-                }}
-                onPress={handlePasswordVisibility}>
-                <Image
-                  source={icons.eye}
-                  style={{
-                    tintColor: COLORS.mainFg,
-                    height: 25,
-                    width: 25,
-                    marginTop: 10,
-                  }}
-                />
-              </Pressable>
-            </View>
-          ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <InputFields
-                ref={passRef}
-                placeholder="Enter Password"
-                value={password}
-                onChangeText={value => setPassword(value)}
-                isPassword={true}
-                secureTextEntry={passwordVisibility}
-                onSubmitEditing={handleSubmit}
-                enablesReturnKeyAutomatically
-              />
-              <Pressable
-                style={{
-                  right: 40,
-                }}
-                onPress={handlePasswordVisibility}>
-                <Image
-                  source={icons.hidden}
-                  style={{
-                    tintColor: COLORS.mainFg,
-                    height: 25,
-                    width: 25,
-                    marginTop: 10,
-                  }}
-                />
-              </Pressable>
-            </View>
-          )}
+          <InputFields
+            ref={passRef}
+            placeholder="Enter Password"
+            value={password}
+            onChangeText={value => setPassword(value)}
+            isPassword={true}
+            secureTextEntry={passwordVisibility}
+            onSubmitEditing={handleSubmit}
+            enablesReturnKeyAutomatically
+          />
         </View>
 
         <Text style={styles.addText}>

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 12,
     fontWeight: 'bold',
-    width: '195%',
+    width: '202%',
   },
   otherTextInputStyle: {
     color: COLORS.mainFg,
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginHorizontal: 20,
     marginVertical: 12,
+    width: '90%',
     fontWeight: 'bold',
   },
 });

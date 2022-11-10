@@ -14,8 +14,7 @@ import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 
 import {useTogglePasswordVisibility} from '../../../hooks/useTogglePasswordVisibility';
-import Loader, {SpinLoader} from '../../../components/SpinLoader';
-import {COLORS, icons} from '../../../constants';
+import {COLORS} from '../../../constants';
 import {ImageLoader} from '../../../components/ImageLoader';
 import HeadingAuth from '../../../components/HeadingAuth';
 import {InputFields} from '../../../components/InputFields';
@@ -83,7 +82,7 @@ const Login = () => {
 
   const showToast = () => {
     Toast.show({
-      type: 'success',
+      type: 'error',
       visibilityTime: 2000,
       text1: 'Kindly fill all the fields',
     });
@@ -108,72 +107,17 @@ const Login = () => {
               passRef.current.focus();
             }}
           />
-          {rightIcon == 'eye' ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <InputFields
-                ref={passRef}
-                placeholder="Enter Password"
-                value={password}
-                onChangeText={value => setPassword(value)}
-                isPassword={true}
-                secureTextEntry={passwordVisibility}
-                onSubmitEditing={handleSubmit}
-              />
-              <Pressable
-                style={{
-                  right: 40,
-                }}
-                onPress={handlePasswordVisibility}>
-                <Image
-                  source={icons.eye}
-                  style={{
-                    tintColor: COLORS.mainFg,
-                    height: 25,
-                    width: 25,
-                    marginTop: 10,
-                  }}
-                />
-              </Pressable>
-            </View>
-          ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <InputFields
-                ref={passRef}
-                placeholder="Enter Password"
-                value={password}
-                onChangeText={value => setPassword(value)}
-                isPassword={true}
-                secureTextEntry={passwordVisibility}
-                enablesReturnKeyAutomatically
-                onSubmitEditing={handleSubmit}
-              />
-              <Pressable
-                style={{
-                  right: 40,
-                }}
-                onPress={handlePasswordVisibility}>
-                <Image
-                  source={icons.hidden}
-                  style={{
-                    tintColor: COLORS.mainFg,
-                    height: 25,
-                    width: 25,
-                    marginTop: 10,
-                  }}
-                />
-              </Pressable>
-            </View>
-          )}
-        </View>
 
+          <InputFields
+            ref={passRef}
+            placeholder="Enter Password"
+            value={password}
+            onChangeText={value => setPassword(value)}
+            isPassword={true}
+            onSubmitEditing={handleSubmit}
+            enablesReturnKeyAutomatically
+          />
+        </View>
         <View style={styles.scrollContainerTwo}>
           <TouchableOpacity
             activeOpacity={0.8}
