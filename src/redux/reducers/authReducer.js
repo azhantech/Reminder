@@ -5,6 +5,7 @@ const initialState = {
   isLogedIn: false,
   checkOnboarding: false,
   emailId: '',
+  passwordId: '',
 };
 
 export const authSlice = createSlice({
@@ -14,10 +15,14 @@ export const authSlice = createSlice({
     changeLogIn: (state, action) => {
       state.isLogedIn = true;
       state.emailId = action.payload.email;
+      state.passwordId = action.payload.password;
+
+      console.log('ACTION.PAYLOAD', state);
     },
     changeLogOut: state => {
       state.isLogedIn = false;
       state.emailId = null;
+      state.passwordId = null;
       state.checkOnboarding = true;
       auth()
         .signOut()

@@ -55,9 +55,13 @@ const Login = () => {
             'userCredential.user',
             JSON.stringify(userCredential.user),
           );
-          dispatch(changeLogIn(email));
+          const user = {
+            email,
+            password,
+          };
+          dispatch(changeLogIn(user));
           setTimeout(() => {
-            navigation.navigate('TabStack');
+            // navigation.navigate('TabStack');
           }, 3000);
         })
         .catch(error => {
