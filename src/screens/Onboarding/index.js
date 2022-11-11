@@ -7,7 +7,7 @@ import {CustomPagination} from '../../util/CustomPagination/index';
 import icons from '../../constants/icons';
 import styles from './styles';
 
-const newImage = [icons.onBoarding, icons.onBoarding];
+const newImage = [icons.launch, icons.online, icons.survey];
 const image = index => ({image: newImage[index % newImage.length]});
 const items = Array.from(Array(3)).map((_, index) => image(index));
 
@@ -31,6 +31,11 @@ const Onboarding = () => {
           data={items}
           renderItem={({item, index}) => (
             <Image
+              style={{
+                height: 400,
+                width: 380,
+                resizeMode: 'center',
+              }}
               source={item.image}
               testID={`container_swiper_renderItem_screen_${index}`}></Image>
           )}

@@ -21,7 +21,6 @@ import {COLORS} from '../../../constants';
 
 const Signup = () => {
   const navigation = useNavigation();
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
@@ -74,10 +73,8 @@ const Signup = () => {
   };
 
   const handleSubmit = () => {
-    if (name === '' && email === '' && password === '' && conPassword === '') {
+    if (email === '' && password === '' && conPassword === '') {
       showToast('Kindly fill all the fields');
-    } else if (name === '') {
-      showToast('Kindly enter Name');
     } else if (email === '') {
       showToast('Kindly enter Email');
     } else if (password === '') {
@@ -95,28 +92,20 @@ const Signup = () => {
 
   return (
     <HideKeyboard>
-      <KeyboardAwareScrollView bounces={false} style={styles.mainContainer}>
+      <KeyboardAwareScrollView
+        scrollEnabled={false}
+        bounces={false}
+        style={styles.mainContainer}>
         <View style={styles.mainContainer}>
           <View style={styles.subContainerOne}>
             <ImageLoader
-              source={require('../../../assets/icons/register.png')}
+              source={require('../../../assets/icons/mention.png')}
               style={styles.imgOne}
             />
           </View>
           <HeadingAuth type="Sign Up" />
           <View style={styles.scrollContainer}>
             <InputFields
-              placeholder="Enter Name"
-              value={name}
-              onChangeText={val => setName(val)}
-              returnKeyType="next"
-              keyboardType="default"
-              onSubmitEditing={() => {
-                emailRef.current.focus();
-              }}
-            />
-            <InputFields
-              ref={emailRef}
               placeholder="Enter Email"
               value={email}
               onChangeText={value => setEmail(value)}

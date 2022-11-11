@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   imgOne: {
     marginTop: Platform.OS === 'ios' ? 60 : 30,
     width: 380,
-    height: 300,
+    height: 340,
     justifyContent: 'center',
     alignItems: 'center',
     resizeMode: 'cover',

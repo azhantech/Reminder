@@ -28,6 +28,9 @@ const trash = require('../assets/icons/trash.png');
 const eye = require('../assets/icons/eye.png');
 const hidden = require('../assets/icons/hidden.png');
 const pencil = require('../assets/icons/pencil.png');
+const online = require('../assets/icons/online.png');
+const survey = require('../assets/icons/survey.png');
+const launch = require('../assets/icons/launch.png');
 export default {
   briefcase,
   close,
@@ -59,4 +62,7 @@ export default {
   eye,
   hidden,
   pencil,
+  online,
+  survey,
+  launch,
 };

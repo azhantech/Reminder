@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   imgOne: {
-    marginTop: Platform.OS === 'ios' ? 15 : 30,
-    width: 400,
-    height: 250,
+    marginTop: Platform.OS === 'ios' ? 15 : 18,
+    width: '100%',
+    height: 320,
     justifyContent: 'center',
     alignItems: 'center',
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   scrollContainer: {
     marginHorizontal: 20,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   policyText: {color: COLORS.mainFg},
   bottomContainer: {
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 15,
   },
   bottomButtonOne: {
     backgroundColor: COLORS.mainFg,

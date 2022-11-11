@@ -104,7 +104,7 @@ const Login = () => {
       <KeyboardAwareScrollView bounces={false} style={styles.mainContainer}>
         <View style={styles.oneContainer}>
           <ImageLoader
-            source={require('../../../assets/icons/edit.png')}
+            source={require('../../../assets/icons/bro.png')}
             style={styles.imgOne}
           />
         </View>

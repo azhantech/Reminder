@@ -41,7 +41,7 @@ const AddTask = () => {
   const showToast = text => {
     Toast.show({
       type: 'error',
-      visibilityTime: 1000,
+      visibilityTime: 2000,
       text1: text,
     });
   };
@@ -56,57 +56,81 @@ const AddTask = () => {
       completed: false,
       notId: Math.floor(Math.random() * 255),
     };
-    console.log('DATA addTask', typeof task.start_time);
-    console.log('DATA addTask', typeof task.end_time);
-    console.log('DATE adTask', typeof task.date);
 
     if (DATA.length != 0) {
-      console.log('======', task.start_time);
+      console.log('======>', moment(new Date()).format('LL'));
+      console.log('----->', task?.start_time[2]);
 
       if (task.tname === undefined) {
         showToast('Kindly enter task name');
       } else if (task.date === undefined) {
         showToast('Kindly pick task date');
+      } else if (
+        moment(task.date, 'LL').format('MMM Do YY') <
+        moment(new Date()).format('MMM Do YY')
+      ) {
+        showToast('Tasks can not be created in passed days');
       } else if (task.start_time === undefined) {
         showToast('Kindly pick task start time');
       } else if (task.end_time === undefined) {
         showToast('Kindly pick task end time');
+      } else if (
+        task.start_time &&
+        task.end_time &&
+        task?.start_time[2] == task?.end_time[2] &&
+        task?.start_time > task?.end_time
+      ) {
+        showToast('Start time can not be greater than End Time');
+      } else if (
+        task.start_time &&
+        task.end_time &&
+        task.start_time == task.end_time
+      ) {
+        showToast('Start Time & End Time can not be same');
+      } else if (task.end_time && task.end_time == '12:00 AM') {
+        showToast('End time can not proceed to next day');
+      } else if (
+        task.start_time &&
+        task.start_time < moment(new Date()).format('LT')
+      ) {
+        showToast('Start time should not be less than passed time');
+      } else if (
+        task.end_time &&
+        task.end_time < moment(new Date()).format('LT')
+      ) {
+        showToast('End time should not be less than passed time');
+      } else if (
+        task.start_time &&
+        task.end_time &&
+        task.start_time[5] == 'P' &&
+        task.end_time[5] == 'A'
+      ) {
+        showToast('End time can not proceed to next day');
       } else if (task.desc === undefined) {
         showToast('Kindly enter task description');
       } else if (task.category == '') {
         showToast('Kindly select category');
       } else {
-        if (
-          task.start_time != task.end_time
-          // &&
-          // task.start_time[2] == task.end_time[2] &&
-          // task.start_time[0] >= task.end_time[0]
-        ) {
-          console.log('TYPE', typeof task.start_time);
+        // MAIN LOGIC HERE
 
-          LocalNotification(
-            task?.notId,
-            task?.date,
-            task?.start_time,
-            task?.tname,
-          );
-
-          dispatch(addTask(task));
-
-          navigation.navigate('HomeStack');
-
-          setTitle('');
-          setDescription('');
-          setDateAdv('');
-          setStartTime('');
-          setEndTime('');
-          setStep({
-            index: 0,
-            value: '',
-          });
-        } else {
-          showToast('Kindly add proper timing');
-        }
+        console.log('TYPE', typeof task.start_time);
+        LocalNotification(
+          task?.notId,
+          task?.date,
+          task?.start_time,
+          task?.tname,
+        );
+        dispatch(addTask(task));
+        navigation.navigate('HomeStack');
+        setTitle('');
+        setDescription('');
+        setDateAdv('');
+        setStartTime('');
+        setEndTime('');
+        setStep({
+          index: 0,
+          value: '',
+        });
       }
     } else {
       showToast('Kindly create the categories first');

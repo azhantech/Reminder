@@ -9,7 +9,6 @@ import AnimatedTyping from '../../util/AnimatedTyping';
 
 let label = [];
 let dataVal = [];
-
 const LineChartComponent = () => {
   const chartData = useSelector(state => state.task.totalData);
 
@@ -55,8 +54,8 @@ const LineChartComponent = () => {
             backgroundColor: COLORS.mainFg,
             // backgroundGradientFrom: COLORS.mainFg,
             // backgroundGradientTo: COLORS.mainFg,
-            backgroundGradientFrom: '#4b51d7',
-            backgroundGradientTo: '#b6b9f3',
+            backgroundGradientFrom: '#474ba3',
+            backgroundGradientTo: '#9ca0f3',
             color: (opacity = 1) => `rgba(75, 238, 112, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {

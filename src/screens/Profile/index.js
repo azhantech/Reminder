@@ -2,12 +2,11 @@ import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {changeLogOut} from '../../redux/reducers/authReducer';
 import {onLoggingOut} from '../../redux/reducers/taskReducer';
 import {ImageLoader} from '../../components/ImageLoader';
-import {shown} from '../../services/LocalPushController';
 import {COLORS} from '../../constants';
 import styles from './styles';
 
@@ -26,15 +25,13 @@ const Profile = () => {
       />
       <View style={styles.body}>
         <View style={styles.bodyContent}>
-          {/* <Text style={styles.info}>{emailAdd && emailAdd}</Text> */}
-
           <TouchableOpacity
             activeOpacity={0.7}
             style={styles.buttonContainer2}
             onPress={() => {
               navigation.navigate('EditProfile');
             }}>
-            <Text style={styles.btnStyle}>Edit Profile</Text>
+            <Text style={styles.btnStyle}>Change Password</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

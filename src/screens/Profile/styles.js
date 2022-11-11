@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     marginVertical: 100,
   },
   buttonContainer: {
-    marginTop: 40,
+    marginTop: 20,
     height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.mainFg,
   },
   buttonContainer2: {
-    marginTop: 20,
+    marginTop: 40,
     height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
