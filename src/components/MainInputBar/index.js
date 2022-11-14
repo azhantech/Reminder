@@ -9,7 +9,7 @@ const MainInputBar = props => {
       <View>
         <TextInput
           autoCapitalize="sentences"
-          multiline={true}
+          // multiline={true}
           style={styles.otherTextInputStyle}
           value={props.value}
           onChangeText={props.onChangeText}

@@ -28,6 +28,7 @@ export const InputFields = React.forwardRef((props, ref) => {
             style={{
               right: 45,
             }}
+            hitSlop={styles.slopStyle}
             onPress={handlePasswordVisibility}>
             <Image
               source={icons.eye}

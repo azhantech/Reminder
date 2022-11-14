@@ -6,8 +6,9 @@ import {
   FlatList,
   Image,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
@@ -15,20 +16,24 @@ import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
-import {LocalNotification} from '../../services/LocalPushController';
 import MainInputBar from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
+import {HideKeyboard} from '../../util/HideKeyboard';
+import {LocalNotification} from '../../services/LocalPushController';
 
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const dateRef = useRef();
+
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState(new Date());
   const [dateAdv, setDateAdv] = useState();
   const [startTime, setStartTime] = useState();
@@ -41,25 +46,22 @@ const AddTask = () => {
   const showToast = text => {
     Toast.show({
       type: 'error',
-      visibilityTime: 2000,
+      visibilityTime: 1500,
       text1: text,
     });
   };
   const handleSubmit = () => {
-    const task = {
-      category: step?.value,
-      tname: title,
-      date: dateAdv,
-      desc: description,
-      start_time: startTime,
-      end_time: endTime,
-      completed: false,
-      notId: Math.floor(Math.random() * 255),
-    };
-
     if (DATA.length != 0) {
-      console.log('======>', moment(new Date()).format('LL'));
-      console.log('----->', task?.start_time[2]);
+      const task = {
+        category: step?.value,
+        tname: title,
+        date: dateAdv,
+        desc: description,
+        start_time: startTime,
+        end_time: endTime,
+        completed: false,
+        notId: Math.floor(Math.random() * 255),
+      };
 
       if (task.tname === undefined) {
         showToast('Kindly enter task name');
@@ -77,35 +79,77 @@ const AddTask = () => {
       } else if (
         task.start_time &&
         task.end_time &&
-        task?.start_time[2] == task?.end_time[2] &&
-        task?.start_time > task?.end_time
-      ) {
-        showToast('Start time can not be greater than End Time');
-      } else if (
-        task.start_time &&
-        task.end_time &&
         task.start_time == task.end_time
       ) {
         showToast('Start Time & End Time can not be same');
-      } else if (task.end_time && task.end_time == '12:00 AM') {
-        showToast('End time can not proceed to next day');
       } else if (
         task.start_time &&
         task.start_time < moment(new Date()).format('LT')
       ) {
         showToast('Start time should not be less than passed time');
       } else if (
+        task.start_time &&
         task.end_time &&
-        task.end_time < moment(new Date()).format('LT')
+        task?.start_time[5] == task?.end_time[5] &&
+        task?.start_time > task?.end_time
       ) {
-        showToast('End time should not be less than passed time');
-      } else if (
+        showToast('Start time can not be greater than End Time');
+      }
+
+      // ------------
+      else if (
         task.start_time &&
         task.end_time &&
         task.start_time[5] == 'P' &&
         task.end_time[5] == 'A'
       ) {
+        showToast('End Time can not proceed to next day');
+      }
+
+      // ------------
+      else if (task.start_time && task.end_time && task.end_time[0] == 1) {
+        if (
+          task?.start_time?.length == 8 &&
+          task.start_time[6] == 'P' &&
+          task.end_time[6] == 'A'
+        ) {
+          showToast('End Time can not proceed to next day');
+        } else if (
+          task?.start_time?.length != 8 &&
+          task.start_time[5] == 'P' &&
+          task.end_time[6] == 'A'
+        ) {
+          showToast('End Time can not proceed to next day ');
+        }
+      }
+
+      // ------------
+      else if (task.start_time && task.end_time && task.start_time[0] == 1) {
+        if (
+          task?.end_time?.length == 8 &&
+          task.start_time[6] == 'A' &&
+          task.end_time[6] == 'P'
+        ) {
+          showToast('End Time can not proceed to next day ');
+        } else if (
+          task?.end_time?.length != 8 &&
+          task.start_time[5] == 'A' &&
+          task.end_time[6] == 'P'
+        ) {
+          showToast('End Time can not proceed to next day');
+        }
+      }
+
+      // ---------
+      else if (task.end_time && task.end_time == '12:00 AM') {
         showToast('End time can not proceed to next day');
+      } else if (
+        task.end_time &&
+        task.start_time &&
+        task.end_time > moment(new Date()).format('LT') &&
+        task?.start_time[5] != task?.end_time[5]
+      ) {
+        showToast('End time should not not proceed to next day');
       } else if (task.desc === undefined) {
         showToast('Kindly enter task description');
       } else if (task.category == '') {
@@ -113,7 +157,8 @@ const AddTask = () => {
       } else {
         // MAIN LOGIC HERE
 
-        console.log('TYPE', typeof task.start_time);
+        setIsLoading(true);
+
         LocalNotification(
           task?.notId,
           task?.date,
@@ -121,6 +166,8 @@ const AddTask = () => {
           task?.tname,
         );
         dispatch(addTask(task));
+        setIsLoading(false);
+
         navigation.navigate('HomeStack');
         setTitle('');
         setDescription('');
@@ -182,129 +229,159 @@ const AddTask = () => {
   };
 
   return (
-    <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>
-      <View style={styles.upperCont}>
-        <Text style={styles.mainText}>Add Task</Text>
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>
-        <View>
-          <Text style={styles.labelStyle}>Title</Text>
-          <MainInputBar
-            value={title}
-            onChangeText={value => setTitle(value)}
-            placeholder="Enter Title"
-          />
+    <HideKeyboard>
+      <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>
+        <View style={styles.upperCont}>
+          <Text style={styles.mainText}>Add Task</Text>
         </View>
-
-        <View>
-          <Text style={styles.labelStyle}>Date</Text>
-
-          <View style={styles.touchableCont}>
-            {dateAdv ? (
-              <TextInput style={styles.otherTextInputStyle} value={dateAdv} />
-            ) : (
-              <TextInput
-                style={styles.otherTextInputStyle}
-                editable={false}
-                placeholder="Pick Date"
-                placeholderTextColor={'grey'}
-              />
-            )}
-
-            <TouchableOpacity
-              onPress={() => setOpen(true)}
-              style={styles.opacStyle}>
-              <Image source={icons.calendar} style={styles.imgStyle} />
-            </TouchableOpacity>
-            <DatePicker
-              modal
-              theme="auto"
-              open={open}
-              date={date}
-              mode="date"
-              onConfirm={date => {
-                setOpen(false);
-                setDate(date);
-                setDateAdv(moment(date).format('LL'));
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.lowerCont}>
+          <View>
+            <Text style={styles.labelStyle}>Title</Text>
+            <MainInputBar
+              value={title}
+              onChangeText={value => setTitle(value)}
+              placeholder="Enter Title"
+              onSubmitEditing={() => {
+                setOpen(true);
+                dateRef.current.focus();
               }}
-              onCancel={() => {
-                setOpen(false);
-              }}
+              returnKeyType="next"
+              enablesReturnKeyAutomatically
             />
           </View>
-        </View>
 
-        <View>
-          <View style={styles.timeInpStyle}>
-            <View>
-              <Text style={styles.labelStyle}>Start Time</Text>
+          <View>
+            <Text style={styles.labelStyle}>Date</Text>
 
+            <View style={styles.touchableCont}>
+              {dateAdv ? (
+                <TextInput
+                  ref={dateRef}
+                  style={styles.otherTextInputStyle}
+                  value={dateAdv}
+                  returnKeyType="next"
+                  enablesReturnKeyAutomatically
+                />
+              ) : (
+                <TextInput
+                  ref={dateRef}
+                  style={styles.otherTextInputStyle}
+                  editable={false}
+                  placeholder="Pick Date"
+                  placeholderTextColor={'grey'}
+                  returnKeyType="next"
+                  enablesReturnKeyAutomatically
+                />
+              )}
+
+              <TouchableOpacity
+                onPress={() => setOpen(true)}
+                style={styles.opacStyle}>
+                <Image source={icons.calendar} style={styles.imgStyle} />
+              </TouchableOpacity>
               <DatePicker
+                modal
+                theme="auto"
+                open={open}
                 date={date}
-                mode="time"
-                theme="light"
-                style={styles.datePickerTxt}
-                onDateChange={val => {
-                  console.log(moment(val).format('LT'));
-                  setStartTime(moment(val).format('LT'));
+                mode="date"
+                onConfirm={date => {
+                  setOpen(false);
+                  setDate(date);
+                  setDateAdv(moment(date).format('LL'));
                 }}
-              />
-            </View>
-
-            <View>
-              <Text style={styles.labelStyle}>End Time</Text>
-
-              <DatePicker
-                date={date}
-                mode="time"
-                theme="light"
-                style={styles.datePickerTxt}
-                onDateChange={val => {
-                  console.log(moment(val).format('LT'));
-                  setEndTime(moment(val).format('LT'));
+                onCancel={() => {
+                  setOpen(false);
                 }}
               />
             </View>
           </View>
-        </View>
-        <View>
-          <Text style={styles.labelStyle}>Description</Text>
-          <MainInputBar
-            value={description}
-            onChangeText={value => setDescription(value)}
-            placeholder="Enter Description"
-          />
-        </View>
-        <Text style={styles.labelStyle}>Category</Text>
 
-        {DATA.length != 0 ? (
-          <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => item?.index.toString()}
-          />
-        ) : (
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() =>
-              navigation.navigate('AddCategories', {
-                nav: 'AddTask',
-              })
-            }
-            style={styles.addCatOpac}>
-            <View>
-              <Text style={styles.addTextOpac}>Add Category +</Text>
+          <View>
+            <View style={styles.timeInpStyle}>
+              <View>
+                <Text style={styles.labelStyle}>Start Time</Text>
+
+                <DatePicker
+                  date={date}
+                  mode="time"
+                  theme="light"
+                  style={styles.datePickerTxt}
+                  onDateChange={val => {
+                    console.log(moment(val).format('LT'));
+                    setStartTime(moment(val).format('LT'));
+                  }}
+                />
+              </View>
+
+              <View>
+                <Text style={styles.labelStyle}>End Time</Text>
+
+                <DatePicker
+                  date={date}
+                  mode="time"
+                  theme="light"
+                  style={styles.datePickerTxt}
+                  onDateChange={val => {
+                    console.log(moment(val).format('LT'));
+                    setEndTime(moment(val).format('LT'));
+                  }}
+                />
+              </View>
             </View>
-          </TouchableOpacity>
-        )}
+          </View>
+          <View>
+            <Text style={styles.labelStyle}>Description</Text>
+            <MainInputBar
+              value={description}
+              onChangeText={value => setDescription(value)}
+              placeholder="Enter Description"
+              returnKeyType="default"
+              enablesReturnKeyAutomatically
+            />
+          </View>
+          <Text style={styles.labelStyle}>Category</Text>
 
-        <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>
-          <Text style={styles.subTitleTwo}>ADD</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </KeyboardAwareScrollView>
+          {DATA.length != 0 ? (
+            <FlatList
+              data={DATA}
+              renderItem={renderItem}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => item?.index.toString()}
+            />
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() =>
+                navigation.navigate('AddCategories', {
+                  nav: 'AddTask',
+                })
+              }
+              style={styles.addCatOpac}>
+              <View>
+                <Text style={styles.addTextOpac}>Add Category +</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+
+          {isLoading ? (
+            <View style={styles.btnTwo}>
+              <ActivityIndicator color={COLORS.mainBg} size={'large'} />
+            </View>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={handleSubmit}
+              style={styles.btnTwo}>
+              <Text style={styles.subTitleTwo}>ADD</Text>
+            </TouchableOpacity>
+          )}
+        </ScrollView>
+      </KeyboardAwareScrollView>
+    </HideKeyboard>
   );
 };
 

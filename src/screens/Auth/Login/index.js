@@ -61,7 +61,7 @@ const Login = () => {
           };
           dispatch(changeLogIn(user));
           setTimeout(() => {
-            // navigation.navigate('TabStack');
+            navigation.navigate('TabStack');
           }, 3000);
         })
         .catch(error => {

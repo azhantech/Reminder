@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,7 +22,7 @@ import {useNavigation} from '@react-navigation/native';
 const AddCategory = ({route}) => {
   const reduxData = useSelector(state => state.task.totalData);
   const {nav} = route.params;
-
+  const desRef = useRef();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [title, setTitle] = useState();
@@ -98,12 +98,18 @@ const AddCategory = ({route}) => {
             placeholder="Enter Title"
             value={title}
             onChangeText={value => setTitle(value)}
+            onSubmitEditing={() => {
+              desRef.current.focus();
+            }}
+            returnKeyType="next"
+            enablesReturnKeyAutomatically
           />
         </View>
 
         <View>
           <Text style={styles.labelStyle}>Description</Text>
           <MainInputBar
+            ref={desRef}
             placeholder="Enter Description"
             value={description}
             onChangeText={value => setDescription(value)}

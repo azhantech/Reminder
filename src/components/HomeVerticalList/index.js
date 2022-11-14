@@ -88,16 +88,18 @@ const HomeVerticalList = props => {
           </TouchableOpacity>
         </Swipeable>
       );
-    } else {
-      return (
-        <View style={styles.mainCont}>
-          <Text style={styles.txtStyle}>{item.tname}</Text>
-          <TouchableOpacity>
-            <ImageLoader source={icons.upArrow} style={styles.img2Style} />
-          </TouchableOpacity>
-        </View>
-      );
     }
+
+    // else {
+    //   return (
+    //     <View style={styles.mainCont}>
+    //       <Text style={styles.txtStyle}>{item.tname}</Text>
+    //       <TouchableOpacity>
+    //         <ImageLoader source={icons.upArrow} style={styles.img2Style} />
+    //       </TouchableOpacity>
+    //     </View>
+    //   );
+    // }
   };
 
   const renderEmptyComponent = () => {
