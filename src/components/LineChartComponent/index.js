@@ -35,7 +35,7 @@ const LineChartComponent = () => {
     }, [chartData]),
   );
 
-  if (dataS === undefined) {
+  if (dataS === undefined || dataS?.length == 0) {
     return (
       <View
         style={{
