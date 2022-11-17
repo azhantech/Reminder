@@ -5,30 +5,33 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 
 import styles from './styles';
-import MainInputBar from '../../components/MainInputBar';
+import {MainInputBar} from '../../components/MainInputBar';
 import {COLOR_SELECTOR} from '../../constants/data';
-import {icons} from '../../constants';
+import {COLORS, icons} from '../../constants';
 import {useDispatch} from 'react-redux';
 import {editCategory} from '../../redux/reducers/taskReducer';
 import {useNavigation} from '@react-navigation/native';
 
 const EditCategory = ({route}) => {
   const {data} = route.params;
-
+  const desRef = useRef();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [title, setTitle] = useState(data.name);
   const [description, setDescription] = useState(data.desc);
   const [selectColor, setSelectColor] = useState(data.color);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
     let counter = 0;
+    setIsLoading(true);
 
     data?.task?.map((item, index) => {
       if (item.completed) {
@@ -46,21 +49,30 @@ const EditCategory = ({route}) => {
     };
 
     console.log('cate', category);
-    if (
-      category.name == undefined ||
-      category.desc == undefined ||
-      category.color == undefined
-    ) {
+    if (category.name == '') {
       Toast.show({
         type: 'error',
-        visibilityTime: 2000,
-        text1: 'Kindly fill all the fields',
+        visibilityTime: 1500,
+        text1: 'Kindly enter Title',
+      });
+    } else if (category.desc == '') {
+      Toast.show({
+        type: 'error',
+        visibilityTime: 1500,
+        text1: 'Kindly enter Description',
+      });
+    } else if (category.color == undefined) {
+      Toast.show({
+        type: 'error',
+        visibilityTime: 1500,
+        text1: 'Kindly pick Color',
       });
     } else {
       console.log('category', category);
       dispatch(editCategory(category));
 
       setTimeout(() => {
+        setIsLoading(false);
         navigation.navigate('Home');
       }, 500);
     }
@@ -100,12 +112,18 @@ const EditCategory = ({route}) => {
             placeholder="Enter Title"
             value={title}
             onChangeText={value => setTitle(value)}
+            onSubmitEditing={() => {
+              desRef.current.focus();
+            }}
+            returnKeyType="next"
+            enablesReturnKeyAutomatically
           />
         </View>
 
         <View>
           <Text style={styles.labelStyle}>Description</Text>
           <MainInputBar
+            ref={desRef}
             placeholder="Enter Description"
             value={description}
             onChangeText={value => setDescription(value)}
@@ -123,9 +141,19 @@ const EditCategory = ({route}) => {
           />
         </View>
 
-        <TouchableOpacity onPress={handleSubmit} style={styles.btnTwo}>
-          <Text style={styles.subTitleTwo}>SUBMIT</Text>
-        </TouchableOpacity>
+        {isLoading ? (
+          <View style={styles.btnTwo}>
+            <ActivityIndicator color={COLORS.mainBg} size={'large'} />
+          </View>
+        ) : (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handleSubmit}
+            style={styles.btnTwo}>
+            <Text style={styles.subTitleTwo}>SUBMIT</Text>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity
           onPress={() => {
             navigation.goBack();

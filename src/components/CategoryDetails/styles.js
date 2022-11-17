@@ -95,6 +95,11 @@ const styles = StyleSheet.create({
   trySty: {
     color: COLORS.mainBg,
   },
+  emptyStyle: {
+    flexDirection: 'row',
+    marginVertical: 25,
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

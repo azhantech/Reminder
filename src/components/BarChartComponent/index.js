@@ -1,10 +1,10 @@
-import {View, Text, Dimensions, ActivityIndicator} from 'react-native';
-import React from 'react';
+import {View} from 'react-native';
+import React, {useState} from 'react';
+import {BarChart} from 'react-native-chart-kit';
+import {useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {BarChart} from 'react-native-chart-kit';
 import {COLORS} from '../../constants';
-import {useSelector} from 'react-redux';
 import AnimatedTyping from '../../util/AnimatedTyping';
 
 let label = [];
@@ -13,12 +13,16 @@ let dataVal = [];
 const BarChartComponent = () => {
   const chartData = useSelector(state => state.task.totalData);
 
-  console.log('LABEL', label);
+  const [labelVal, setLabelVal] = useState();
+  const [dataS, setDataS] = useState();
+
+  console.log('LABEL', labelVal);
+  console.log('dataS', dataS);
   const data = {
-    labels: label,
+    labels: labelVal,
     datasets: [
       {
-        data: dataVal,
+        data: dataS,
       },
     ],
   };
@@ -29,10 +33,16 @@ const BarChartComponent = () => {
         label.push(item?.name);
         dataVal.push(item?.task.length);
       });
+
+      setLabelVal(label);
+      setDataS(dataVal);
+
+      label = [];
+      dataVal = [];
     }, [chartData]),
   );
 
-  if (dataVal.length == 0) {
+  if (dataS === undefined) {
     return (
       <View
         style={{
@@ -43,6 +53,7 @@ const BarChartComponent = () => {
           height: 180,
           borderRadius: 10,
           width: '100%',
+          marginBottom: 10,
         }}>
         <AnimatedTyping text={['No Data to present !']} />
       </View>
@@ -52,13 +63,13 @@ const BarChartComponent = () => {
       <View>
         <BarChart
           data={data}
-          width={Dimensions.get('window').width * 0.89}
-          height={250}
+          width={365}
+          height={220}
           verticalLabelRotation={-50}
           chartConfig={{
             backgroundColor: COLORS.mainFg,
-            backgroundGradientFrom: '#4b51d7',
-            backgroundGradientTo: '#b6b9f3',
+            backgroundGradientFrom: COLORS.mainFg,
+            backgroundGradientTo: COLORS.mainFg,
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {

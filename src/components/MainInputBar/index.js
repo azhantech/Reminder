@@ -1,13 +1,13 @@
 import {View, TextInput} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import {COLORS} from '../../constants';
 
-const MainInputBar = props => {
+export const MainInputBar = React.forwardRef((props, ref) => {
   return (
     <>
       <View>
         <TextInput
+          ref={ref}
           autoCapitalize="sentences"
           // multiline={true}
           style={styles.otherTextInputStyle}
@@ -19,6 +19,4 @@ const MainInputBar = props => {
       </View>
     </>
   );
-};
-
-export default MainInputBar;
+});

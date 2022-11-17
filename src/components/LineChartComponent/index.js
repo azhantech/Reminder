@@ -1,5 +1,5 @@
-import {View, Dimensions, ActivityIndicator} from 'react-native';
-import React from 'react';
+import {View} from 'react-native';
+import React, {useState} from 'react';
 import {ProgressChart} from 'react-native-chart-kit';
 import {useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
@@ -12,9 +12,12 @@ let dataVal = [];
 const LineChartComponent = () => {
   const chartData = useSelector(state => state.task.totalData);
 
+  const [labelVal, setLabelVal] = useState();
+  const [dataS, setDataS] = useState();
+
   const data = {
-    labels: label,
-    data: dataVal,
+    labels: labelVal,
+    data: dataS,
   };
 
   useFocusEffect(
@@ -23,10 +26,16 @@ const LineChartComponent = () => {
         label.push(item?.name);
         dataVal.push(item?.task.length);
       });
+
+      setLabelVal(label);
+      setDataS(dataVal);
+
+      label = [];
+      dataVal = [];
     }, [chartData]),
   );
 
-  if (dataVal.length == 0) {
+  if (dataS === undefined) {
     return (
       <View
         style={{
@@ -46,16 +55,16 @@ const LineChartComponent = () => {
       <View>
         <ProgressChart
           data={data}
-          width={Dimensions.get('window').width * 0.89}
+          width={365}
           height={220}
           strokeWidth={12}
           radius={32}
           chartConfig={{
             backgroundColor: COLORS.mainFg,
-            // backgroundGradientFrom: COLORS.mainFg,
-            // backgroundGradientTo: COLORS.mainFg,
-            backgroundGradientFrom: '#474ba3',
-            backgroundGradientTo: '#9ca0f3',
+            backgroundGradientFrom: COLORS.mainFg,
+            backgroundGradientTo: COLORS.mainFg,
+            // backgroundGradientFrom: '#7277f7',
+            // backgroundGradientTo: '#3c3f97',
             color: (opacity = 1) => `rgba(75, 238, 112, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {

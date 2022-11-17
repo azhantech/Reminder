@@ -13,7 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {addCategory} from '../../redux/reducers/taskReducer';
 import BackButon from '../../components/BackButon';
-import MainInputBar from '../../components/MainInputBar';
+import {MainInputBar} from '../../components/MainInputBar';
 import {COLOR_SELECTOR} from '../../constants/data';
 import {icons} from '../../constants';
 import styles from './styles';
@@ -39,15 +39,23 @@ const AddCategory = ({route}) => {
       task: [],
     };
 
-    if (
-      category.name == undefined ||
-      category.desc == undefined ||
-      category.color == undefined
-    ) {
+    if (category.name == '') {
       Toast.show({
         type: 'error',
-        visibilityTime: 2000,
-        text1: 'Kindly fill all the fields',
+        visibilityTime: 1500,
+        text1: 'Kindly enter Title',
+      });
+    } else if (category.desc == '') {
+      Toast.show({
+        type: 'error',
+        visibilityTime: 1500,
+        text1: 'Kindly enter Description',
+      });
+    } else if (category.color == undefined) {
+      Toast.show({
+        type: 'error',
+        visibilityTime: 1500,
+        text1: 'Kindly pick Color',
       });
     } else {
       console.log('category', category);

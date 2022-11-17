@@ -16,7 +16,7 @@ import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
-import MainInputBar from '../../components/MainInputBar';
+import {MainInputBar} from '../../components/MainInputBar';
 import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';

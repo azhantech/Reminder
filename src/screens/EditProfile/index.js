@@ -46,14 +46,13 @@ const EditProfile = () => {
       .currentUser.updatePassword(passwordKey)
 
       .then(() => {
-        setIsLoading(false);
-
         const data = {
           isLogedIn: true,
           emailId: getEmail,
           passwordId: passwordKey,
         };
         changeLogIn(data);
+        setIsLoading(false);
 
         navigation.navigate('Profile');
       })

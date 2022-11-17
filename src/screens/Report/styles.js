@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   upMainCont: {
     marginHorizontal: 15,
-    marginBottom: 120,
+    marginBottom: 150,
   },
   upperContainer: {
     justifyContent: 'center',
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
   },
   contView: {
     flexDirection: 'row',
-    marginHorizontal: 10,
-    justifyContent: 'center',
+    marginRight: 16,
+    justifyContent: 'space-between',
   },
   mainText: {
     marginVertical: 20,

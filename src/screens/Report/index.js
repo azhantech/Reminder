@@ -24,8 +24,6 @@ const Report = () => {
     let counter = 0;
     let totalLength = 0;
 
-    console.log('ARRAY', JSON.stringify(data));
-
     data.forEach(item => {
       item.task.forEach(element => {
         if (!element.completed) {
@@ -34,9 +32,6 @@ const Report = () => {
       });
       totalLength += item.task.length;
     });
-
-    console.log('counter', counter);
-    console.log('totalLength', totalLength);
 
     setCompletedPercentage({
       color: COLORS.mainFg,
@@ -52,11 +47,6 @@ const Report = () => {
           ? Math.floor((counter / totalLength) * 100)
           : 0,
     });
-
-    console.log(
-      'nonCompletedPercentage.progress',
-      (totalLength - counter / totalLength) * 100,
-    );
   };
 
   useFocusEffect(
@@ -84,17 +74,7 @@ const Report = () => {
               progress={nonCompletedPercentage && nonCompletedPercentage}
             />
           </View>
-        </View>
-        <View
-          style={{
-            left: 5,
-            right: 2,
-          }}>
           <BarChartComponent />
-          <View
-            style={{
-              marginVertical: 10,
-            }}></View>
           <LineChartComponent />
         </View>
       </View>

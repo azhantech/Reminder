@@ -4,6 +4,7 @@ import styles from './styles';
 import BackButon from '../BackButon';
 import {vh} from '../../util/Dimensions';
 import ProgressCircle from 'react-native-progress/Circle';
+import AnimatedTyping from '../../util/AnimatedTyping';
 
 const CategoryDetails = ({route, navigation}) => {
   let animatedValue = new Animated.Value(0);
@@ -61,6 +62,13 @@ const CategoryDetails = ({route, navigation}) => {
     }
   };
 
+  const renderEmptyComponent = () => {
+    return (
+      <View style={styles.emptyStyle}>
+        <AnimatedTyping text={['No Data to present !']} />
+      </View>
+    );
+  };
   const renderItem = ({item}) => {
     return (
       <View
@@ -133,6 +141,7 @@ const CategoryDetails = ({route, navigation}) => {
             renderItem={renderItem}
             horizontal={false}
             showsVerticalScrollIndicator={false}
+            ListEmptyComponent={renderEmptyComponent}
             keyExtractor={(item, index) => index.toString()}
           />
         </Animated.View>

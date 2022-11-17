@@ -22,8 +22,6 @@ const ScheduleTaskList = props => {
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
 
-  const [task, setTask] = useState();
-
   const onDelete = (id, category) => {
     const data = {id, category};
     dispatch(deleteTask(data));

@@ -17,7 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 import {LocalNotification} from '../../services/LocalPushController';
-import MainInputBar from '../../components/MainInputBar';
+import {MainInputBar} from '../../components/MainInputBar';
 import {COLORS, icons} from '../../constants';
 import {editTask} from '../../redux/reducers/taskReducer';
 import styles from './styles';
