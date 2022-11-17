@@ -43,7 +43,7 @@ const LineChartComponent = () => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          height: 180,
+          height: 200,
           borderRadius: 10,
           width: '100%',
         }}>
@@ -55,7 +55,7 @@ const LineChartComponent = () => {
       <View>
         <ProgressChart
           data={data}
-          width={365}
+          width={384}
           height={220}
           strokeWidth={12}
           radius={32}

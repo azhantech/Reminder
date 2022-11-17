@@ -127,6 +127,8 @@ const EditCategory = ({route}) => {
             placeholder="Enter Description"
             value={description}
             onChangeText={value => setDescription(value)}
+            returnKeyType="default"
+            enablesReturnKeyAutomatically
           />
         </View>
         <View>

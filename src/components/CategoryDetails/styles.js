@@ -96,9 +96,14 @@ const styles = StyleSheet.create({
     color: COLORS.mainBg,
   },
   emptyStyle: {
-    flexDirection: 'row',
-    marginVertical: 25,
+    marginVertical: 65,
     justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
+  empTxt: {
+    color: COLORS.mainBg,
+    fontSize: FONTS.body1.fontSize,
   },
 });
 

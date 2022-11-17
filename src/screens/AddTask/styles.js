@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   datePickerTxt: {
-    width: 100,
+    width: 110,
     height: 100,
   },
   subTitleTwo: {fontWeight: 'bold', color: COLORS.mainBg},

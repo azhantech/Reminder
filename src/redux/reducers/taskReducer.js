@@ -46,10 +46,16 @@ export const taskSlice = createSlice({
         }
       });
     },
+
     editCategory: (state, action) => {
       state['totalData'].map((item, index) => {
         if (item.index === action.payload.index) {
           state['totalData'][index] = action.payload;
+
+          item['task'].map((value, number) => {
+            state['totalData'][index]['task'][number]['category'] =
+              action.payload.name;
+          });
         }
       });
     },

@@ -5,13 +5,13 @@ const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: COLORS.mainBg,
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
   upperContainer: {
     marginBottom: 5,
   },
   middleContainer: {
-    marginVertical: 20,
+    marginVertical: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textThree: {
-    paddingTop: 10,
     textAlign: 'center',
     paddingHorizontal: 40,
   },
