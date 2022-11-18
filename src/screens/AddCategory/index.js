@@ -95,8 +95,12 @@ const AddCategory = ({route}) => {
   return (
     <KeyboardAwareScrollView bounces={false} style={styles.mainCont}>
       <View style={styles.upperCont}>
-        <BackButon />
-
+        <View
+          style={{
+            left: -35,
+          }}>
+          <BackButon />
+        </View>
         <Text style={styles.mainText}>Add Category</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>

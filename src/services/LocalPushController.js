@@ -25,30 +25,16 @@ export const initiateNotification = () => {
   });
 };
 
-export const LocalNotification = (id, date, start_time, text) => {
-  const dateVal = moment(date, 'LL');
-  const startVal = moment(start_time, 'LT');
-  const testDate = moment('03:48 PM', 'hh:mm A');
-  console.log(date);
-  console.log(start_time);
-  console.log(typeof id);
-  console.log(text);
-
-  let updatedVal = dateVal
-    ?.hour(startVal ? startVal.hours() : dateVal.hours())
-    .minute(startVal ? startVal.minutes() : dateVal.minutes());
-
-  console.log(updatedVal?.toDate()); // Javascript DateTime object
-
-  console.log('entered here', testDate.toDate());
+export const LocalNotification = (id, updatedVal, message, text) => {
+  console.log('PROVIDED TEXT =====> ', updatedVal);
 
   PushNotification.localNotificationSchedule({
     id: `${id}`,
     channelId: 'hello',
     channelName: 'my channel',
     autoCancel: true,
-    message: `Time to do ${text}`,
-    title: `Start doing ${text}!`,
+    message: message,
+    title: text,
     date: updatedVal?.toDate(),
     playSound: true,
     soundName: 'default',
@@ -58,6 +44,33 @@ export const LocalNotification = (id, date, start_time, text) => {
     repeatTime: 1,
   });
 };
+
+// export const LocalEndNotification = (id, endTime, date, text) => {
+//   const dateVal = moment(date, 'LL');
+//   const startVal = moment(endTime, 'LT');
+
+//   let updatedVal = dateVal
+//     ?.hour(startVal ? startVal.hours() : dateVal.hours())
+//     .minute(startVal ? startVal.minutes() : dateVal.minutes());
+
+//   console.log(updatedVal?.toDate()); // Javascript DateTime object
+
+//   PushNotification.localNotificationSchedule({
+//     id: `${id}`,
+//     channelId: 'hello',
+//     channelName: 'my channel',
+//     autoCancel: true,
+//     message: `Two minutes left in ending ${text}`,
+//     title: ` ${text} Ending soon!`,
+//     date: updatedVal?.toDate(),
+//     playSound: true,
+//     soundName: 'default',
+//     importance: Importance.HIGH,
+//     vibrate: true,
+//     vibration: 300,
+//     repeatTime: 1,
+//   });
+// };
 
 PushNotification.getScheduledLocalNotifications(nots => {
   console.log('nots', nots);

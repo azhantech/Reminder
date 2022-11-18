@@ -21,7 +21,10 @@ import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
 import {HideKeyboard} from '../../util/HideKeyboard';
-import {LocalNotification} from '../../services/LocalPushController';
+import {
+  LocalEndNotification,
+  LocalNotification,
+} from '../../services/LocalPushController';
 
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);
@@ -35,6 +38,8 @@ const AddTask = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState(new Date());
+  const [dateOne, setDateOne] = useState(new Date());
+  const [dateTwo, setDateTwo] = useState(new Date());
   const [dateAdv, setDateAdv] = useState();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
@@ -51,120 +56,242 @@ const AddTask = () => {
     });
   };
   const handleSubmit = () => {
-    if (DATA.length != 0) {
-      const task = {
-        category: step?.value,
-        tname: title,
-        date: dateAdv,
-        desc: description,
-        start_time: startTime,
-        end_time: endTime,
-        completed: false,
-        notId: Math.floor(Math.random() * 255),
-      };
+    try {
+      if (DATA.length != 0) {
+        const task = {
+          category: step?.value,
+          tname: title,
+          date: dateAdv,
+          desc: description,
+          start_time: !startTime ? moment(new Date()).format('LT') : startTime,
+          end_time: !endTime ? moment(new Date()).format('LT') : endTime,
+          completed: false,
+          notId: Math.floor(Math.random() * 255),
+          notEndId: Math.floor(Math.random() * Math.random() * 255),
+        };
 
-      if (task.tname === undefined) {
-        showToast('Kindly enter task name');
-      } else if (task.date === undefined) {
-        showToast('Kindly pick task date');
-      } else if (
-        moment(task.date, 'LL').format('MMM Do YY') <
-        moment(new Date()).format('MMM Do YY')
-      ) {
-        showToast('Tasks can not be created in passed days');
-      } else if (task.start_time === undefined) {
-        showToast('Kindly pick task start time');
-      } else if (task.end_time === undefined) {
-        showToast('Kindly pick task end time');
-      } else if (
-        task.start_time &&
-        task.end_time &&
-        task.start_time == task.end_time
-      ) {
-        showToast('Start Time & End Time can not be same');
-      } else if (
-        task.start_time &&
-        task.start_time < moment(new Date()).format('LT')
-      ) {
-        showToast('Start time should not be less than passed time');
-      } else if (
-        task.start_time &&
-        task.end_time &&
-        task?.start_time[5] == task?.end_time[5] &&
-        task?.start_time > task?.end_time
-      ) {
-        showToast('Start time can not be greater than End Time');
-      }
+        if (!task.tname || task.tname == '') {
+          console.log('Kindly enter task name');
+          showToast('Kindly enter task name');
 
-      // ------------
-      else if (
-        task.start_time &&
-        task.end_time &&
-        task.start_time[5] == 'P' &&
-        task.end_time[5] == 'A'
-      ) {
-        showToast('End Time can not proceed to next day');
-      }
-
-      // ------------
-      else if (task.start_time && task.end_time && task.end_time[0] == 1) {
-        if (
-          task?.start_time?.length == 8 &&
-          task.start_time[6] == 'P' &&
-          task.end_time[6] == 'A'
-        ) {
-          showToast('End Time can not proceed to next day');
-        } else if (
-          task?.start_time?.length != 8 &&
-          task.start_time[5] == 'P' &&
-          task.end_time[6] == 'A'
-        ) {
-          showToast('End Time can not proceed to next day ');
+          return;
         }
-      }
 
-      // ------------
-      else if (task.start_time && task.end_time && task.start_time[0] == 1) {
+        if (!task.date) {
+          console.log('Kindly pick task date');
+          showToast('Kindly pick task date');
+          return;
+        }
+
         if (
-          task?.end_time?.length == 8 &&
+          moment(task.date, 'LL').format('MMM Do YY') <
+          moment(new Date()).format('MMM Do YY')
+        ) {
+          console.log('Tasks can not be created in passed days');
+          showToast('Tasks can not be created in passed days');
+          return;
+        }
+
+        if (!task.start_time) {
+          console.log('Kindly pick task start time');
+          showToast('Kindly pick task start time');
+          return;
+        }
+        if (!task.end_time) {
+          console.log('Kindly pick task end time');
+          showToast('Kindly pick task end time');
+          return;
+        }
+        if (
+          task.start_time &&
+          task.end_time &&
+          task.start_time == task.end_time
+        ) {
+          console.log('Start Time & End Time can not be same');
+          showToast('Start Time & End Time can not be same');
+          return;
+        }
+
+        if (
+          task.start_time &&
+          task.start_time < moment(new Date()).format('LT')
+        ) {
+          console.log('Start time should be graeter than passed time');
+          showToast('Start time should be greater than passed time');
+
+          return;
+        }
+
+        if (task.start_time.length == 8 && task.start_time[6] == 'A') {
+          if (
+            moment(new Date()).format('LT').length == 8 &&
+            moment(new Date()).format('LT').length[6] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+
+          if (
+            moment(new Date()).format('LT').length != 8 &&
+            moment(new Date()).format('LT').length[5] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+        }
+
+        // -----
+        if (task.start_time.length != 8 && task.start_time[5] == 'A') {
+          if (
+            moment(new Date()).format('LT').length == 7 &&
+            moment(new Date()).format('LT').length[5] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+
+          if (
+            moment(new Date()).format('LT').length != 7 &&
+            moment(new Date()).format('LT').length[4] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+        }
+        // ------
+        if (
+          task.start_time.length == 8 &&
           task.start_time[6] == 'A' &&
-          task.end_time[6] == 'P'
+          task.end_time[6] == 'A'
         ) {
-          showToast('End Time can not proceed to next day ');
-        } else if (
-          task?.end_time?.length != 8 &&
-          task.start_time[5] == 'A' &&
-          task.end_time[6] == 'P'
-        ) {
+          console.log('End Time can not proceed to next day');
           showToast('End Time can not proceed to next day');
+          return;
         }
-      }
 
-      // ---------
-      else if (task.end_time && task.end_time == '12:00 AM') {
-        showToast('End time can not proceed to next day');
-      } else if (
-        task.end_time &&
-        task.start_time &&
-        task.end_time > moment(new Date()).format('LT') &&
-        task?.start_time[5] != task?.end_time[5]
-      ) {
-        showToast('End time should not not proceed to next day');
-      } else if (task.desc === undefined) {
-        showToast('Kindly enter task description');
-      } else if (task.category == '') {
-        showToast('Kindly select category');
-      } else {
+        // ------
+        if (
+          task.start_time[0] != 8 &&
+          task.start_time[5] == 'A' &&
+          task.end_time[5] == 'A'
+        ) {
+          console.log('End Time can not proceed to next day');
+          showToast('End Time can not proceed to next day');
+          return;
+        }
+
+        if (
+          task.start_time &&
+          task.end_time &&
+          task?.start_time[5] == task?.end_time[5] &&
+          task?.start_time > task?.end_time
+        ) {
+          console.log('Start time can not be greater than End Time');
+          showToast('Start time can not be greater than End Time');
+          return;
+        }
+
+        // ------------
+        if (
+          task.start_time &&
+          task.end_time &&
+          task.start_time[5] == 'P' &&
+          task.end_time[5] == 'A'
+        ) {
+          console.log('End Time can not proceed to next day');
+          showToast('End Time can not proceed to next day');
+          return;
+        }
+
+        // ------------
+
+        if (task.start_time && task.end_time && task.end_time[0] == 1) {
+          if (
+            task?.start_time?.length == 8 &&
+            task.start_time[6] == 'P' &&
+            task.end_time[6] == 'A'
+          ) {
+            console.log('End Time can not proceed to next day');
+            showToast('End Time can not proceed to next day');
+            return;
+          }
+
+          if (
+            task?.start_time?.length != 8 &&
+            task.start_time[5] == 'P' &&
+            task.end_time[6] == 'A'
+          ) {
+            console.log('End Time can not proceed to next day');
+            showToast('End Time can not proceed to next day');
+            return;
+          }
+        }
+
+        // ---------
+        if (task.end_time && task.end_time == '12:00 AM') {
+          console.log('End time can not proceed to next day');
+          showToast('End time can not proceed to next day');
+          return;
+        }
+
+        if (
+          task.end_time &&
+          task.start_time &&
+          task.end_time > moment(new Date()).format('LT') &&
+          task?.start_time[5] != task?.end_time[5] &&
+          task?.start_time[5] == 'P'
+        ) {
+          console.log('End time should not not proceed to next day');
+          showToast('End time should not not proceed to next day');
+          return;
+        }
+
+        if (!task.desc) {
+          console.log('Kindly enter task description');
+          showToast('Kindly enter task description');
+          return;
+        }
+
+        if (task.category == '') {
+          console.log('Kindly select category');
+          showToast('Kindly select category');
+          return;
+        }
+
         // MAIN LOGIC HERE
-
+        console.log('Main logic ?');
         setIsLoading(true);
+
+        const dateVal = moment(task.date, 'LL');
+        const startVal = moment(task.start_time, 'LT');
+        const endVal = moment(task.end_time, 'LT');
+
+        let updatedValStart = dateVal
+          ?.hour(startVal ? startVal.hours() : dateVal.hours())
+          .minute(startVal ? startVal.minutes() : dateVal.minutes());
 
         LocalNotification(
           task?.notId,
-          task?.date,
-          task?.start_time,
-          task?.tname,
+          updatedValStart,
+          `Time to do ${task?.tname}`,
+          `Start doing ${task?.tname}`,
         );
+
+        let updatedValEnd = dateVal
+          ?.hour(endVal ? endVal.hours() : dateVal.hours())
+          .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
+
+        LocalNotification(
+          task?.notEndId,
+          updatedValEnd,
+          `${task?.tname} is approaching to end in 2 minutes`,
+          `${task?.tname} Ending Alert`,
+        );
+
         dispatch(addTask(task));
         setIsLoading(false);
 
@@ -178,9 +305,11 @@ const AddTask = () => {
           index: 0,
           value: '',
         });
+      } else {
+        showToast('Kindly create the categories first');
       }
-    } else {
-      showToast('Kindly create the categories first');
+    } catch (error) {
+      console.log(error);
     }
   };
   const renderItem = ({item}) => {
@@ -255,19 +384,28 @@ const AddTask = () => {
           <View>
             <Text style={styles.labelStyle}>Date</Text>
 
-            <View style={styles.touchableCont}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => setOpen(true)}
+              style={styles.touchableCont}>
               {dateAdv ? (
                 <TextInput
                   ref={dateRef}
-                  style={styles.otherTextInputStyle}
+                  style={[styles.otherTextInputStyle, {paddingRight: 70}]}
                   value={dateAdv}
+                  editable={false}
                   returnKeyType="next"
                   enablesReturnKeyAutomatically
                 />
               ) : (
                 <TextInput
                   ref={dateRef}
-                  style={styles.otherTextInputStyle}
+                  style={[
+                    styles.otherTextInputStyle,
+                    {
+                      paddingRight: '50%',
+                    },
+                  ]}
                   editable={false}
                   placeholder="Pick Date"
                   placeholderTextColor={'grey'}
@@ -276,17 +414,16 @@ const AddTask = () => {
                 />
               )}
 
-              <TouchableOpacity
-                onPress={() => setOpen(true)}
-                style={styles.opacStyle}>
+              <View style={styles.opacStyle}>
                 <Image source={icons.calendar} style={styles.imgStyle} />
-              </TouchableOpacity>
+              </View>
               <DatePicker
                 modal
                 theme="auto"
                 open={open}
                 date={date}
                 mode="date"
+                minimumDate={new Date()}
                 onConfirm={date => {
                   setOpen(false);
                   setDate(date);
@@ -296,7 +433,7 @@ const AddTask = () => {
                   setOpen(false);
                 }}
               />
-            </View>
+            </TouchableOpacity>
           </View>
 
           <View>
@@ -305,11 +442,13 @@ const AddTask = () => {
                 <Text style={styles.labelStyle}>Start Time</Text>
 
                 <DatePicker
-                  date={date}
+                  date={dateOne}
                   mode="time"
+                  minimumDate={new Date(Date.now())}
                   theme="light"
                   style={styles.datePickerTxt}
                   onDateChange={val => {
+                    setDateOne(val);
                     console.log(moment(val).format('LT'));
                     setStartTime(moment(val).format('LT'));
                   }}
@@ -320,11 +459,13 @@ const AddTask = () => {
                 <Text style={styles.labelStyle}>End Time</Text>
 
                 <DatePicker
-                  date={date}
+                  date={dateTwo}
                   mode="time"
+                  minimumDate={new Date()}
                   theme="light"
                   style={styles.datePickerTxt}
                   onDateChange={val => {
+                    setDateTwo(val);
                     console.log(moment(val).format('LT'));
                     setEndTime(moment(val).format('LT'));
                   }}

@@ -7,6 +7,7 @@ import HomeHorizontalCards from '../../components/HomeHorizontalCards';
 import HomeVerticalList from '../../components/HomeVerticalList';
 import styles from './styles';
 import {icons} from '../../constants';
+import PushNotification from 'react-native-push-notification';
 
 const NUM_TASKS = 6;
 
@@ -28,6 +29,10 @@ const Home = () => {
   useFocusEffect(
     React.useCallback(() => {
       setDataVal(DATA);
+
+      PushNotification.getScheduledLocalNotifications(nots => {
+        console.log('nots', nots);
+      });
     }, [dataVal, DATA]),
   );
   const horizontalProps = {

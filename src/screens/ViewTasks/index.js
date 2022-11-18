@@ -56,8 +56,12 @@ const ViewTasks = ({route}) => {
   return (
     <View style={styles.mainCont}>
       <View style={styles.upperCont}>
-        <BackButon />
-
+        <View
+          style={{
+            left: -35,
+          }}>
+          <BackButon />
+        </View>
         <Text style={styles.mainText}>TASKS</Text>
       </View>
       <View style={styles.flatStyle}>

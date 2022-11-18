@@ -13,8 +13,9 @@ const BackButon = () => {
         styles.mainView,
         {
           justifyContent: 'center',
-          height: 40,
-          width: 40,
+          alignItems: 'center',
+          height: 38,
+          width: 38,
           marginTop: 15,
         },
       ]}>

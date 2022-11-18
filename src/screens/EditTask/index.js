@@ -69,126 +69,257 @@ const EditTask = ({route}) => {
           end_time: endTime,
           completed: data.completed,
           notId: data.notId,
+          notEndId: data.notEndId,
         };
-        if (task.tname === undefined) {
+
+        if (!task.tname || task.tname == '') {
+          console.log('Kindly enter task name');
           showToast('Kindly enter task name');
-        } else if (task.date === undefined) {
+
+          return;
+        }
+
+        if (!task.date) {
+          console.log('Kindly pick task date');
           showToast('Kindly pick task date');
-        } else if (
+          return;
+        }
+
+        if (
           moment(task.date, 'LL').format('MMM Do YY') <
           moment(new Date()).format('MMM Do YY')
         ) {
+          console.log('Tasks can not be created in passed days');
           showToast('Tasks can not be created in passed days');
-        } else if (task.start_time === undefined) {
+          return;
+        }
+
+        if (!task.start_time) {
+          console.log('Kindly pick task start time');
           showToast('Kindly pick task start time');
-        } else if (task.end_time === undefined) {
+          return;
+        }
+        if (!task.end_time) {
+          console.log('Kindly pick task end time');
           showToast('Kindly pick task end time');
-        } else if (
+          return;
+        }
+        if (
           task.start_time &&
           task.end_time &&
           task.start_time == task.end_time
         ) {
+          console.log('Start Time & End Time can not be same');
           showToast('Start Time & End Time can not be same');
-        } else if (
+          return;
+        }
+
+        if (
           task.start_time &&
           task.start_time < moment(new Date()).format('LT')
         ) {
-          showToast('Start time should not be less than passed time');
-        } else if (
+          console.log('Start time should be graeter than passed time');
+          showToast('Start time should be greater than passed time');
+
+          return;
+        }
+
+        if (task.start_time.length == 8 && task.start_time[6] == 'A') {
+          if (
+            moment(new Date()).format('LT').length == 8 &&
+            moment(new Date()).format('LT').length[6] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+
+          if (
+            moment(new Date()).format('LT').length != 8 &&
+            moment(new Date()).format('LT').length[5] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+        }
+
+        // -----
+        if (task.start_time.length != 8 && task.start_time[5] == 'A') {
+          if (
+            moment(new Date()).format('LT').length == 7 &&
+            moment(new Date()).format('LT').length[5] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+
+          if (
+            moment(new Date()).format('LT').length != 7 &&
+            moment(new Date()).format('LT').length[4] == 'P'
+          ) {
+            showToast('Start time can not exceed to next day!');
+
+            return;
+          }
+        }
+        // ------
+        if (
+          task.start_time.length == 8 &&
+          task.start_time[6] == 'A' &&
+          task.end_time[6] == 'A'
+        ) {
+          console.log('End Time can not proceed to next day');
+          showToast('End Time can not proceed to next day');
+          return;
+        }
+
+        // ------
+        if (
+          task.start_time[0] != 8 &&
+          task.start_time[5] == 'A' &&
+          task.end_time[5] == 'A'
+        ) {
+          console.log('End Time can not proceed to next day');
+          showToast('End Time can not proceed to next day');
+          return;
+        }
+
+        if (
           task.start_time &&
           task.end_time &&
           task?.start_time[5] == task?.end_time[5] &&
           task?.start_time > task?.end_time
         ) {
+          console.log('Start time can not be greater than End Time');
           showToast('Start time can not be greater than End Time');
+          return;
         }
 
         // ------------
-        else if (
+        if (
           task.start_time &&
           task.end_time &&
           task.start_time[5] == 'P' &&
           task.end_time[5] == 'A'
         ) {
+          console.log('End Time can not proceed to next day');
           showToast('End Time can not proceed to next day');
+          return;
         }
 
         // ------------
-        else if (task.start_time && task.end_time && task.end_time[0] == 1) {
+
+        if (task.start_time && task.end_time && task.end_time[0] == 1) {
           if (
             task?.start_time?.length == 8 &&
             task.start_time[6] == 'P' &&
             task.end_time[6] == 'A'
           ) {
+            console.log('End Time can not proceed to next day');
             showToast('End Time can not proceed to next day');
-          } else if (
+            return;
+          }
+
+          if (
             task?.start_time?.length != 8 &&
             task.start_time[5] == 'P' &&
             task.end_time[6] == 'A'
           ) {
-            showToast('End Time can not proceed to next day ');
-          }
-        }
-
-        // ------------
-        else if (task.start_time && task.end_time && task.start_time[0] == 1) {
-          if (
-            task?.end_time?.length == 8 &&
-            task.start_time[6] == 'A' &&
-            task.end_time[6] == 'P'
-          ) {
-            showToast('End Time can not proceed to next day ');
-          } else if (
-            task?.end_time?.length != 8 &&
-            task.start_time[5] == 'A' &&
-            task.end_time[6] == 'P'
-          ) {
+            console.log('End Time can not proceed to next day');
             showToast('End Time can not proceed to next day');
+            return;
           }
         }
 
         // ---------
-        else if (task.end_time && task.end_time == '12:00 AM') {
+        if (task.end_time && task.end_time == '12:00 AM') {
+          console.log('End time can not proceed to next day');
           showToast('End time can not proceed to next day');
-        } else if (
+          return;
+        }
+
+        if (
           task.end_time &&
           task.start_time &&
           task.end_time > moment(new Date()).format('LT') &&
-          task?.start_time[5] != task?.end_time[5]
+          task?.start_time[5] != task?.end_time[5] &&
+          task?.start_time[5] == 'P'
         ) {
+          console.log('End time should not not proceed to next day');
           showToast('End time should not not proceed to next day');
-        } else if (task.desc === undefined) {
-          showToast('Kindly enter task description');
-        } else if (task.category == '') {
-          showToast('Kindly select category');
-        } else if (task.desc === undefined) {
-          showToast('Kindly enter task description');
-        } else if (task.category == '') {
-          showToast('Kindly select category');
-        } else {
-          setIsLoading(true);
-          console.log('task', task);
-
-          setTimeout(() => {
-            id.map((item, index) => {
-              if (item.notId == id) {
-                console.log('item', item.notId);
-                PushNotification.cancelLocalNotification(item.notId);
-              }
-            });
-
-            LocalNotification(
-              task?.notId,
-              task?.date,
-              task?.start_time,
-              task?.tname,
-            );
-
-            dispatch(editTask(task));
-            setIsLoading(false);
-            navigation.navigate(nav);
-          }, 2000);
+          return;
         }
+
+        if (!task.desc) {
+          console.log('Kindly enter task description');
+          showToast('Kindly enter task description');
+          return;
+        }
+
+        if (task.category == '') {
+          console.log('Kindly select category');
+          showToast('Kindly select category');
+          return;
+        }
+
+        // MAIN LOGIC HERE
+        console.log('Main logic ?');
+
+        setIsLoading(true);
+        console.log('task', task);
+
+        setTimeout(() => {
+          id.map((item, index) => {
+            if (item.notId == id) {
+              console.log('item', item.notId);
+              PushNotification.cancelLocalNotification(item.notId);
+              return;
+            }
+
+            if (item.notEndId == id) {
+              console.log('item', item.notEndId);
+              PushNotification.cancelLocalNotification(item.notEndId);
+              return;
+            }
+          });
+
+          const dateVal = moment(task.date, 'LL');
+          const startVal = moment(task.start_time, 'LT');
+          const endVal = moment(task.end_time, 'LT');
+
+          console.log('START =============>', startVal);
+          console.log('END ================>', endVal);
+
+          let updatedValStart = dateVal
+            ?.hour(startVal ? startVal.hours() : dateVal.hours())
+            .minute(startVal ? startVal.minutes() : dateVal.minutes());
+
+          console.log('updatedValStart', updatedValStart);
+          LocalNotification(
+            task?.notId,
+            updatedValStart,
+            `Time to do ${task?.tname}`,
+            `Start doing ${task?.tname}`,
+          );
+
+          let updatedValEnd = dateVal
+            ?.hour(endVal ? endVal.hours() : dateVal.hours())
+            .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
+
+          console.log('updatedValEnd', updatedValEnd);
+          LocalNotification(
+            task?.notEndId,
+            updatedValEnd,
+            `${task?.tname} is approaching to end in 2 minutes`,
+            `${task?.tname} Ending Alert`,
+          );
+
+          dispatch(editTask(task));
+          setIsLoading(false);
+          navigation.navigate(nav);
+        }, 2000);
       } else {
         showToast('Kindly create the Categories first');
       }
@@ -226,7 +357,10 @@ const EditTask = ({route}) => {
         <View>
           <Text style={styles.labelStyle}>Date</Text>
 
-          <View style={styles.touchableCont}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => setOpen(true)}
+            style={styles.touchableCont}>
             {dateAdv ? (
               <TextInput
                 ref={dateRef}
@@ -247,18 +381,16 @@ const EditTask = ({route}) => {
               />
             )}
 
-            <TouchableOpacity
-              onPress={() => setOpen(true)}
-              style={styles.opacStyle}>
+            <View style={styles.opacStyle}>
               <Image source={icons.calendar} style={styles.imgStyle} />
-            </TouchableOpacity>
+            </View>
             <DatePicker
               modal
               theme="auto"
-              androidVariant="iosClone"
               open={open}
               date={date}
               mode="date"
+              minimumDate={new Date()}
               onConfirm={date => {
                 setOpen(false);
                 setDate(date);
@@ -268,7 +400,7 @@ const EditTask = ({route}) => {
                 setOpen(false);
               }}
             />
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View>
@@ -279,6 +411,7 @@ const EditTask = ({route}) => {
               <DatePicker
                 date={moment(startTime, 'hh:mm A').toDate()}
                 mode="time"
+                minimumDate={new Date()}
                 theme="light"
                 style={styles.datePickerTxt}
                 onDateChange={val => {
@@ -294,6 +427,7 @@ const EditTask = ({route}) => {
               <DatePicker
                 date={moment(endTime, 'hh:mm A').toDate()}
                 mode="time"
+                minimumDate={new Date()}
                 theme="light"
                 style={styles.datePickerTxt}
                 onDateChange={val => {

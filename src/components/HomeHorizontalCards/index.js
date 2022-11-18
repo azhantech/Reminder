@@ -98,70 +98,58 @@ const HomeHorizontalCards = props => {
           </View>
         </TouchableOpacity>
       );
-    } else {
-      return (
-        <View
-          style={[
-            styles.mainContainer,
-            {
-              backgroundColor: item.color,
-              shadowColor: item.color,
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: 0.2,
-              shadowRadius: 1,
-              elevation: 1,
-            },
-          ]}>
-          <View style={styles.upperContainer}>
-            <Text style={styles.upContText}>{item.name}</Text>
-            <View style={styles.upContInnerView}>
-              <Image
-                style={([styles.upContOneImg], {tintColor: COLORS.mainBg})}
-                source={icons.clock}
-              />
-            </View>
-          </View>
-          <View style={styles.bottomContainer}>
-            <ProgressBar
-              animated={true}
-              width={250}
-              height={8}
-              // indeterminate={item.color != COLORS.mainFg ? false : true}
-              animationType="spring"
-              color="#FFFFFF"
-              borderWidth={0.5}
-              borderColor={item.color}
-              progress={Number(item.progress / 100)}
-              unfilledColor={COLORS.transparentWhite}
-            />
-
-            <View style={styles.bottomBelowContainer}></View>
-          </View>
-        </View>
-      );
     }
   };
 
+  const renderEmptyComponent = () => {
+    return (
+      <View
+        style={[
+          styles.mainContainer,
+          {
+            backgroundColor: COLORS.mainFg,
+            shadowColor: COLORS.mainFg,
+            shadowOffset: {width: 0, height: 2},
+            shadowOpacity: 0.2,
+            shadowRadius: 1,
+            elevation: 1,
+          },
+        ]}>
+        <View style={styles.upperContainer}>
+          <Text style={styles.upContText}>Nothing to show yet</Text>
+          <View style={styles.upContInnerView}>
+            <Image
+              style={([styles.upContOneImg], {tintColor: COLORS.mainBg})}
+              source={icons.clock}
+            />
+          </View>
+        </View>
+        <View style={styles.bottomContainer}>
+          <ProgressBar
+            animated={true}
+            width={250}
+            height={8}
+            animationType="spring"
+            color="#FFFFFF"
+            borderWidth={0.5}
+            borderColor={COLORS.mainFg}
+            progress={Number(100 / 100)}
+            unfilledColor={COLORS.transparentWhite}
+          />
+
+          <View style={styles.bottomBelowContainer}></View>
+        </View>
+      </View>
+    );
+  };
   return (
     <>
       <FlatList
-        data={
-          data?.length > 0
-            ? data
-            : [
-                {
-                  index: Math.floor(Math.random()),
-                  name: 'Nothing to show yet',
-                  progress: 100,
-                  desc: '',
-
-                  color: COLORS.mainFg,
-                },
-              ]
-        }
+        data={data?.length > 0 && data}
         renderItem={renderItem}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        ListEmptyComponent={renderEmptyComponent}
         keyExtractor={(item, index) => index.toString()}
       />
     </>
