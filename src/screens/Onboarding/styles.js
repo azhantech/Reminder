@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants/theme';
 
 const styles = StyleSheet.create({
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   upperContainer: {
-    marginBottom: 5,
+    marginBottom: Platform.OS === 'android' ? 5 : 10,
   },
   middleContainer: {
     marginVertical: 40,

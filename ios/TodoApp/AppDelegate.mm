@@ -15,6 +15,7 @@
 #import <ReactCommon/RCTTurboModuleManager.h>
 
 #import <react/config/ReactNativeConfig.h>
+#import <Firebase.h>
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
@@ -32,8 +33,10 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   RCTAppSetupPrepareApp(application);
-
+  [FIRApp configure];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+
+  ;
 
 #if RCT_NEW_ARCH_ENABLED
   _contextContainer = std::make_shared<facebook::react::ContextContainer const>();
@@ -57,6 +60,54 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  
+  static Splash *splash = [[Splash alloc] init];
+
+    [splash createSplashView:self.window];
+    [splash setBackgroundColor:@"#FFFFFF"];
+//    [splash setBackgroundImage:@"splashbg"];
+
+
+    [splash setSplashHideAnimation:SPLASH_SLIDE_DOWN];
+    [splash setSplashHideDelay:1000];
+
+//    AnimatedObject *logo1 = [[AnimatedObject alloc] initImage:@"logo" width:screenWidth*0.08 height:screenHeight*0.04];
+//    [logo1 setVisibility:(bool) false];
+//    [logo1 setScaleType:(int) FIT_CENTER];
+//
+//    [logo1 addToSplash];
+      
+  AnimatedObject *image1 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height:screenHeight * 0.15];
+  [image1 setPositionX:(float) 0];
+  [image1 setPositionY:(float) 0];
+  [image1 setScaleType:(int) FIT_XY];
+  [image1 setVisibility:(bool) false];
+  [image1 addToSplash];
+
+  AnimatedObject *image2 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height: screenHeight * 0.15, 0, screenHeight - screenHeight * 0.15, FIT_XY, false];
+  [image2 setPositionX:(float) 0];
+  [image2 setPositionY:(float) screenHeight - screenHeight * 0.15];
+  [image2 setScaleType:(int) FIT_XY];
+  [image2 setVisibility:(bool) false];
+  [image2 addToSplash];
+  
+  AnimatedObject *logoImage = [[AnimatedObject alloc] initImage:@"logo" width:screenWidth * 0.4 height:screenHeight * 0.24];
+  [logoImage addToSplash];
+  
+//  AnimatedObject logoimage = new AnimatedObject(R.drawable.logo, screenHeight * 0.24, screenWidth * 0.4);
+//  splash.addAnimatedImage(logoimage);
+//
+  
+//    ObjectAnimation *logo1Animation1 = [[ObjectAnimation alloc] initimage:logo1 animationtype:FADE animationDuration:800 fromVal:0 toVal:1];
+//    ObjectAnimation *logo1Animation2 = [[ObjectAnimation alloc] initimage:logo1 animationtype:SCALE animationDuration:400 scaleX:4.9 scaleY:4.9];
+
+    GroupAnimation *ga1 = [[GroupAnimation alloc] init:1];
+    [ga1 addAnimation:logo1Animation1];
+    [ga1 addAnimation:logo1Animation2];
+
+    [splash splashShow];
+  
   return YES;
 }
 

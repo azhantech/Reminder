@@ -1,15 +1,24 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+$RNFirebaseAsStaticFramework = true
 
-platform :ios, '12.4'
+platform :ios, '15'
 install! 'cocoapods', :deterministic_uuids => false
+pod 'RNAnimatedSplash', :path => '../node_modules/react-native-animated-splash'
+pod 'Firebase', :modular_headers => true
+pod 'FirebaseCore', :modular_headers => true
+pod 'FirebaseCoreInternal', :modular_headers => true
+pod 'GoogleUtilities', :modular_headers => true
+
 
 target 'TodoApp' do
   config = use_native_modules!
+  use_frameworks!
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-
+  pod 'RNAnimatedSplash', :path => '../node_modules/react-native-animated-splash'
+  
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
@@ -28,6 +37,7 @@ target 'TodoApp' do
 
   target 'TodoAppTests' do
     inherit! :complete
+
     # Pods for testing
   end
 
