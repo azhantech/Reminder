@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 
 const styles = StyleSheet.create({
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.mainBg,
     marginVertical: 12,
-    paddingBottom: 50,
+    paddingBottom: Platform.OS === 'android' ? 50 : 10,
     height: 100,
     flexDirection: 'row',
     justifyContent: 'center',

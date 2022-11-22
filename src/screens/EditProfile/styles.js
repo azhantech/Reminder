@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   imgOne: {
-    marginTop: Platform.OS === 'ios' ? 60 : 30,
+    marginTop: Platform.OS === 'ios' ? 80 : 30,
     width: 380,
     height: 300,
     justifyContent: 'center',

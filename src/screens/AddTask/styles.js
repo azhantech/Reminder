@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 
 const styles = StyleSheet.create({
@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   upperCont: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: Platform.OS === 'android' ? 10 : 40,
   },
   mainText: {
     marginVertical: 20,
@@ -41,6 +41,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginHorizontal: 20,
     marginVertical: 15,
+    paddingRight: Platform.OS === 'ios' ? 100 : 70,
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  otherTTextInputStyle: {
+    color: 'black',
+    borderColor: COLORS.mainFg,
+    paddingVertical: 2,
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
+    marginVertical: 15,
+    paddingRight: Platform.OS === 'ios' ? 200 : 70,
     fontWeight: 'bold',
     fontSize: 20,
   },
@@ -68,7 +80,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   datePickerTxt: {
-    width: 110,
+    width: Platform.OS === 'ios' ? 115 : 110,
     height: 100,
   },
   subTitleTwo: {fontWeight: 'bold', color: COLORS.mainBg},

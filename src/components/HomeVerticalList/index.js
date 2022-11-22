@@ -10,7 +10,6 @@ import {
   onTaskStatusChange,
   onCategoryProgressChange,
 } from '../../redux/reducers/taskReducer';
-import {ImageLoader} from '../ImageLoader/index';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 
@@ -89,17 +88,6 @@ const HomeVerticalList = props => {
         </Swipeable>
       );
     }
-
-    // else {
-    //   return (
-    //     <View style={styles.mainCont}>
-    //       <Text style={styles.txtStyle}>{item.tname}</Text>
-    //       <TouchableOpacity>
-    //         <ImageLoader source={icons.upArrow} style={styles.img2Style} />
-    //       </TouchableOpacity>
-    //     </View>
-    //   );
-    // }
   };
 
   const renderEmptyComponent = () => {

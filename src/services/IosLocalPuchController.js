@@ -1,7 +1,6 @@
-import moment from 'moment';
-import PushNotification, {Importance} from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
-export const initiateNotification = () => {
+export const iosInitiateNotification = () => {
   PushNotification.configure({
     onRegister: token => console.log('Token', token),
     onNotification: notification => console.log('NOTIFICATION', notification),
@@ -14,37 +13,27 @@ export const initiateNotification = () => {
     requestPermissions: true,
   });
 
-  PushNotification.createChannel({
+  PushNotificationIOS.createChannel({
     channelId: 'hello',
     channelName: 'my channel',
     channelDescription: 'A channel for Notification',
     playSound: true,
     soundName: 'default',
-    importance: Importance.HIGH,
     vibrate: true,
   });
 };
 
-export const LocalNotification = (id, updatedVal, message, text) => {
+export const iosLocalNotification = (id, updatedVal, message, text) => {
   console.log('PROVIDED TEXT =====> ', updatedVal);
 
-  PushNotification.localNotificationSchedule({
+  PushNotificationIOS.addNotificationRequest({
     id: `${id}`,
     channelId: 'hello',
     channelName: 'my channel',
-    autoCancel: true,
-    message: message,
     title: text,
-    date: updatedVal?.toDate(),
-    playSound: true,
-    soundName: 'default',
-    importance: Importance.HIGH,
-    vibrate: true,
-    vibration: 300,
-    repeatTime: 1,
+    subtitle: message,
+    fireDate: updatedVal?.toDate(),
+    sound: 'default',
+    isCritical: true,
   });
 };
-
-PushNotification.getScheduledLocalNotifications(nots => {
-  console.log('nots', nots);
-});

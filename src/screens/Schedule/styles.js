@@ -1,11 +1,11 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 import {vh, vw} from '../../util/Dimensions';
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    marginVertical: 20,
+    marginVertical: Platform.OS === 'android' ? 20 : 50,
   },
   upperContainer: {
     justifyContent: 'center',

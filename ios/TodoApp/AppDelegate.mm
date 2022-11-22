@@ -1,5 +1,8 @@
 #import "AppDelegate.h"
 
+#import <UserNotifications/UserNotifications.h>
+#import <RNCPushNotificationIOS.h>
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -36,6 +39,9 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [FIRApp configure];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 
+  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+  center.delegate = self;
+  
   ;
 
 #if RCT_NEW_ARCH_ENABLED
@@ -62,21 +68,15 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [self.window makeKeyAndVisible];
   
   
+  
   static Splash *splash = [[Splash alloc] init];
 
-    [splash createSplashView:self.window];
-    [splash setBackgroundColor:@"#FFFFFF"];
-//    [splash setBackgroundImage:@"splashbg"];
-
-
-    [splash setSplashHideAnimation:SPLASH_SLIDE_DOWN];
-    [splash setSplashHideDelay:1000];
-
-//    AnimatedObject *logo1 = [[AnimatedObject alloc] initImage:@"logo" width:screenWidth*0.08 height:screenHeight*0.04];
-//    [logo1 setVisibility:(bool) false];
-//    [logo1 setScaleType:(int) FIT_CENTER];
-//
-//    [logo1 addToSplash];
+  [splash createSplashView:self.window];
+  [splash setBackgroundColor:@"#FFFFFF"];
+ 
+  [splash setSplashHideAnimation:SPLASH_SLIDE_DOWN];
+  [splash setSplashHideDelay:1000];
+ 
       
   AnimatedObject *image1 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height:screenHeight * 0.15];
   [image1 setPositionX:(float) 0];
@@ -84,8 +84,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [image1 setScaleType:(int) FIT_XY];
   [image1 setVisibility:(bool) false];
   [image1 addToSplash];
-
-  AnimatedObject *image2 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height: screenHeight * 0.15, 0, screenHeight - screenHeight * 0.15, FIT_XY, false];
+ 
+  AnimatedObject *image2 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height:screenHeight * 0.15 positionX:0 positionY:screenHeight - screenHeight * 0.15 visibility:false scaleType:FIT_XY];
   [image2 setPositionX:(float) 0];
   [image2 setPositionY:(float) screenHeight - screenHeight * 0.15];
   [image2 setScaleType:(int) FIT_XY];
@@ -94,22 +94,26 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   
   AnimatedObject *logoImage = [[AnimatedObject alloc] initImage:@"logo" width:screenWidth * 0.4 height:screenHeight * 0.24];
   [logoImage addToSplash];
-  
-//  AnimatedObject logoimage = new AnimatedObject(R.drawable.logo, screenHeight * 0.24, screenWidth * 0.4);
-//  splash.addAnimatedImage(logoimage);
-//
-  
-//    ObjectAnimation *logo1Animation1 = [[ObjectAnimation alloc] initimage:logo1 animationtype:FADE animationDuration:800 fromVal:0 toVal:1];
-//    ObjectAnimation *logo1Animation2 = [[ObjectAnimation alloc] initimage:logo1 animationtype:SCALE animationDuration:400 scaleX:4.9 scaleY:4.9];
 
-    GroupAnimation *ga1 = [[GroupAnimation alloc] init:1];
-    [ga1 addAnimation:logo1Animation1];
-    [ga1 addAnimation:logo1Animation2];
+  
+  ObjectAnimation *image1Animation = [[ObjectAnimation alloc]initimage:image1 animationtype:SLIDE animationDuration:780 fromX:0 toX:0 fromY:-screenHeight  * 0.15 toY:0];
+  ObjectAnimation *image2Animation = [[ObjectAnimation alloc]initimage:image2 animationtype:SLIDE animationDuration:780 fromX:0 toX:0 fromY:screenHeight  * 0.15 toY:0];
+  
+  ObjectAnimation *logoimageAnimation1 = [[ObjectAnimation alloc]initimage:logoImage animationtype:FADE animationDuration:1000 fromX:0 toX:1 fromY:1 toY:0 loop:false];
+  ObjectAnimation *logoimageAnimation2 = [[ObjectAnimation alloc]initimage:logoImage animationtype:SCALE animationDuration:1000 fromX:0 toX:1 fromY:0 toY:1 loop:false];
 
-    [splash splashShow];
+  GroupAnimation *ga1 = [[GroupAnimation alloc] init:1];
+  
+  [ga1 addAnimation:image1Animation];
+  [ga1 addAnimation:image2Animation];
+  [ga1 addAnimation:logoimageAnimation1];
+  [ga1 addAnimation:logoimageAnimation2];
+
+  [splash splashShow];
   
   return YES;
 }
+
 
 /// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
 ///
@@ -180,5 +184,35 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 }
 
 #endif
+
+// Required for the register event.
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+ [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+// Required for the notification event. You must call the completion handler after handling the remote notification.
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+  [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+}
+// Required for the registrationError event.
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+ [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
+}
+// Required for localNotification event
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler
+{
+  [RNCPushNotificationIOS didReceiveNotificationResponse:response];
+}
+ 
+//Called when a notification is delivered to a foreground app.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+  completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner | UNNotificationPresentationOptionBadge);
+}
 
 @end

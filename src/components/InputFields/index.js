@@ -30,17 +30,7 @@ export const InputFields = React.forwardRef((props, ref) => {
             }}
             hitSlop={styles.slopStyle}
             onPress={handlePasswordVisibility}>
-            <Image
-              source={icons.eye}
-              style={{
-                tintColor: COLORS.mainFg,
-                marginTop: 12,
-                height: 25,
-                width: 25,
-                marginRight: 20,
-                resizeMode: 'contain',
-              }}
-            />
+            <Image source={icons.eye} style={styles.imgStyle} />
           </Pressable>
         ) : (
           <Pressable
@@ -48,17 +38,7 @@ export const InputFields = React.forwardRef((props, ref) => {
               right: 45,
             }}
             onPress={handlePasswordVisibility}>
-            <Image
-              source={icons.hidden}
-              style={{
-                tintColor: COLORS.mainFg,
-                marginTop: 12,
-                height: 25,
-                width: 25,
-                marginRight: 20,
-                resizeMode: 'contain',
-              }}
-            />
+            <Image source={icons.hidden} style={styles.imgStyle} />
           </Pressable>
         )}
       </View>

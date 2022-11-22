@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.mainBg,
     borderBottomRightRadius: 45,
     borderBottomLeftRadius: 45,
-    paddingVertical: 20,
+    paddingVertical: Platform.OS === 'android' ? 20 : 46,
   },
 
   upperContainer: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   upperLevelImgContainer: {},
   profileImgStyle: {
     width: 95,
-    height: 60,
+    height: Platform.OS === 'android' ? 60 : 45,
   },
   upperLevelTxtContainer: {},
   helloTxtStyle: {

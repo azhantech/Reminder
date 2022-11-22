@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS} from '../../constants';
 
 const styles = StyleSheet.create({
@@ -23,6 +23,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   slopStyle: {top: 20, bottom: 20, left: 25, right: 25},
+  imgStyle: {
+    tintColor: COLORS.mainFg,
+    marginTop: Platform.OS === 'android' ? 12 : 4,
+    height: 25,
+    width: 25,
+    marginRight: 20,
+    resizeMode: 'contain',
+  },
 });
 
 export default styles;

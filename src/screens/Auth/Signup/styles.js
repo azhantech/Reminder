@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   imgOne: {
-    marginTop: Platform.OS === 'ios' ? 15 : 18,
+    marginTop: Platform.OS === 'ios' ? 58 : 18,
     width: '100%',
     height: 320,
     justifyContent: 'center',

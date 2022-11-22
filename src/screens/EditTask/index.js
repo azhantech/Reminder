@@ -6,21 +6,24 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import React, {useState, useRef} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
-import {LocalNotification} from '../../services/LocalPushController';
 import {MainInputBar} from '../../components/MainInputBar';
 import {COLORS, icons} from '../../constants';
 import {editTask} from '../../redux/reducers/taskReducer';
 import styles from './styles';
+import {LocalNotification} from '../../services/LocalPushController';
+import {iosLocalNotification} from '../../services/IosLocalPuchController';
 
 const EditTask = ({route}) => {
   const {data, nav} = route.params;
@@ -51,10 +54,19 @@ const EditTask = ({route}) => {
   };
 
   const getNotificationValue = () => {
-    PushNotification.getScheduledLocalNotifications(nots => {
-      console.log('nots', nots);
-      setId(nots);
-    });
+    if (Platform.OS === 'android') {
+      PushNotification.getScheduledLocalNotifications(nots => {
+        console.log('nots', nots);
+        setId(nots);
+      });
+    }
+
+    if (Platform.OS === 'ios') {
+      PushNotificationIOS.getPendingNotificationRequests(nots => {
+        console.log('nots', nots);
+        setId(nots);
+      });
+    }
   };
 
   const handleSubmit = () => {
@@ -274,13 +286,21 @@ const EditTask = ({route}) => {
           id.map((item, index) => {
             if (item.notId == id) {
               console.log('item', item.notId);
-              PushNotification.cancelLocalNotification(item.notId);
+              Platform.OS === 'android'
+                ? PushNotification.cancelLocalNotification(item.notId)
+                : PushNotificationIOS.removePendingNotificationRequests(
+                    item.notId,
+                  );
               return;
             }
 
             if (item.notEndId == id) {
               console.log('item', item.notEndId);
-              PushNotification.cancelLocalNotification(item.notEndId);
+              Platform.OS === 'android'
+                ? PushNotification.cancelLocalNotification(item.notEndId)
+                : PushNotificationIOS.removePendingNotificationRequests(
+                    item.notEndId,
+                  );
               return;
             }
           });
@@ -297,24 +317,38 @@ const EditTask = ({route}) => {
             .minute(startVal ? startVal.minutes() : dateVal.minutes());
 
           console.log('updatedValStart', updatedValStart);
-          LocalNotification(
-            task?.notId,
-            updatedValStart,
-            `Time to do ${task?.tname}`,
-            `Start doing ${task?.tname}`,
-          );
+          Platform.OS === 'android'
+            ? LocalNotification(
+                task?.notId,
+                updatedValStart,
+                `Time to do ${task?.tname}`,
+                `Start doing ${task?.tname}`,
+              )
+            : iosLocalNotification(
+                task?.notId,
+                updatedValStart,
+                `Time to do ${task?.tname}`,
+                `Start doing ${task?.tname}`,
+              );
 
           let updatedValEnd = dateVal
             ?.hour(endVal ? endVal.hours() : dateVal.hours())
             .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
 
           console.log('updatedValEnd', updatedValEnd);
-          LocalNotification(
-            task?.notEndId,
-            updatedValEnd,
-            `${task?.tname} is approaching to end in 2 minutes`,
-            `${task?.tname} Ending Alert`,
-          );
+          Platform.OS === 'android'
+            ? LocalNotification(
+                task?.notEndId,
+                updatedValEnd,
+                `${task?.tname} is approaching to end in 2 minutes`,
+                `${task?.tname} Ending Alert`,
+              )
+            : iosLocalNotification(
+                task?.notEndId,
+                updatedValEnd,
+                `${task?.tname} is approaching to end in 2 minutes`,
+                `${task?.tname} Ending Alert`,
+              );
 
           dispatch(editTask(task));
           setIsLoading(false);

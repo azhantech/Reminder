@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import React, {useState} from 'react';
 import {BarChart} from 'react-native-chart-kit';
 import {useSelector} from 'react-redux';
@@ -50,7 +50,7 @@ const BarChartComponent = () => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          height: 200,
+          height: Platform.OS === 'android' ? 200 : 230,
           borderRadius: 10,
           width: '100%',
           marginBottom: 10,
@@ -63,7 +63,7 @@ const BarChartComponent = () => {
       <View>
         <BarChart
           data={data}
-          width={384}
+          width={Platform.OS === 'ios' ? 360 : 384}
           height={220}
           verticalLabelRotation={-50}
           chartConfig={{

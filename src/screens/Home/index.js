@@ -63,11 +63,6 @@ const Home = () => {
       <View style={styles.bottomContainer}>
         <View style={styles.bottomTopContainer}>
           <Text style={styles.catOneTxtStyle}>My Tasks</Text>
-          {/* {task && (
-            <Link to={{screen: 'ViewTasks', params: {id: task?.name}}}>
-              <Text style={styles.catTwoTxtStyle}>View Tasks</Text>
-            </Link>
-          )} */}
         </View>
 
         <HomeVerticalList tasks={newTask} />

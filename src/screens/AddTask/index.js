@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import React, {useState, useRef} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -21,10 +22,8 @@ import styles from './styles';
 import {COLORS, icons} from '../../constants';
 import {addTask} from '../../redux/reducers/taskReducer';
 import {HideKeyboard} from '../../util/HideKeyboard';
-import {
-  LocalEndNotification,
-  LocalNotification,
-} from '../../services/LocalPushController';
+import {LocalNotification} from '../../services/LocalPushController';
+import {iosLocalNotification} from '../../services/IosLocalPuchController';
 
 const AddTask = () => {
   const DATA = useSelector(state => state.task.totalData);
@@ -273,8 +272,18 @@ const AddTask = () => {
         let updatedValStart = dateVal
           ?.hour(startVal ? startVal.hours() : dateVal.hours())
           .minute(startVal ? startVal.minutes() : dateVal.minutes());
+        console.log('================>');
 
-        LocalNotification(
+        Platform.OS === 'android'
+          ? LocalNotification(
+              task?.notId,
+              updatedValStart,
+              `Time to do ${task?.tname}`,
+              `Start doing ${task?.tname}`,
+            )
+          : console.log('*************');
+
+        iosLocalNotification(
           task?.notId,
           updatedValStart,
           `Time to do ${task?.tname}`,
@@ -285,12 +294,19 @@ const AddTask = () => {
           ?.hour(endVal ? endVal.hours() : dateVal.hours())
           .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
 
-        LocalNotification(
-          task?.notEndId,
-          updatedValEnd,
-          `${task?.tname} is approaching to end in 2 minutes`,
-          `${task?.tname} Ending Alert`,
-        );
+        Platform.OS === 'android'
+          ? LocalNotification(
+              task?.notEndId,
+              updatedValEnd,
+              `${task?.tname} is approaching to end in 2 minutes`,
+              `${task?.tname} Ending Alert`,
+            )
+          : iosLocalNotification(
+              task?.notEndId,
+              updatedValEnd,
+              `${task?.tname} is approaching to end in 2 minutes`,
+              `${task?.tname} Ending Alert`,
+            );
 
         dispatch(addTask(task));
         setIsLoading(false);
@@ -391,7 +407,7 @@ const AddTask = () => {
               {dateAdv ? (
                 <TextInput
                   ref={dateRef}
-                  style={[styles.otherTextInputStyle, {paddingRight: 70}]}
+                  style={styles.otherTextInputStyle}
                   value={dateAdv}
                   editable={false}
                   returnKeyType="next"
@@ -400,12 +416,7 @@ const AddTask = () => {
               ) : (
                 <TextInput
                   ref={dateRef}
-                  style={[
-                    styles.otherTextInputStyle,
-                    {
-                      paddingRight: '50%',
-                    },
-                  ]}
+                  style={styles.otherTTextInputStyle}
                   editable={false}
                   placeholder="Pick Date"
                   placeholderTextColor={'grey'}

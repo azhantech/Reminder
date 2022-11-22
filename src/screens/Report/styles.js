@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 
 const styles = StyleSheet.create({
@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   },
   contView: {
     flexDirection: 'row',
-    marginRight: 16,
+    marginRight: 10,
+    left: Platform.OS === 'ios' ? -4 : -3,
     justifyContent: 'space-between',
   },
   mainText: {

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 import {vw} from '../../util/Dimensions';
 
@@ -25,7 +25,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.5,
   },
 
-  topCont: {marginHorizontal: 20},
+  topCont: {
+    marginHorizontal: 20,
+    marginTop: Platform.OS === 'android' ? 2 : 40,
+  },
   opcTxt: {
     color: COLORS.mainFg,
     fontSize: FONTS.h3.fontSize,
