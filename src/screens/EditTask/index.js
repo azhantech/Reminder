@@ -286,23 +286,30 @@ const EditTask = ({route}) => {
           id.map((item, index) => {
             if (item.notId == id) {
               console.log('item', item.notId);
-              PushNotification.cancelLocalNotification(item.notId);
-              // Platform.OS === 'android'
-              //   ? PushNotification.cancelLocalNotification(item.notId)
-              //   : PushNotificationIOS.removePendingNotificationRequests(
-              //       item.notId,
-              //     );
+
+              if (Platform.OS === 'android') {
+                PushNotification.cancelLocalNotification(item.notId);
+              }
+
+              if (Platform.OS === 'ios') {
+                PushNotificationIOS.removePendingNotificationRequests([
+                  item.notId,
+                ]);
+              }
               return;
             }
 
             if (item.notEndId == id) {
               console.log('item', item.notEndId);
-              PushNotification.cancelLocalNotification(item.notEndId);
-              // Platform.OS === 'android'
-              //   ? PushNotification.cancelLocalNotification(item.notEndId)
-              //   : PushNotificationIOS.removePendingNotificationRequests(
-              //       item.notEndId,
-              //     );
+              if (Platform.OS === 'android') {
+                PushNotification.cancelLocalNotification(item.notEndId);
+              }
+
+              if (Platform.OS === 'ios') {
+                PushNotificationIOS.removePendingNotificationRequests([
+                  item.notEndId,
+                ]);
+              }
               return;
             }
           });

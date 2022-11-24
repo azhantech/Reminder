@@ -1,15 +1,16 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
+import {vh, vw} from '../../util/Dimensions';
 
 const styles = StyleSheet.create({
   mainCont: {
     marginVertical: 10,
-    marginHorizontal: 5,
+    marginHorizontal: Platform.OS === 'ios' ? 4.85 : 4.8,
     paddingLeft: 5,
     paddingVertical: 20,
     borderRadius: 10,
     elevation: 5,
-    width: '50%',
+    width: vw * 4.5,
   },
   imgStyle: {
     height: 25,

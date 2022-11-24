@@ -1,4 +1,5 @@
 import moment from 'moment';
+import {Platform} from 'react-native';
 import PushNotification, {Importance} from 'react-native-push-notification';
 
 export const initiateNotification = () => {
@@ -11,7 +12,8 @@ export const initiateNotification = () => {
       sound: true,
     },
     popInitialNotification: true,
-    requestPermissions: true,
+    requestPermissions: Platform.OS === 'ios',
+    // requestPermissions: true,
   });
 
   PushNotification.createChannel({

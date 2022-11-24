@@ -1,4 +1,4 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Platform} from 'react-native';
 import React, {useState} from 'react';
 import {Link, useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -8,8 +8,7 @@ import HomeVerticalList from '../../components/HomeVerticalList';
 import styles from './styles';
 import {icons} from '../../constants';
 import PushNotification from 'react-native-push-notification';
-
-const NUM_TASKS = 6;
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const Home = () => {
   const DATA = useSelector(state => state.task.totalData);
@@ -30,9 +29,17 @@ const Home = () => {
     React.useCallback(() => {
       setDataVal(DATA);
 
-      PushNotification.getScheduledLocalNotifications(nots => {
-        console.log('nots', nots);
-      });
+      if (Platform.OS === 'ios') {
+        PushNotificationIOS.getPendingNotificationRequests(nots => {
+          console.log('nots ===>', nots);
+        });
+      }
+
+      if (Platform.OS === 'android') {
+        PushNotification.getScheduledLocalNotifications(nots => {
+          console.log('nots', nots);
+        });
+      }
     }, [dataVal, DATA]),
   );
   const horizontalProps = {

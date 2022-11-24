@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {Platform} from 'react-native';
 import {configureStore} from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -22,7 +21,6 @@ import {persistedReducer} from './src/redux/store';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import {initiateNotification} from './src/services/LocalPushController';
-import {iosInitiateNotification} from './src/services/IosLocalPuchController';
 
 const App = () => {
   const store = configureStore({
@@ -38,9 +36,7 @@ const App = () => {
   let persistor = persistStore(store);
 
   useEffect(() => {
-    Platform.OS === 'android'
-      ? initiateNotification()
-      : iosInitiateNotification;
+    initiateNotification();
   }, []);
   return (
     <>

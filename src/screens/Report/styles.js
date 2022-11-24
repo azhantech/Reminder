@@ -17,8 +17,7 @@ const styles = StyleSheet.create({
   },
   contView: {
     flexDirection: 'row',
-    marginRight: 10,
-    left: Platform.OS === 'ios' ? -4 : -0.5,
+    left: Platform.OS === 'ios' ? -5 : -4.9,
     justifyContent: 'space-between',
   },
   mainText: {

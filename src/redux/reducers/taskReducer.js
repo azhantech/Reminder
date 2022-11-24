@@ -1,6 +1,9 @@
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {createSlice, current} from '@reduxjs/toolkit';
 import moment from 'moment';
+import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
+import {iosLocalNotification} from '../../services/IosLocalPuchController';
 import {LocalNotification} from '../../services/LocalPushController';
 
 const initialState = {
@@ -75,12 +78,38 @@ export const taskSlice = createSlice({
           );
 
           item['task'].map((value, number) => {
-            if (value.notId == action.payload.startId) {
-              PushNotification.cancelLocalNotification(action.payload.startId);
+            if (Platform.OS === 'android') {
+              if (value.notId == action.payload.startId) {
+                PushNotification.cancelLocalNotification(
+                  action.payload.startId,
+                );
+              }
+
+              if (value.notEndId == action.payload.endId) {
+                PushNotification.cancelLocalNotification(action.payload.endId);
+              }
             }
 
-            if (value.noEndtId == action.payload.endId) {
-              PushNotification.cancelLocalNotification(action.payload.endId);
+            if (Platform.OS === 'ios') {
+              if (value.notId == action.payload.startId) {
+                PushNotificationIOS.removePendingNotificationRequests([
+                  `${action.payload.startId}`,
+                ]);
+
+                PushNotificationIOS.removeDeliveredNotifications([
+                  `${action.payload.startId}`,
+                ]);
+              }
+
+              if (value.notEndId == action.payload.endId) {
+                PushNotificationIOS.removePendingNotificationRequests([
+                  `${action.payload.endId}`,
+                ]);
+
+                PushNotificationIOS.removeDeliveredNotifications([
+                  `${action.payload.endId}`,
+                ]);
+              }
             }
           });
 
@@ -101,10 +130,34 @@ export const taskSlice = createSlice({
                 const startVal = moment(value.start_time, 'LT');
 
                 if (startVal.format('LT') >= moment(new Date()).format('LT')) {
-                  PushNotification.cancelLocalNotification(value.notId);
+                  if (Platform.OS === 'android') {
+                    PushNotification.cancelLocalNotification(value.notId);
+                  }
+
+                  if (Platform.OS === 'ios') {
+                    PushNotificationIOS.removePendingNotificationRequests([
+                      `${value.notId}`,
+                    ]);
+
+                    PushNotificationIOS.removeDeliveredNotifications([
+                      `${value.notId}`,
+                    ]);
+                  }
+                }
+                if (Platform.OS === 'android') {
+                  PushNotification.cancelLocalNotification(value.notEndId);
                 }
 
-                PushNotification.cancelLocalNotification(value.notEndId);
+                if (Platform.OS === 'ios') {
+                  PushNotificationIOS.removePendingNotificationRequests([
+                    `${value.notEndId}`,
+                  ]);
+
+                  PushNotificationIOS.removeDeliveredNotifications([
+                    `${value.notEndId}`,
+                  ]);
+                }
+
                 return value.completed;
               }
             });
@@ -125,13 +178,27 @@ export const taskSlice = createSlice({
                   ?.hour(startVal ? startVal.hours() : dateVal.hours())
                   .minute(startVal ? startVal.minutes() : dateVal.minutes());
 
-                if (startVal >= moment(new Date()).format('LT')) {
-                  LocalNotification(
-                    value.notId,
-                    updatedValStart,
-                    `Time to do ${value.tname}`,
-                    `Start doing ${value.tname}`,
-                  );
+                if (
+                  moment(startVal).format('LT') >=
+                  moment(new Date()).format('LT')
+                ) {
+                  if (Platform.OS === 'android') {
+                    LocalNotification(
+                      value.notId,
+                      updatedValStart,
+                      `Time to do ${value.tname}`,
+                      `Start doing ${value.tname}`,
+                    );
+                  }
+
+                  if (Platform.OS === 'ios') {
+                    iosLocalNotification(
+                      value.notId,
+                      updatedValStart,
+                      `Time to do ${value.tname}`,
+                      `Start doing ${value.tname}`,
+                    );
+                  }
                 }
 
                 let updatedValEnd = dateVal
@@ -139,12 +206,23 @@ export const taskSlice = createSlice({
                   .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
 
                 if (endVal.format('LT') >= moment(new Date()).format('LT')) {
-                  LocalNotification(
-                    value.notEndId,
-                    updatedValEnd,
-                    `${value.tname} is approaching to end in 2 minutes`,
-                    `${value.tname} Ending Alert`,
-                  );
+                  if (Platform.OS === 'android') {
+                    LocalNotification(
+                      value.notEndId,
+                      updatedValEnd,
+                      `${value.tname} is approaching to end in 2 minutes`,
+                      `${value.tname} Ending Alert`,
+                    );
+                  }
+
+                  if (Platform.OS === 'ios') {
+                    iosLocalNotification(
+                      value.notEndId,
+                      updatedValEnd,
+                      `${value.tname} is approaching to end in 2 minutes`,
+                      `${value.tname} Ending Alert`,
+                    );
+                  }
                 }
                 return value.completed;
               }
