@@ -67,48 +67,56 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
-  
-  
   static Splash *splash = [[Splash alloc] init];
+     
+     [splash createSplashView:self.window];
+     [splash setBackgroundColor:@"FFFFFF"];
+ 
 
-  [splash createSplashView:self.window];
-  [splash setBackgroundColor:@"#FFFFFF"];
- 
-  [splash setSplashHideAnimation:SPLASH_SLIDE_DOWN];
-  [splash setSplashHideDelay:1000];
- 
-      
-  AnimatedObject *image1 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height:screenHeight * 0.15];
-  [image1 setPositionX:(float) 0];
-  [image1 setPositionY:(float) 0];
-  [image1 setScaleType:(int) FIT_XY];
-  [image1 setVisibility:(bool) false];
-  [image1 addToSplash];
- 
-  AnimatedObject *image2 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height:screenHeight * 0.15 positionX:0 positionY:screenHeight - screenHeight * 0.15 visibility:false scaleType:FIT_XY];
-  [image2 setPositionX:(float) 0];
-  [image2 setPositionY:(float) screenHeight - screenHeight * 0.15];
-  [image2 setScaleType:(int) FIT_XY];
-  [image2 setVisibility:(bool) false];
-  [image2 addToSplash];
+    [splash setSplashHideAnimation:SPLASH_SLIDE_DOWN];
+    [splash setSplashHideDelay:2000];
   
-  AnimatedObject *logoImage = [[AnimatedObject alloc] initImage:@"logo" width:screenWidth * 0.4 height:screenHeight * 0.24];
-  [logoImage addToSplash];
+     AnimatedObject *logo1 = [[AnimatedObject alloc] initImage:@"logo" width:screenWidth*0.095 height:screenHeight * 0.05];
+     [logo1 setVisibility:(bool) false];
+     [logo1 setScaleType:(int) FIT_CENTER];
+     
+     [logo1 addToSplash];
 
   
+    AnimatedObject *image1 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height:screenHeight * 0.15];
+    [image1 setPositionX:(float) 0];
+    [image1 setPositionY:(float) 0];
+    [image1 setScaleType:(int) FIT_XY];
+    [image1 setVisibility:(bool) false];
+    [image1 addToSplash];
+  
+    AnimatedObject *image2 = [[AnimatedObject alloc] initImage:@"splashbg" width:screenWidth height:screenHeight * 0.15 positionX:0 positionY:screenHeight - screenHeight * 0.15 visibility:false scaleType:FIT_XY];
+    [image2 setPositionX:(float) 0];
+    [image2 setPositionY:(float) screenHeight - screenHeight * 0.15];
+    [image2 setScaleType:(int) FIT_XY];
+    [image2 setVisibility:(bool) false];
+    [image2 addToSplash];
+  
+  
+  AnimatedObject *logoImage = [[AnimatedObject alloc] initImage:@"logoU" width:screenWidth*0.095 height:screenHeight * 0.05];
+  [logoImage setScaleType:(int) FIT_CENTER];
+
+    [logoImage addToSplash];
+  
+ 
   ObjectAnimation *image1Animation = [[ObjectAnimation alloc]initimage:image1 animationtype:SLIDE animationDuration:780 fromX:0 toX:0 fromY:-screenHeight  * 0.15 toY:0];
-  ObjectAnimation *image2Animation = [[ObjectAnimation alloc]initimage:image2 animationtype:SLIDE animationDuration:780 fromX:0 toX:0 fromY:screenHeight  * 0.15 toY:0];
+  ObjectAnimation *image2Animation = [[ObjectAnimation alloc]initimage:image2 animationtype:SLIDE animationDuration:780 fromX:0 toX:0 fromY:screenHeight * 0.15 toY:0];
   
-  ObjectAnimation *logoimageAnimation1 = [[ObjectAnimation alloc]initimage:logoImage animationtype:FADE animationDuration:1000 fromX:0 toX:1 fromY:1 toY:0 loop:false];
-  ObjectAnimation *logoimageAnimation2 = [[ObjectAnimation alloc]initimage:logoImage animationtype:SCALE animationDuration:1000 fromX:0 toX:1 fromY:0 toY:1 loop:false];
+
+  ObjectAnimation *logoimageAnimation1 = [[ObjectAnimation alloc] initimage:logoImage animationtype:SCALE animationDuration:800 scaleX:5.5 scaleY:6];
+  
 
   GroupAnimation *ga1 = [[GroupAnimation alloc] init:1];
   
+  [ga1 addAnimation:logoimageAnimation1];
+ 
   [ga1 addAnimation:image1Animation];
   [ga1 addAnimation:image2Animation];
-  [ga1 addAnimation:logoimageAnimation1];
-  [ga1 addAnimation:logoimageAnimation2];
-
   [splash splashShow];
   
   return YES;
