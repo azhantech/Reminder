@@ -1,4 +1,7 @@
 import {createSlice, current} from '@reduxjs/toolkit';
+import moment from 'moment';
+import PushNotification from 'react-native-push-notification';
+import {LocalNotification} from '../../services/LocalPushController';
 
 const initialState = {
   totalData: [],
@@ -66,6 +69,20 @@ export const taskSlice = createSlice({
           const updatedValue = item['task'].filter(
             data => data.tname !== action.payload.id,
           );
+          console.log(
+            "state['totalData'][index]['task']['notId']",
+            current(state['totalData'][index]['task']),
+          );
+
+          item['task'].map((value, number) => {
+            if (value.notId == action.payload.startId) {
+              PushNotification.cancelLocalNotification(action.payload.startId);
+            }
+
+            if (value.noEndtId == action.payload.endId) {
+              PushNotification.cancelLocalNotification(action.payload.endId);
+            }
+          });
 
           state['totalData'][index]['task'] = updatedValue;
         } else {
@@ -81,6 +98,13 @@ export const taskSlice = createSlice({
             item['task'].map((value, num) => {
               if (value.tname === action.payload.item.tname) {
                 value.completed = true;
+                const startVal = moment(value.start_time, 'LT');
+
+                if (startVal.format('LT') >= moment(new Date()).format('LT')) {
+                  PushNotification.cancelLocalNotification(value.notId);
+                }
+
+                PushNotification.cancelLocalNotification(value.notEndId);
                 return value.completed;
               }
             });
@@ -92,6 +116,36 @@ export const taskSlice = createSlice({
             item['task'].map((value, num) => {
               if (value.tname === action.payload.item.tname) {
                 value.completed = false;
+
+                const dateVal = moment(value.date, 'LL');
+                const startVal = moment(value.start_time, 'LT');
+                const endVal = moment(value.end_time, 'LT');
+
+                let updatedValStart = dateVal
+                  ?.hour(startVal ? startVal.hours() : dateVal.hours())
+                  .minute(startVal ? startVal.minutes() : dateVal.minutes());
+
+                if (startVal >= moment(new Date()).format('LT')) {
+                  LocalNotification(
+                    value.notId,
+                    updatedValStart,
+                    `Time to do ${value.tname}`,
+                    `Start doing ${value.tname}`,
+                  );
+                }
+
+                let updatedValEnd = dateVal
+                  ?.hour(endVal ? endVal.hours() : dateVal.hours())
+                  .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
+
+                if (endVal.format('LT') >= moment(new Date()).format('LT')) {
+                  LocalNotification(
+                    value.notEndId,
+                    updatedValEnd,
+                    `${value.tname} is approaching to end in 2 minutes`,
+                    `${value.tname} Ending Alert`,
+                  );
+                }
                 return value.completed;
               }
             });
@@ -105,7 +159,6 @@ export const taskSlice = createSlice({
       let taskLength = 0;
 
       state['totalData'].forEach(element => {
-        console.log('element.category', element.name);
         if (element.name == action.payload.category) {
           console.log('element', element);
           element.task.map((item, index) => {

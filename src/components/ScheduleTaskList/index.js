@@ -22,8 +22,8 @@ const ScheduleTaskList = props => {
   const dispatch = useDispatch();
   const reduxDefaultData = useSelector(state => state.task.totalData);
 
-  const onDelete = (id, category) => {
-    const data = {id, category};
+  const onDelete = (id, category, startId, endId) => {
+    const data = {id, category, startId, endId};
     dispatch(deleteTask(data));
   };
 
@@ -36,7 +36,9 @@ const ScheduleTaskList = props => {
       });
       return (
         <TouchableOpacity
-          onPress={() => onDelete(item.tname, item.category)}
+          onPress={() =>
+            onDelete(item.tname, item.category, item.notId, item.notEndId)
+          }
           activeOpacity={0.6}
           style={styles.slideOpac}>
           <Animated.Image

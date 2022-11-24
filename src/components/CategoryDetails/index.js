@@ -4,6 +4,7 @@ import styles from './styles';
 import BackButon from '../BackButon';
 import {vh} from '../../util/Dimensions';
 import ProgressCircle from 'react-native-progress/Circle';
+import {COLORS} from '../../constants';
 
 const CategoryDetails = ({route, navigation}) => {
   let animatedValue = new Animated.Value(0);
@@ -107,6 +108,7 @@ const CategoryDetails = ({route, navigation}) => {
           style={[
             styles.cardStyle,
             frontAnimatedStyle,
+            {backgroundColor: data.color},
             {opacity: frontOpacity},
           ]}>
           <Text style={styles.nameTxt}>{data?.name}</Text>
@@ -133,6 +135,7 @@ const CategoryDetails = ({route, navigation}) => {
           style={[
             styles.cardStyle,
             backAnimatedStyle,
+            {backgroundColor: data.color},
             {opacity: backOpacity, position: 'absolute'},
           ]}>
           <FlatList

@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     position: 'absolute',
     elevation: 3,
-    backgroundColor: COLORS.mainFg,
     shadowColor: '#7F5DF0',
     shadowOffset: {
       height: 20,

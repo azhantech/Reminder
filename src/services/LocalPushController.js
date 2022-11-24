@@ -26,7 +26,7 @@ export const initiateNotification = () => {
 };
 
 export const LocalNotification = (id, updatedVal, message, text) => {
-  console.log('PROVIDED TEXT =====> ', updatedVal);
+  console.log('PROVIDED TEXT ', updatedVal);
 
   PushNotification.localNotificationSchedule({
     id: `${id}`,

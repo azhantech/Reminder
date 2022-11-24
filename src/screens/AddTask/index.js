@@ -70,7 +70,7 @@ const AddTask = () => {
         };
 
         if (!task.tname || task.tname == '') {
-          console.log('Kindly enter task name');
+          console.log('Kindly enter title');
           showToast('Kindly enter task name');
 
           return;
@@ -272,41 +272,54 @@ const AddTask = () => {
         let updatedValStart = dateVal
           ?.hour(startVal ? startVal.hours() : dateVal.hours())
           .minute(startVal ? startVal.minutes() : dateVal.minutes());
-        console.log('================>');
 
-        Platform.OS === 'android'
-          ? LocalNotification(
-              task?.notId,
-              updatedValStart,
-              `Time to do ${task?.tname}`,
-              `Start doing ${task?.tname}`,
-            )
-          : console.log('*************');
-
-        iosLocalNotification(
+        LocalNotification(
           task?.notId,
           updatedValStart,
           `Time to do ${task?.tname}`,
           `Start doing ${task?.tname}`,
         );
 
+        // Platform.OS === 'android'
+        //   ? LocalNotification(
+        //       task?.notId,
+        //       updatedValStart,
+        //       `Time to do ${task?.tname}`,
+        //       `Start doing ${task?.tname}`,
+        //     )
+        //   : console.log('*************');
+
+        // iosLocalNotification(
+        //   task?.notId,
+        //   updatedValStart,
+        //   `Time to do ${task?.tname}`,
+        //   `Start doing ${task?.tname}`,
+        // );
+
         let updatedValEnd = dateVal
           ?.hour(endVal ? endVal.hours() : dateVal.hours())
           .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
 
-        Platform.OS === 'android'
-          ? LocalNotification(
-              task?.notEndId,
-              updatedValEnd,
-              `${task?.tname} is approaching to end in 2 minutes`,
-              `${task?.tname} Ending Alert`,
-            )
-          : iosLocalNotification(
-              task?.notEndId,
-              updatedValEnd,
-              `${task?.tname} is approaching to end in 2 minutes`,
-              `${task?.tname} Ending Alert`,
-            );
+        LocalNotification(
+          task?.notEndId,
+          updatedValEnd,
+          `${task?.tname} is approaching to end in 2 minutes`,
+          `${task?.tname} Ending Alert`,
+        );
+
+        // Platform.OS === 'android'
+        //   ? LocalNotification(
+        //       task?.notEndId,
+        //       updatedValEnd,
+        //       `${task?.tname} is approaching to end in 2 minutes`,
+        //       `${task?.tname} Ending Alert`,
+        //     )
+        //   : iosLocalNotification(
+        //       task?.notEndId,
+        //       updatedValEnd,
+        //       `${task?.tname} is approaching to end in 2 minutes`,
+        //       `${task?.tname} Ending Alert`,
+        //     );
 
         dispatch(addTask(task));
         setIsLoading(false);
@@ -462,6 +475,8 @@ const AddTask = () => {
                     setDateOne(val);
                     console.log(moment(val).format('LT'));
                     setStartTime(moment(val).format('LT'));
+
+                    console.log('startTime', startTime);
                   }}
                 />
               </View>
@@ -472,7 +487,11 @@ const AddTask = () => {
                 <DatePicker
                   date={dateTwo}
                   mode="time"
-                  minimumDate={new Date()}
+                  minimumDate={
+                    startTime
+                      ? moment(startTime, 'LT').format()
+                      : new Date(Date.now())
+                  }
                   theme="light"
                   style={styles.datePickerTxt}
                   onDateChange={val => {

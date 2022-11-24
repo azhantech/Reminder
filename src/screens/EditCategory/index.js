@@ -55,7 +55,7 @@ const EditCategory = ({route}) => {
         visibilityTime: 1500,
         text1: 'Kindly enter Title',
       });
-    } else if (category.desc == '') {
+    } else if (category.desc == '' || !category.desc) {
       Toast.show({
         type: 'error',
         visibilityTime: 1500,

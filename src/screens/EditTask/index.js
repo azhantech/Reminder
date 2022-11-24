@@ -286,21 +286,23 @@ const EditTask = ({route}) => {
           id.map((item, index) => {
             if (item.notId == id) {
               console.log('item', item.notId);
-              Platform.OS === 'android'
-                ? PushNotification.cancelLocalNotification(item.notId)
-                : PushNotificationIOS.removePendingNotificationRequests(
-                    item.notId,
-                  );
+              PushNotification.cancelLocalNotification(item.notId);
+              // Platform.OS === 'android'
+              //   ? PushNotification.cancelLocalNotification(item.notId)
+              //   : PushNotificationIOS.removePendingNotificationRequests(
+              //       item.notId,
+              //     );
               return;
             }
 
             if (item.notEndId == id) {
               console.log('item', item.notEndId);
-              Platform.OS === 'android'
-                ? PushNotification.cancelLocalNotification(item.notEndId)
-                : PushNotificationIOS.removePendingNotificationRequests(
-                    item.notEndId,
-                  );
+              PushNotification.cancelLocalNotification(item.notEndId);
+              // Platform.OS === 'android'
+              //   ? PushNotification.cancelLocalNotification(item.notEndId)
+              //   : PushNotificationIOS.removePendingNotificationRequests(
+              //       item.notEndId,
+              //     );
               return;
             }
           });
@@ -317,38 +319,54 @@ const EditTask = ({route}) => {
             .minute(startVal ? startVal.minutes() : dateVal.minutes());
 
           console.log('updatedValStart', updatedValStart);
-          Platform.OS === 'android'
-            ? LocalNotification(
-                task?.notId,
-                updatedValStart,
-                `Time to do ${task?.tname}`,
-                `Start doing ${task?.tname}`,
-              )
-            : iosLocalNotification(
-                task?.notId,
-                updatedValStart,
-                `Time to do ${task?.tname}`,
-                `Start doing ${task?.tname}`,
-              );
+
+          LocalNotification(
+            task?.notId,
+            updatedValStart,
+            `Time to do ${task?.tname}`,
+            `Start doing ${task?.tname}`,
+          );
+
+          // Platform.OS === 'android'
+          //   ? LocalNotification(
+          //       task?.notId,
+          //       updatedValStart,
+          //       `Time to do ${task?.tname}`,
+          //       `Start doing ${task?.tname}`,
+          //     )
+          //   : iosLocalNotification(
+          //       task?.notId,
+          //       updatedValStart,
+          //       `Time to do ${task?.tname}`,
+          //       `Start doing ${task?.tname}`,
+          //     );
 
           let updatedValEnd = dateVal
             ?.hour(endVal ? endVal.hours() : dateVal.hours())
             .minute(endVal ? endVal.minutes() - 2 : dateVal.minutes());
 
           console.log('updatedValEnd', updatedValEnd);
-          Platform.OS === 'android'
-            ? LocalNotification(
-                task?.notEndId,
-                updatedValEnd,
-                `${task?.tname} is approaching to end in 2 minutes`,
-                `${task?.tname} Ending Alert`,
-              )
-            : iosLocalNotification(
-                task?.notEndId,
-                updatedValEnd,
-                `${task?.tname} is approaching to end in 2 minutes`,
-                `${task?.tname} Ending Alert`,
-              );
+
+          LocalNotification(
+            task?.notEndId,
+            updatedValEnd,
+            `${task?.tname} is approaching to end in 2 minutes`,
+            `${task?.tname} Ending Alert`,
+          );
+
+          // Platform.OS === 'android'
+          //   ? LocalNotification(
+          //       task?.notEndId,
+          //       updatedValEnd,
+          //       `${task?.tname} is approaching to end in 2 minutes`,
+          //       `${task?.tname} Ending Alert`,
+          //     )
+          //   : iosLocalNotification(
+          //       task?.notEndId,
+          //       updatedValEnd,
+          //       `${task?.tname} is approaching to end in 2 minutes`,
+          //       `${task?.tname} Ending Alert`,
+          //     );
 
           dispatch(editTask(task));
           setIsLoading(false);
