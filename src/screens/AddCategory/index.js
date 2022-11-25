@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import React, {useState, useRef} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -103,7 +104,10 @@ const AddCategory = ({route}) => {
         </View>
         <Text style={styles.mainText}>Add Category</Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>
+      <ScrollView
+        scrollEnabled={Platform.OS === 'ios' ? false : true}
+        showsVerticalScrollIndicator={false}
+        style={styles.lowerCont}>
         <View>
           <Text style={styles.labelStyle}>Title</Text>
           <MainInputBar

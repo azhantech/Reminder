@@ -105,7 +105,10 @@ const EditCategory = ({route}) => {
       <View style={styles.upperCont}>
         <Text style={styles.mainText}>Edit Category</Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.lowerCont}>
+      <ScrollView
+        scrollEnabled={Platform.OS === 'ios' ? false : true}
+        showsVerticalScrollIndicator={false}
+        style={styles.lowerCont}>
         <View>
           <Text style={styles.labelStyle}>Title</Text>
           <MainInputBar

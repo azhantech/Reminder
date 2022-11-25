@@ -1,10 +1,10 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 
 const styles = StyleSheet.create({
   header: {
     backgroundColor: COLORS.mainFg,
-    height: 350,
+    height: Platform.OS === 'android' ? 350 : 400,
     borderBottomRightRadius: 50,
     borderBottomLeftRadius: 50,
   },

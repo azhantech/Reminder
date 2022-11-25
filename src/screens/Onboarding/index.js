@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Platform} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
@@ -33,7 +33,7 @@ const Onboarding = () => {
             <Image
               style={{
                 height: 400,
-                width: 380,
+                width: Platform.OS === 'android' ? 380 : 400,
                 resizeMode: 'center',
               }}
               source={item.image}

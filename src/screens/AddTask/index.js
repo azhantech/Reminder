@@ -483,6 +483,7 @@ const AddTask = () => {
           <Text style={styles.mainText}>Add Task</Text>
         </View>
         <ScrollView
+          scrollEnabled={Platform.OS === 'ios' ? false : true}
           showsVerticalScrollIndicator={false}
           style={styles.lowerCont}>
           <View>

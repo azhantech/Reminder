@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     outline: 'none',
     borderBottomWidth: 1,
     marginHorizontal: 20,
-    marginVertical: 12,
+    marginVertical: Platform.OS === 'android' ? 12 : 20,
     width: '90%',
     fontWeight: 'bold',
   },

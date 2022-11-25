@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: COLORS.mainBg,
     flex: 1,
-    paddingVertical: 20,
+    paddingVertical: Platform.OS === 'android' ? 20 : 50,
   },
   upperContainer: {
     marginBottom: Platform.OS === 'android' ? 5 : 10,

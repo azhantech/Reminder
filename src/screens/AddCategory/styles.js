@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   mainText: {
     marginVertical: 20,
     color: COLORS.black,
-    left: -50,
+    left: Platform.OS === 'android' ? -50 : -60,
     textAlign: 'center',
     fontWeight: 'bold',
     ...FONTS.h1,

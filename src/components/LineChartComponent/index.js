@@ -45,7 +45,7 @@ const LineChartComponent = () => {
           alignItems: 'center',
           height: Platform.OS === 'android' ? 200 : 230,
           borderRadius: 10,
-          width: Platform.OS === 'android' ? '99.5%' : '100%',
+          width: Platform.OS === 'android' ? '99.5%' : '99%',
         }}>
         <AnimatedTyping text={['No Data to present !']} />
       </View>
@@ -55,7 +55,7 @@ const LineChartComponent = () => {
       <View>
         <ProgressChart
           data={data}
-          width={Platform.OS === 'ios' ? 360 : 380}
+          width={Platform.OS === 'ios' ? 395 : 380}
           height={220}
           strokeWidth={12}
           radius={32}

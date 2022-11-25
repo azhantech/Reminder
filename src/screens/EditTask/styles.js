@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
 
 const styles = StyleSheet.create({
@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   upperCont: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: Platform.OS === 'ios' ? 35 : 10,
   },
   mainText: {
     marginVertical: 20,

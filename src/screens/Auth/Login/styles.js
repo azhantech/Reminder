@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   subTitleTwo: {fontWeight: 'bold', color: COLORS.mainBg},
   bottomText: {
     marginVertical: 10,
-    marginBottom: 20,
+    marginBottom: Platform.OS === 'android' ? 20 : 22,
     color: COLORS.gray,
   },
   imgPressable: {
