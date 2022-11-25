@@ -52,7 +52,7 @@ const BarChartComponent = () => {
           alignItems: 'center',
           height: Platform.OS === 'android' ? 200 : 230,
           borderRadius: 10,
-          width: '100%',
+          width: '99.5%',
           marginBottom: 10,
         }}>
         <AnimatedTyping text={['No Data to present !']} />
@@ -63,7 +63,7 @@ const BarChartComponent = () => {
       <View>
         <BarChart
           data={data}
-          width={Platform.OS === 'ios' ? 360 : 384}
+          width={Platform.OS === 'ios' ? 360 : 380}
           height={220}
           verticalLabelRotation={-50}
           chartConfig={{

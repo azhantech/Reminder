@@ -99,6 +99,24 @@ const HomeVerticalList = props => {
       </View>
     );
   };
+
+  const bubbleSort = (a, par) => {
+    {
+      var swapped;
+      do {
+        swapped = false;
+        for (var i = 0; i < a.length - 1; i++) {
+          if (a[i][par] > a[i + 1][par]) {
+            var temp = a[i];
+            a[i] = a[i + 1];
+            a[i + 1] = temp;
+            swapped = true;
+          }
+        }
+      } while (swapped);
+    }
+  };
+
   useEffect(() => {
     let arr = [];
     let newArr = [];
@@ -114,12 +132,12 @@ const HomeVerticalList = props => {
       arr.push(element.task);
     });
 
-    console.log('array ---> ', arr);
     arr.forEach(element => {
       newArr = [...newArr, ...element];
     });
 
-    console.log('ARRAY ======> ', newArr);
+    bubbleSort(newArr, 'date');
+
     setTask(newArr);
   }, [reduxDefaultData, tasks]);
 

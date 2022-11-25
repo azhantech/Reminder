@@ -8,7 +8,7 @@ const AppStatusBar = ({backgroundColor, ...props}) => {
       <StatusBar
         backgroundColor={backgroundColor}
         {...props}
-        StatusBarStyle={'dark-content'}
+        barStyle="dark-content"
       />
     </View>
   );

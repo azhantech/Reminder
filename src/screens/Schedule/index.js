@@ -110,6 +110,9 @@ const Schedule = () => {
             style={styles.calendarStripStyle}
             onDateSelected={handleOnDateSelected}
             calendarColor={COLORS.mainBg}
+            calendarHeaderFormat={moment(selectedDate, 'dddd, MMM Do').format(
+              'L',
+            )}
             calendarHeaderStyle={styles.calendarHeaderStyle}
             dateNumberStyle={styles.dateNumberStyle}
             dateNameStyle={styles.dateNameStyle}
