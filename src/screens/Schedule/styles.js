@@ -47,7 +47,15 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginBottom: 2,
   },
-
+  highlightDateNameStyleIOS: {
+    color: COLORS.mainBg,
+    backgroundColor: COLORS.mainFg,
+    borderRadius: 10,
+    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 2,
+  },
   highlightDateNumberStyle: {
     color: COLORS.mainFg,
     borderRadius: 10,

@@ -52,7 +52,7 @@ const BarChartComponent = () => {
           alignItems: 'center',
           height: Platform.OS === 'android' ? 200 : 230,
           borderRadius: 10,
-          width: '99.5%',
+          width: Platform.OS === 'android' ? '99.5%' : '100%',
           marginBottom: 10,
         }}>
         <AnimatedTyping text={['No Data to present !']} />

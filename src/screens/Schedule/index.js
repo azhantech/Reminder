@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   LayoutAnimation,
   UIManager,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -116,7 +117,11 @@ const Schedule = () => {
             calendarHeaderStyle={styles.calendarHeaderStyle}
             dateNumberStyle={styles.dateNumberStyle}
             dateNameStyle={styles.dateNameStyle}
-            highlightDateNameStyle={styles.highlightDateNameStyle}
+            highlightDateNameStyle={
+              Platform.OS === 'android'
+                ? styles.highlightDateNameStyle
+                : styles.highlightDateNameStyleIOS
+            }
             highlightDateNumberStyle={styles.highlightDateNumberStyle}
             calendarAnimation={{type: 'sequence', duration: 5}}
           />
