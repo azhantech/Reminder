@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/CircularStd-Bold.ttf",
+      "sha1": "c8b117288cc6bcca619007d7e29673cbac00ccf1"
+    },
+    {
+      "path": "src/assets/fonts/index.js",
+      "sha1": "7f9906858e087a834a39e2ce910bcf6c9f9bd9d7"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-Bold.ttf",
+      "sha1": "1fb1bac5b7ca944183892094a02d1ae07387f26e"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-Medium.ttf",
+      "sha1": "bb52976032066e4fc7aa02f7535cc17e6757e10d"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-Regular.ttf",
+      "sha1": "ae5652d0bed8c90d97c43fe6bcaac0a9b0f787e7"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-SemiBold.ttf",
+      "sha1": "dfaa61cf745e3a4aec141f96fd1cfc10dcd363c8"
+    },
+    {
+      "path": "src/assets/fonts/Rubik-Medium.ttf",
+      "sha1": "9dd416bb989087a3e63125f4fea7898c97ff157c"
+    },
+    {
+      "path": "src/assets/fonts/Rubik-Regular.ttf",
+      "sha1": "a7748ad21296101be2698dc585c7194ed43385ea"
+    }
+  ]
+}
