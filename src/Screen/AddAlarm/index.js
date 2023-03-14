@@ -9,7 +9,7 @@ import { colors } from '../../utils/appTheme';
 import { vh, vw } from '../../utils/dimensions';
 
 const AddAlarm = () => {
-  const [repeatData, setRepeatData] = useState(['Every Sunday', 'Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday']);
+  const repeatData = ['Every Sunday', 'Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday'];
   const dateRef = useRef(null);
   const [time, setTime] = useState(new Date());
   const [name, setName] = useState(null);
