@@ -1,15 +1,31 @@
-import 'react-native-gesture-handler';
 import React from 'react';
-import {View} from 'react-native';
-import Navigation from './src/navigation';
-import {colors} from './src/utils/appTheme';
-import AddAlarm from './src/Screen/AddAlarm';
-const App = () => {
+import {Platform, StatusBar, StyleSheet, UIManager, View} from 'react-native';
+import Navigator from './src/navigation/index';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/src/integration/react';
+import {store, persistor} from './src/redux/store';
+
+const App = props => {
   return (
-    <View style={{flex: 1}}>
-      <AddAlarm />
-    </View>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <View style={styles.container}>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="transparent"
+            translucent={true}
+          />
+
+          <Navigator />
+        </View>
+      </PersistGate>
+    </Provider>
   );
 };
-
 export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+});
