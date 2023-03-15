@@ -10,7 +10,9 @@ import { AddAlarmAction } from '../../redux/actions/AlarmAction';
 import { colors } from '../../utils/appTheme';
 import { vh, vw } from '../../utils/dimensions';
 
-const AddAlarm = ({ navigation, route }) => {
+const EditAlarm = ({ navigation, route }) => {
+  const itemDetails = route?.params?.item;
+  console.log(itemDetails, 'itemDetailsitemDetails')
   const dispatch = useDispatch();
   const repeatData = [
     'Every Sunday',
@@ -22,15 +24,15 @@ const AddAlarm = ({ navigation, route }) => {
     'Every Saturday',
   ];
   const dateRef = useRef(null);
-  const [time, setTime] = useState(new Date());
-  const [name, setName] = useState(null);
-  const [ringOnce, setRingOnce] = useState(true);
-  const [custom, setCustom] = useState(false);
-  const [isVibrateEnabled, setIsVibrateEnabled] = useState(false);
-  const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(false);
+  const [time, setTime] = useState(itemDetails?.time);
+  const [name, setName] = useState(itemDetails?.name);
+  const [ringOnce, setRingOnce] = useState(itemDetails?.ringOnce);
+  const [custom, setCustom] = useState(itemDetails?.custom);
+  const [isVibrateEnabled, setIsVibrateEnabled] = useState(itemDetails?.vibrate);
+  const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(itemDetails?.snooze);
   const formattedToDate = moment(new Date(time)).format('hh:mm A');
   const [repeatPicker, setRepeatPicker] = useState(false);
-  const [selectedRepeatValue, setSelectedRepeatValue] = useState(null);
+  const [selectedRepeatValue, setSelectedRepeatValue] = useState(itemDetails?.ring);
 
   const toggleVibrateSwitch = () =>
     setIsVibrateEnabled(previousState => !previousState);
@@ -50,10 +52,8 @@ const AddAlarm = ({ navigation, route }) => {
 
 
   const handleOnSubmit = async () => {
-    const randomid = Math.random() + Date.now();
-    const id = parseInt(randomid.toFixed());
     const data = {
-      id: id,
+      id: itemDetails?.id,
       name,
       time,
       vibrate: isVibrateEnabled,
@@ -62,7 +62,6 @@ const AddAlarm = ({ navigation, route }) => {
       ringOnce: ringOnce,
       custom: custom,
     };
-    console.log('Daya  ====>0', data);
     await dispatch(AddAlarmAction(data))
     navigation.goBack()
 
@@ -269,11 +268,11 @@ const AddAlarm = ({ navigation, route }) => {
             alignItems: 'center',
           }}
           onPress={handleOnSubmit}>
-          <CircularBold style={{ color: colors.white }}>ADD</CircularBold>
+          <CircularBold style={{ color: colors.white }}>UPDATE</CircularBold>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default AddAlarm
+export default EditAlarm

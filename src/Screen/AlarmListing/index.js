@@ -23,7 +23,7 @@ const AlarmList = ({ navigation }) => {
     { id: 10, name: '5:00 am', day: 'Mon, 13 Mar' },
   ];
   const renderItem = ({ item }) => {
-    return <SwitchComponent data={item} onPress={() => navigation.navigate('AddAlarm', {
+    return <SwitchComponent data={item} onPress={() => navigation.navigate('EditAlarm', {
       item: item,
     })} />;
   };
