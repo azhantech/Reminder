@@ -10,6 +10,23 @@ const AlarmReducer = (state = initialState, action) => {
         ...state,
         alarms: [...state.alarms, action?.payload],
       };
+
+    case types.DELETE_ALARM: {
+      let alarm = state.alarms;
+      let index = alarm.findIndex((x) => x.id == action.alarmId);
+
+      if (index > -1) {
+        alarm.splice(index, 1);
+        return {
+          ...state,
+          alarms: [...alarm],
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
+    }
     default:
       return state;
   }

@@ -1,18 +1,17 @@
 import moment from 'moment';
 import React, { useState, useRef } from 'react';
-import { View, Switch, Text, TextInput } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Switch, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { icons } from '../../assets/images';
 import CustomPicker from '../../Component/CustomerPicker';
 import DatePickerPopUp from '../../Component/DatePickerPopUp';
 import CircularBold from '../../Component/Texts/CircularBold';
-import { AddAlarmAction } from '../../redux/actions/AlarmAction';
+import { AddAlarmAction, removeAlaramAction } from '../../redux/actions/AlarmAction';
 import { colors } from '../../utils/appTheme';
 import { vh, vw } from '../../utils/dimensions';
 
 const EditAlarm = ({ navigation, route }) => {
   const itemDetails = route?.params?.item;
-  console.log(itemDetails, 'itemDetailsitemDetails')
   const dispatch = useDispatch();
   const repeatData = [
     'Every Sunday',
@@ -66,6 +65,11 @@ const EditAlarm = ({ navigation, route }) => {
     navigation.goBack()
 
   };
+
+  const handleDeleteReminder = async () => {
+    await dispatch(removeAlaramAction(itemDetails?.id))
+    navigation.goBack()
+  }
 
   const renderTime = () => {
     return (
@@ -219,6 +223,29 @@ const EditAlarm = ({ navigation, route }) => {
       </View>
     );
   };
+
+  const renderDeleteAlarm = () => {
+    return (
+      <TouchableOpacity
+        onPress={handleDeleteReminder}
+        style={{
+          backgroundColor: colors.white,
+          height: vw * 20,
+          width: vw * 20,
+          marginBottom: vh,
+          elevation: 7,
+          borderRadius: vw * 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          bottom: 8 * vh,
+          right: 0,
+          marginRight: vw * 5,
+        }}>
+        <Image source={icons.delete} />
+      </TouchableOpacity>
+    );
+  };
   return (
     <View style={{ flex: 1, backgroundColor: '#000' }}>
       <DatePickerPopUp
@@ -271,6 +298,7 @@ const EditAlarm = ({ navigation, route }) => {
           <CircularBold style={{ color: colors.white }}>UPDATE</CircularBold>
         </TouchableOpacity>
       </View>
+      {renderDeleteAlarm()}
     </View>
   );
 };

@@ -58,6 +58,7 @@ export const icons = {
   play: require('./icons/play.png'),
   clockDob: require('./icons/clockDob.png'),
   arrowDown: require('./icons/arrowDown.png'),
+  delete: require('./icons/delete.png'),
 };
 
 export const tabIcons = {

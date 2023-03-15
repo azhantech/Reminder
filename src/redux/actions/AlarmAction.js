@@ -10,3 +10,12 @@ export const AddAlarmAction = data => {
     }
   };
 };
+
+export const removeAlaramAction = (id) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.DELETE_ALARM,
+      alarmId: id,
+    });
+  };
+};
