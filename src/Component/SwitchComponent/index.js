@@ -2,13 +2,16 @@ import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Switch, Text, TouchableOpacity, View } from 'react-native';
+import { UpdateAlarm } from '../../redux/actions/AlarmAction';
 import { store } from '../../redux/store';
 import { colors } from '../../utils/appTheme';
 import { vh, vw } from '../../utils/dimensions';
 import CircularBold from '../Texts/CircularBold';
 import RubikRegular from '../Texts/RubikRegular';
+import { useDispatch } from 'react-redux';
 
 const SwitchComponent = props => {
+  const dispatch = useDispatch();
   const item = props?.data;
   const date = moment(item?.time).format('LT');
   const [isEnabled, setIsEnabled] = useState(
@@ -19,7 +22,7 @@ const SwitchComponent = props => {
   const handleLatestWishList = () => {
     const current = store
       .getState().AlarmReducer.alarms.find((t) => t?.id === item?.id)
-    if (current?.vibrate) {
+    if (current?.snooze) {
       setIsEnabled(true)
     } else {
       setIsEnabled(false)
@@ -31,6 +34,21 @@ const SwitchComponent = props => {
       handleLatestWishList();
     }, [])
   );
+
+  const handleAddWishList = async (value) => {
+    setIsEnabled(previousState => !previousState)
+    const data = {
+      id: item?.id,
+      name: item?.name,
+      time: item?.time,
+      vibrate: item?.vibrate,
+      snooze: value,
+      ring: item?.ring,
+      ringOnce: item?.ringOnce,
+      custom: item?.custom,
+    };
+    await dispatch(UpdateAlarm(data));
+  };
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
@@ -86,7 +104,7 @@ const SwitchComponent = props => {
             trackColor={{ false: '#767577', true: '#81b0ff' }}
             thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
+            onValueChange={(value) => handleAddWishList(value)}
             value={isEnabled}
           />
         </View>
