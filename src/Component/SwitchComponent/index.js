@@ -50,7 +50,6 @@ const SwitchComponent = props => {
     await dispatch(UpdateAlarm(data));
   };
 
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <TouchableOpacity
       onPress={props?.onPress}
