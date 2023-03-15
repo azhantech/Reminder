@@ -1,9 +1,10 @@
 import moment from 'moment';
-import React, {useState} from 'react';
-import {Switch, Text, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../utils/appTheme';
-import {vh, vw} from '../../utils/dimensions';
+import React, { useState } from 'react';
+import { Switch, Text, TouchableOpacity, View } from 'react-native';
+import { colors } from '../../utils/appTheme';
+import { vh, vw } from '../../utils/dimensions';
 import CircularBold from '../Texts/CircularBold';
+import RubikRegular from '../Texts/RubikRegular';
 
 const SwitchComponent = props => {
   const item = props?.data;
@@ -14,7 +15,8 @@ const SwitchComponent = props => {
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
-    <View
+    <TouchableOpacity
+      onPress={props?.onPress}
       style={{
         backgroundColor: '#fffA',
         height: vh * 10,
@@ -30,30 +32,40 @@ const SwitchComponent = props => {
           height: '100%',
           justifyContent: 'center',
           width: '30%',
-          alignItems: 'center',
+          marginLeft: vw * 4,
         }}>
         <CircularBold>{item?.name}</CircularBold>
+        <RubikRegular style={{ fontSize: 1.5 * vh, color: colors.borderBtn, textTransform: 'capitalize' }}>{item?.ring}</RubikRegular>
       </View>
       <View
         style={{
           width: '70%',
           height: '100%',
           flexDirection: 'row',
-          alignItems: 'center',
+          // alignItems: 'center',
           justifyContent: 'space-around',
         }}>
-        <View style={{justifyContent: 'center'}}>
-          <CircularBold style={{fontSize: vh * 1.5}}>{date}</CircularBold>
+        <View style={{ justifyContent: 'center' }}>
+          <CircularBold style={{ fontSize: vh * 1.5 }}>{date}</CircularBold>
+
         </View>
-        <Switch
-          trackColor={{false: '#767577', true: '#81b0ff'}}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
+
+        <View style={{
+          marginTop: vh * 2,
+        }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <CircularBold>{item?.day}</CircularBold>
+          </View>
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
