@@ -151,7 +151,7 @@ const EditAlarm = ({ navigation, route }) => {
   const renderRepat = () => {
     return (
       <TouchableOpacity
-        onPress={setRepeatPicker}
+        onPress={() => setRepeatPicker(true)}
         style={{
           justifyContent: 'center',
           width: 85 * vw,
