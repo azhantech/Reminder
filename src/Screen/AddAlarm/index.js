@@ -49,7 +49,10 @@ const AddAlarm = () => {
   };
 
   const handleOnSubmit = () => {
+    const randomid = Math.random() + Date.now();
+    const id = parseInt(randomid.toFixed());
     const data = {
+      id: id,
       name,
       time,
       vibrate: isVibrateEnabled,

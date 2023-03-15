@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, {useState} from 'react';
 import {Switch, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../utils/appTheme';
@@ -6,7 +7,7 @@ import CircularBold from '../Texts/CircularBold';
 
 const SwitchComponent = props => {
   const item = props?.data;
-  console.log('Item ===========>', item);
+  const date = moment(item).format('DD MM YYYY A');
   const [isEnabled, setIsEnabled] = useState(
     item?.snooze ? item?.snooze : false,
   );
@@ -28,21 +29,21 @@ const SwitchComponent = props => {
         style={{
           height: '100%',
           justifyContent: 'center',
-          width: '40%',
+          width: '30%',
           alignItems: 'center',
         }}>
         <CircularBold>{item?.name}</CircularBold>
       </View>
       <View
         style={{
-          width: '60%',
+          width: '70%',
           height: '100%',
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-around',
         }}>
         <View style={{justifyContent: 'center'}}>
-          <CircularBold>{item?.day}</CircularBold>
+          <CircularBold style={{fontSize: vh * 1.5}}>{date}</CircularBold>
         </View>
         <Switch
           trackColor={{false: '#767577', true: '#81b0ff'}}
