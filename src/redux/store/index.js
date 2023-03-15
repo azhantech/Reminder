@@ -1,8 +1,8 @@
 import thunk from 'redux-thunk';
-import {persistReducer, persistStore} from 'redux-persist';
-import {createStore, applyMiddleware} from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import { createStore, applyMiddleware } from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../RootReducer';
 
 export const persistConfig = {

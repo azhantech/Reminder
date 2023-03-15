@@ -1,18 +1,19 @@
-import React from 'react';
-import {View, Text, Touchable, TouchableOpacity} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useE } from 'react';
+import { View, Text, Touchable, TouchableOpacity } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 import SwitchComponent from '../../Component/SwitchComponent';
 import CircularBold from '../../Component/Texts/CircularBold';
-import {getAlarms} from '../../redux/actions/AlarmAction';
-import {colors} from '../../utils/appTheme';
-import {vh, vw} from '../../utils/dimensions';
+import { getAlarms } from '../../redux/actions/AlarmAction';
+import { colors } from '../../utils/appTheme';
+import { vh, vw } from '../../utils/dimensions';
 
-const AlarmList = ({navigation}) => {
+const AlarmList = ({ navigation }) => {
   const dispatch = useDispatch();
   const datas = useSelector(state => state?.AlarmReducer?.alarms);
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     return (
       <SwitchComponent
         data={item}
@@ -42,7 +43,7 @@ const AlarmList = ({navigation}) => {
           bottom: 5 * vh,
           right: 10 * vw,
         }}>
-        <CircularBold style={{fontSize: vh * 5, color: colors.white}}>
+        <CircularBold style={{ fontSize: vh * 5, color: colors.white }}>
           +
         </CircularBold>
       </TouchableOpacity>
@@ -50,11 +51,11 @@ const AlarmList = ({navigation}) => {
   };
   return (
     <View
-      style={{flex: 1, backgroundColor: colors.black, alignItems: 'center'}}>
+      style={{ flex: 1, backgroundColor: colors.black, alignItems: 'center' }}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={datas}
-        style={{flex: 1, marginTop: 5 * vh, marginBottom: 5 * vh}}
+        style={{ flex: 1, marginTop: 5 * vh, marginBottom: 5 * vh }}
         renderItem={renderItem}
       />
       {renderAddAlarm()}

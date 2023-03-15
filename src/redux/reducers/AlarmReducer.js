@@ -39,7 +39,7 @@ const AlarmReducer = (state = initialState, action) => {
           alarmData[i].ring = action?.payload?.ring;
         }
       }
-      return {...state.alarms, alarms: alarmData};
+      return { ...state.alarms, alarms: alarmData };
     default:
       return state;
   }
