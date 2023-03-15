@@ -5888,6 +5888,10 @@ react-native-screens@^3.20.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+"react-native-toast@git+https://github.com/Salsoft-Technologies/react-native-toast.git":
+  version "1.0.7"
+  resolved "git+https://github.com/Salsoft-Technologies/react-native-toast.git#1b75b095d72061b69cce7853d56510c327787582"
+
 react-native@0.71.4:
   version "0.71.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.71.4.tgz#f03f600efe68f745d19454ab17f9c1a9ef304790"

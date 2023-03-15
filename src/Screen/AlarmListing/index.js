@@ -1,31 +1,28 @@
 import React from 'react';
-import { View, Text, Touchable, TouchableOpacity } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import {View, Text, Touchable, TouchableOpacity} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
 import SwitchComponent from '../../Component/SwitchComponent';
 import CircularBold from '../../Component/Texts/CircularBold';
-import { colors } from '../../utils/appTheme';
-import { vh, vw } from '../../utils/dimensions';
+import {getAlarms} from '../../redux/actions/AlarmAction';
+import {colors} from '../../utils/appTheme';
+import {vh, vw} from '../../utils/dimensions';
 
-const AlarmList = ({ navigation }) => {
+const AlarmList = ({navigation}) => {
+  const dispatch = useDispatch();
   const datas = useSelector(state => state?.AlarmReducer?.alarms);
-  console.log('Datasasdas ==========>', datas);
-  const data = [
-    { id: 1, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 2, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 3, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 4, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 5, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 6, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 7, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 8, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 9, name: '5:00 am', day: 'Mon, 13 Mar' },
-    { id: 10, name: '5:00 am', day: 'Mon, 13 Mar' },
-  ];
-  const renderItem = ({ item }) => {
-    return <SwitchComponent data={item} onPress={() => navigation.navigate('EditAlarm', {
-      item: item,
-    })} />;
+
+  const renderItem = ({item}) => {
+    return (
+      <SwitchComponent
+        data={item}
+        onPress={() =>
+          navigation.navigate('EditAlarm', {
+            item: item,
+          })
+        }
+      />
+    );
   };
 
   const renderAddAlarm = () => {
@@ -45,7 +42,7 @@ const AlarmList = ({ navigation }) => {
           bottom: 5 * vh,
           right: 10 * vw,
         }}>
-        <CircularBold style={{ fontSize: vh * 5, color: colors.white }}>
+        <CircularBold style={{fontSize: vh * 5, color: colors.white}}>
           +
         </CircularBold>
       </TouchableOpacity>
@@ -53,11 +50,11 @@ const AlarmList = ({ navigation }) => {
   };
   return (
     <View
-      style={{ flex: 1, backgroundColor: colors.black, alignItems: 'center' }}>
+      style={{flex: 1, backgroundColor: colors.black, alignItems: 'center'}}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={datas}
-        style={{ flex: 1, marginTop: 5 * vh, marginBottom: 5 * vh }}
+        style={{flex: 1, marginTop: 5 * vh, marginBottom: 5 * vh}}
         renderItem={renderItem}
       />
       {renderAddAlarm()}

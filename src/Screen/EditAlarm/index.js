@@ -1,17 +1,29 @@
 import moment from 'moment';
-import React, { useState, useRef } from 'react';
-import { View, Switch, Text, TextInput, Image, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { icons } from '../../assets/images';
+import React, {useState, useRef} from 'react';
+import {
+  View,
+  Switch,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {icons} from '../../assets/images';
 import CustomPicker from '../../Component/CustomerPicker';
 import DatePickerPopUp from '../../Component/DatePickerPopUp';
 import CircularBold from '../../Component/Texts/CircularBold';
-import { AddAlarmAction, removeAlaramAction } from '../../redux/actions/AlarmAction';
-import { colors } from '../../utils/appTheme';
-import { vh, vw } from '../../utils/dimensions';
+import {
+  AddAlarmAction,
+  removeAlaramAction,
+  UpdateAlarm,
+} from '../../redux/actions/AlarmAction';
+import {colors} from '../../utils/appTheme';
+import {vh, vw} from '../../utils/dimensions';
 
-const EditAlarm = ({ navigation, route }) => {
+const EditAlarm = ({navigation, route}) => {
   const itemDetails = route?.params?.item;
+  console.log(itemDetails, 'itemDetailsitemDetails');
   const dispatch = useDispatch();
   const repeatData = [
     'Every Sunday',
@@ -27,11 +39,15 @@ const EditAlarm = ({ navigation, route }) => {
   const [name, setName] = useState(itemDetails?.name);
   const [ringOnce, setRingOnce] = useState(itemDetails?.ringOnce);
   const [custom, setCustom] = useState(itemDetails?.custom);
-  const [isVibrateEnabled, setIsVibrateEnabled] = useState(itemDetails?.vibrate);
+  const [isVibrateEnabled, setIsVibrateEnabled] = useState(
+    itemDetails?.vibrate,
+  );
   const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(itemDetails?.snooze);
   const formattedToDate = moment(new Date(time)).format('hh:mm A');
   const [repeatPicker, setRepeatPicker] = useState(false);
-  const [selectedRepeatValue, setSelectedRepeatValue] = useState(itemDetails?.ring);
+  const [selectedRepeatValue, setSelectedRepeatValue] = useState(
+    itemDetails?.ring,
+  );
 
   const toggleVibrateSwitch = () =>
     setIsVibrateEnabled(previousState => !previousState);
@@ -49,7 +65,6 @@ const EditAlarm = ({ navigation, route }) => {
     }, 500);
   };
 
-
   const handleOnSubmit = async () => {
     const data = {
       id: itemDetails?.id,
@@ -61,15 +76,14 @@ const EditAlarm = ({ navigation, route }) => {
       ringOnce: ringOnce,
       custom: custom,
     };
-    await dispatch(AddAlarmAction(data))
-    navigation.goBack()
-
+    await dispatch(UpdateAlarm(data));
+    navigation.goBack();
   };
 
   const handleDeleteReminder = async () => {
-    await dispatch(removeAlaramAction(itemDetails?.id))
-    navigation.goBack()
-  }
+    await dispatch(removeAlaramAction(itemDetails?.id));
+    navigation.goBack();
+  };
 
   const renderTime = () => {
     return (
@@ -82,7 +96,7 @@ const EditAlarm = ({ navigation, route }) => {
           borderBottomWidth: vw * 1,
           borderColor: colors.white,
         }}>
-        <CircularBold style={{ fontSize: vh * 7, color: colors.white }}>
+        <CircularBold style={{fontSize: vh * 7, color: colors.white}}>
           {formattedToDate}
         </CircularBold>
       </TouchableOpacity>
@@ -109,7 +123,7 @@ const EditAlarm = ({ navigation, route }) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{ color: ringOnce ? colors.drawerBlack : colors.white }}>
+          <Text style={{color: ringOnce ? colors.drawerBlack : colors.white}}>
             Ring Once
           </Text>
         </TouchableOpacity>
@@ -124,7 +138,7 @@ const EditAlarm = ({ navigation, route }) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{ color: custom ? colors.drawerBlack : colors.white }}>
+          <Text style={{color: custom ? colors.drawerBlack : colors.white}}>
             Custom
           </Text>
         </TouchableOpacity>
@@ -165,7 +179,7 @@ const EditAlarm = ({ navigation, route }) => {
   const renderAlarmTitle = () => {
     return (
       <View>
-        <Text style={{ color: colors.white }}>Alarm Name</Text>
+        <Text style={{color: colors.white}}>Alarm Name</Text>
         <TextInput
           value={name}
           onChangeText={text => setName(text)}
@@ -193,9 +207,9 @@ const EditAlarm = ({ navigation, route }) => {
             justifyContent: 'space-between',
             marginTop: 2 * vh,
           }}>
-          <Text style={{ color: colors.white }}> Virabte</Text>
+          <Text style={{color: colors.white}}> Virabte</Text>
           <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={isVibrateEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleVibrateSwitch}
@@ -211,9 +225,9 @@ const EditAlarm = ({ navigation, route }) => {
             justifyContent: 'space-between',
             marginTop: 2 * vh,
           }}>
-          <Text style={{ color: colors.white }}> Snooze</Text>
+          <Text style={{color: colors.white}}> Snooze</Text>
           <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={isSnoozeEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSnoozeSwitch}
@@ -247,11 +261,11 @@ const EditAlarm = ({ navigation, route }) => {
     );
   };
   return (
-    <View style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={{flex: 1, backgroundColor: '#000'}}>
       <DatePickerPopUp
         ref={e => (dateRef.current = e)}
         onYes={date => setTime(date)}
-      // minimumDate={moment().toDate()}
+        // minimumDate={moment().toDate()}
       />
 
       <CustomPicker
@@ -260,7 +274,7 @@ const EditAlarm = ({ navigation, route }) => {
         onHide={() => setRepeatPicker(false)}
         onPress={item => handleItem(item)}
         selectedItem={selectedRepeatValue}
-      // pickerStyle={styles.pickerStyle}
+        // pickerStyle={styles.pickerStyle}
       />
       {renderTime()}
       <View
@@ -295,7 +309,7 @@ const EditAlarm = ({ navigation, route }) => {
             alignItems: 'center',
           }}
           onPress={handleOnSubmit}>
-          <CircularBold style={{ color: colors.white }}>UPDATE</CircularBold>
+          <CircularBold style={{color: colors.white}}>UPDATE</CircularBold>
         </TouchableOpacity>
       </View>
       {renderDeleteAlarm()}
@@ -303,4 +317,4 @@ const EditAlarm = ({ navigation, route }) => {
   );
 };
 
-export default EditAlarm
+export default EditAlarm;
