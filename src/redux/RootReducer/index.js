@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-
+import AlarmReducer from '../reducers/AlarmReducer';
 const rootReducer = combineReducers({
-  auth: () => [],
+  AlarmReducer: AlarmReducer,
 });
 export default rootReducer;
