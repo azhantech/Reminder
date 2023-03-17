@@ -7,6 +7,7 @@ import CustomPicker from '../../Component/CustomerPicker';
 import DatePickerPopUp from '../../Component/DatePickerPopUp';
 import CircularBold from '../../Component/Texts/CircularBold';
 import { AddAlarmAction } from '../../redux/actions/AlarmAction';
+import { LocalNotification } from '../../services/LocalPushController';
 import { colors } from '../../utils/appTheme';
 import { vh, vw } from '../../utils/dimensions';
 
@@ -64,6 +65,12 @@ const AddAlarm = ({ navigation, route }) => {
     };
     console.log('Daya  ====>0', data);
     await dispatch(AddAlarmAction(data))
+    LocalNotification(
+      Math.floor(Math.random() * 255),
+      data?.time,
+      'message',
+      'text',
+    );
     navigation.goBack()
 
   };

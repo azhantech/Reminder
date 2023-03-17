@@ -1,6 +1,6 @@
 import moment from 'moment';
-import {Platform} from 'react-native';
-import PushNotification, {Importance} from 'react-native-push-notification';
+import { Platform } from 'react-native';
+import PushNotification, { Importance } from 'react-native-push-notification';
 
 export const initiateNotification = () => {
   PushNotification.configure({
@@ -37,7 +37,7 @@ export const LocalNotification = (id, updatedVal, message, text) => {
     autoCancel: true,
     message: message,
     title: text,
-    date: updatedVal?.toDate(),
+    date: updatedVal,
     playSound: true,
     soundName: 'default',
     importance: Importance.HIGH,
