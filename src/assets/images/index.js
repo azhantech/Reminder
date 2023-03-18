@@ -30,6 +30,7 @@ export const generalImages = {
   cleaningImage1: require('./generalImages/cleaningImage1.png'),
   cleaningImage2: require('./generalImages/cleaningImage2.png'),
   cleaningImage3: require('./generalImages/cleaningImage3.png'),
+  joggingPerson: require('./generalImages/joggingPerson.png'),
 };
 export const icons = {
   logo: require('./icons/logo.png'),

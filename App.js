@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Platform, StatusBar, StyleSheet, UIManager, View } from 'react-native';
 import Navigator from './src/navigation/index';
 import { Provider } from 'react-redux';
@@ -7,15 +7,24 @@ import { store, persistor } from './src/redux/store';
 import { initiateNotification } from './src/services/LocalPushController';
 import ReactnativeSplash from 'react-native-animated-splash';
 import AlarmPopUp from './src/Component/AlarmPopUp';
+import PushNotification from 'react-native-push-notification';
+import { generalImages } from './src/assets/images';
 const App = props => {
+  const [notificationData, setNotificationData] = useState(null);
   const confirmationRef = useRef();
   React.useEffect(() => {
     initiateNotification();
     ReactnativeSplash.hide();
-    confirmationRef?.current.show()
+
   }, []);
 
-  // confirmationRef.current.show();
+  PushNotification.configure({
+    onNotification: notification => {
+      setNotificationData(notification);
+      confirmationRef?.current?.show()
+    },
+  });
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -30,17 +39,19 @@ const App = props => {
 
           <AlarmPopUp
             reference={confirmationRef}
-            // icon={generalImages.joggingPerson}
+            icon={generalImages.joggingPerson}
             title="Go Jogging"
             primaryButtonText="Snooze"
             secondaryButtonText="I'm Going"
-          // notificationData={notificationData}
+            notificationData={notificationData}
           />
         </View>
       </PersistGate>
     </Provider>
   );
 };
+
+
 export default App;
 const styles = StyleSheet.create({
   container: {

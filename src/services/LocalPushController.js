@@ -5,7 +5,7 @@ import PushNotification, { Importance } from 'react-native-push-notification';
 export const initiateNotification = () => {
   PushNotification.configure({
     onRegister: token => console.log('Token', token),
-    onNotification: notification => console.log('NOTIFICATION', notification),
+    // onNotification: notification => console.log('NOTIFICATION', notification),
     permissions: {
       alert: true,
       badge: true,
@@ -50,3 +50,4 @@ export const LocalNotification = (id, updatedVal, message, text) => {
 PushNotification.getScheduledLocalNotifications(nots => {
   console.log('nots', nots);
 });
+

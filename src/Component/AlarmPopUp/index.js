@@ -1,4 +1,4 @@
-import { View, Image } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import React, { useImperativeHandle, useRef, useEffect, useState } from 'react';
 import PopupHOC from '../PopupHOC';
 import styles from './styles';
@@ -15,6 +15,8 @@ import CircularBold from '../Texts/CircularBold';
 const AlarmPopUp = props => {
   const dispatch = useDispatch();
   const [reminderDetails, setReminderDetails] = useState(null);
+
+  console.log(props?.notificationData, 'notificationsDTAT')
   // useEffect(() => {
   //   handleReminderDetails();
   // }, [props?.notificationData?.id]);
@@ -103,9 +105,10 @@ const AlarmPopUp = props => {
   };
   const show = onShow => {
     modalRef?.current.show();
-    if (props?.notificationData?.alarm) {
-      startMusic();
-    }
+    startMusic()
+    // if (props?.notificationData?.alarm) {
+    //   startMusic();
+    // }
   };
 
   return (
@@ -128,6 +131,22 @@ const AlarmPopUp = props => {
         ) : null}
 
         <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.primaryButton} onPress={hide}>
+            <CircularBold
+              numberOfLines={4} style={[styles.title, {
+                color: '#fff'
+              }]}>
+              {props.primaryButtonText}
+            </CircularBold>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.secondaryButton} onPress={hide}>
+            <CircularBold numberOfLines={4} style={[styles.title, {
+              color: '#fff'
+            }]}>
+              {props.secondaryButtonText}
+            </CircularBold>
+          </TouchableOpacity>
           {/* <MainButton
             text={props.primaryButtonText}
             style={styles.primaryButton}

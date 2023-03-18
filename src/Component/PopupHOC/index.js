@@ -1,7 +1,6 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { Image, Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
 // import {BlurView} from '@react-native-community/blur';
-import { useImperativeHandle } from 'react';
 import { vh, vw } from '../../utils/dimensions';
 // const BottomSheetWrapperComponent =
 const PopupHOC = props => {
