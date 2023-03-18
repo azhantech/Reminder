@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { Platform } from 'react-native';
-import PushNotification, { Importance } from 'react-native-push-notification';
+import {Platform} from 'react-native';
+import PushNotification, {Importance} from 'react-native-push-notification';
 
 export const initiateNotification = () => {
   PushNotification.configure({
@@ -21,13 +21,13 @@ export const initiateNotification = () => {
     channelName: 'my channel',
     channelDescription: 'A channel for Notification',
     playSound: true,
-    soundName: 'default',
+    soundName: 'alarm.mp3',
     importance: Importance.HIGH,
     vibrate: true,
   });
 };
 
-export const LocalNotification = (id, updatedVal, message, text) => {
+export const LocalNotification = (id, updatedVal, message, text, data) => {
   console.log('PROVIDED TEXT ', updatedVal);
 
   PushNotification.localNotificationSchedule({
@@ -39,15 +39,15 @@ export const LocalNotification = (id, updatedVal, message, text) => {
     title: text,
     date: updatedVal,
     playSound: true,
-    soundName: 'default',
+    soundName: 'alarm.mp3',
     importance: Importance.HIGH,
-    vibrate: true,
+    vibrate: data?.isVibrateEnabled,
     vibration: 300,
     repeatTime: 1,
+    actions: ['Yes', 'No'],
   });
 };
 
 PushNotification.getScheduledLocalNotifications(nots => {
   console.log('nots', nots);
 });
-
