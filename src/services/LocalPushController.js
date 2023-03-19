@@ -43,7 +43,7 @@ export const initiateNotification = () => {
 
 
 
-export const LocalNotification = (id, updatedVal, message, text) => {
+export const LocalNotification = (id, updatedVal, vibrate, snooze, message, text) => {
   console.log('PROVIDED TEXT ', updatedVal);
   PushNotification.localNotificationSchedule({
     id: `${id}`,
@@ -56,9 +56,9 @@ export const LocalNotification = (id, updatedVal, message, text) => {
     playSound: true,
     soundName: 'alarm.mp3',
     importance: Importance.HIGH,
-    vibrate: data?.isVibrateEnabled,
+    vibrate: vibrate,
     vibration: 300,
-    repeatTime: 1,
+    repeatTime: snooze ? 1 : 0,
     actions: ["Snooze", "Cancel"],
     allowWhileIdle: true,
     invokeApp: false,

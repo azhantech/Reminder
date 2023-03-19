@@ -11,6 +11,8 @@ export const AddAlarmAction = data => {
       LocalNotification(
         Math.floor(Math.random() * 255),
         data?.time,
+        data?.vibrate,
+        data?.snooze,
         'Alarm',
         data?.name,
       );
