@@ -1,17 +1,17 @@
 import moment from 'moment';
-import React, { useState, useRef } from 'react';
-import { View, Switch, Text, TextInput } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useDispatch } from 'react-redux';
+import React, {useState, useRef} from 'react';
+import {View, Switch, Text, TextInput} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
 import CustomPicker from '../../Component/CustomerPicker';
 import DatePickerPopUp from '../../Component/DatePickerPopUp';
 import CircularBold from '../../Component/Texts/CircularBold';
-import { AddAlarmAction } from '../../redux/actions/AlarmAction';
-import { LocalNotification } from '../../services/LocalPushController';
-import { colors } from '../../utils/appTheme';
-import { vh, vw } from '../../utils/dimensions';
+import {AddAlarmAction} from '../../redux/actions/AlarmAction';
+import {LocalNotification} from '../../services/LocalPushController';
+import {colors} from '../../utils/appTheme';
+import {vh, vw} from '../../utils/dimensions';
 
-const AddAlarm = ({ navigation, route }) => {
+const AddAlarm = ({navigation, route}) => {
   const dispatch = useDispatch();
   const repeatData = [
     'Every Sunday',
@@ -55,18 +55,37 @@ const AddAlarm = ({ navigation, route }) => {
     const data = {
       id: id,
       name,
-      time,
+      time: time,
       vibrate: isVibrateEnabled,
       snooze: isSnoozeEnabled,
       ring: custom ? selectedRepeatValue : 'ring once',
       ringOnce: ringOnce,
       custom: custom,
     };
-    console.log('Daya  ====>0', data);
-    await dispatch(AddAlarmAction(data))
-    navigation.goBack()
+    if (name != '') {
+      await dispatch(AddAlarmAction(data));
+      navigation.goBack();
+    } else {
+      console.log('please Enter Name');
+    }
   };
 
+  // export const snoozeAlarm = async () => {
+  //   const randomid = Math.random() + Date.now();
+  //   const id = parseInt(randomid.toFixed());
+  //   const data = {
+  //     id: id,
+  //     name,
+  //     time,
+  //     vibrate: isVibrateEnabled,
+  //     snooze: isSnoozeEnabled,
+  //     ring: custom ? selectedRepeatValue : 'ring once',
+  //     ringOnce: ringOnce,
+  //     custom: custom,
+  //   };
+  //   console.log('Daya  ====>0', data);
+  //   await dispatch(AddAlarmAction(data));
+  // };
   const renderTime = () => {
     return (
       <TouchableOpacity
@@ -78,7 +97,7 @@ const AddAlarm = ({ navigation, route }) => {
           borderBottomWidth: vw * 1,
           borderColor: colors.white,
         }}>
-        <CircularBold style={{ fontSize: vh * 7, color: colors.white }}>
+        <CircularBold style={{fontSize: vh * 7, color: colors.white}}>
           {formattedToDate}
         </CircularBold>
       </TouchableOpacity>
@@ -105,7 +124,7 @@ const AddAlarm = ({ navigation, route }) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{ color: ringOnce ? colors.drawerBlack : colors.white }}>
+          <Text style={{color: ringOnce ? colors.drawerBlack : colors.white}}>
             Ring Once
           </Text>
         </TouchableOpacity>
@@ -120,7 +139,7 @@ const AddAlarm = ({ navigation, route }) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{ color: custom ? colors.drawerBlack : colors.white }}>
+          <Text style={{color: custom ? colors.drawerBlack : colors.white}}>
             Custom
           </Text>
         </TouchableOpacity>
@@ -161,7 +180,7 @@ const AddAlarm = ({ navigation, route }) => {
   const renderAlarmTitle = () => {
     return (
       <View>
-        <Text style={{ color: colors.white }}>Alarm Name</Text>
+        <Text style={{color: colors.white}}>Alarm Name</Text>
         <TextInput
           value={name}
           onChangeText={text => setName(text)}
@@ -189,9 +208,9 @@ const AddAlarm = ({ navigation, route }) => {
             justifyContent: 'space-between',
             marginTop: 2 * vh,
           }}>
-          <Text style={{ color: colors.white }}> Virabte</Text>
+          <Text style={{color: colors.white}}> Virabte</Text>
           <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={isVibrateEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleVibrateSwitch}
@@ -207,9 +226,9 @@ const AddAlarm = ({ navigation, route }) => {
             justifyContent: 'space-between',
             marginTop: 2 * vh,
           }}>
-          <Text style={{ color: colors.white }}> Snooze</Text>
+          <Text style={{color: colors.white}}> Snooze</Text>
           <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={isSnoozeEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSnoozeSwitch}
@@ -220,11 +239,11 @@ const AddAlarm = ({ navigation, route }) => {
     );
   };
   return (
-    <View style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={{flex: 1, backgroundColor: '#000'}}>
       <DatePickerPopUp
         ref={e => (dateRef.current = e)}
         onYes={date => setTime(date)}
-      // minimumDate={moment().toDate()}
+        // minimumDate={moment().toDate()}
       />
 
       <CustomPicker
@@ -233,7 +252,7 @@ const AddAlarm = ({ navigation, route }) => {
         onHide={() => setRepeatPicker(false)}
         onPress={item => handleItem(item)}
         selectedItem={selectedRepeatValue}
-      // pickerStyle={styles.pickerStyle}
+        // pickerStyle={styles.pickerStyle}
       />
       {renderTime()}
       <View
@@ -268,7 +287,7 @@ const AddAlarm = ({ navigation, route }) => {
             alignItems: 'center',
           }}
           onPress={handleOnSubmit}>
-          <CircularBold style={{ color: colors.white }}>ADD</CircularBold>
+          <CircularBold style={{color: colors.white}}>ADD</CircularBold>
         </TouchableOpacity>
       </View>
     </View>

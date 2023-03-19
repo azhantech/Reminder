@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { Platform } from 'react-native';
-import PushNotification, { Importance } from 'react-native-push-notification';
-
+import {Platform} from 'react-native';
+import PushNotification, {Importance} from 'react-native-push-notification';
+import {snoozeAlarm} from '../redux/actions/AlarmAction';
 export const initiateNotification = () => {
   PushNotification.configure({
     onRegister: token => console.log('Token', token),
@@ -14,19 +14,37 @@ export const initiateNotification = () => {
     popInitialNotification: true,
     requestPermissions: Platform.OS === 'ios',
     onAction: function (notification) {
-      console.log(notification, 'notificationnotification')
+      console.log(notification, 'notificationnotification');
       if (notification.action === 'Snooze') {
-        console.log('Alarm Snoozed');
-      }
-      else if (notification.action === 'Cancel') {
+        const time = new Date();
+        var newDateObj = moment(time).add(5, 'm').toDate();
+        LocalNotification(
+          Math.floor(Math.random() * 255),
+          newDateObj,
+          true,
+          true,
+          'Alarm',
+          notification?.title,
+        );
+        // console.log('Daya  ====>0', data);
+        // snoozeAlarm(data);
+        // console.log('Time ======= === === ==>', time);
+        // LocalNotification(
+        //   Math.floor(Math.random() * 255),
+        //   time,
+        //   notification?.vibrate,
+        //   true,
+        //   'Alarm',
+        //   notification?.title,
+        // );
+      } else if (notification.action === 'Cancel') {
         console.log('Alarm Stoped');
         //PushNotification.cancelAllLocalNotifications();
-      }
-      else {
+      } else {
         console.log('Notification opened');
       }
     },
-    actions: ["Snooze", "Cancel"],
+    actions: ['Snooze', 'Cancel'],
     // requestPermissions: true,
   });
 
@@ -41,10 +59,16 @@ export const initiateNotification = () => {
   });
 };
 
-
-
-export const LocalNotification = (id, updatedVal, vibrate, snooze, message, text) => {
+export const LocalNotification = (
+  id,
+  updatedVal,
+  vibrate,
+  snooze,
+  message,
+  text,
+) => {
   console.log('PROVIDED TEXT ', updatedVal);
+
   PushNotification.localNotificationSchedule({
     id: `${id}`,
     channelId: 'hello',
@@ -59,7 +83,7 @@ export const LocalNotification = (id, updatedVal, vibrate, snooze, message, text
     vibrate: vibrate,
     vibration: 300,
     repeatTime: snooze ? 1 : 0,
-    actions: ["Snooze", "Cancel"],
+    actions: ['Snooze', 'Cancel'],
     allowWhileIdle: true,
     invokeApp: false,
   });
