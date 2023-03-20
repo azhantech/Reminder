@@ -83,7 +83,7 @@ export const LocalNotification = (
     importance: Importance.HIGH,
     vibrate: vibrate,
     vibration: 300,
-    repeatType: repeatType,
+    repeatType: repeatType ? repeatType : 'hour',
     repeatTime: snooze ? 1 : 0,
     actions: ['Snooze', 'Cancel'],
     allowWhileIdle: true,
