@@ -1,7 +1,7 @@
 import moment from 'moment';
-import {Platform} from 'react-native';
-import PushNotification, {Importance} from 'react-native-push-notification';
-import {snoozeAlarm} from '../redux/actions/AlarmAction';
+import { Platform } from 'react-native';
+import PushNotification, { Importance } from 'react-native-push-notification';
+import { snoozeAlarm } from '../redux/actions/AlarmAction';
 export const initiateNotification = () => {
   PushNotification.configure({
     onRegister: token => console.log('Token', token),
@@ -64,6 +64,7 @@ export const LocalNotification = (
   updatedVal,
   vibrate,
   snooze,
+  repeatType,
   message,
   text,
 ) => {
@@ -82,6 +83,7 @@ export const LocalNotification = (
     importance: Importance.HIGH,
     vibrate: vibrate,
     vibration: 300,
+    repeatType: repeatType,
     repeatTime: snooze ? 1 : 0,
     actions: ['Snooze', 'Cancel'],
     allowWhileIdle: true,
