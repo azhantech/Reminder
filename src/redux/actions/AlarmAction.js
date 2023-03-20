@@ -57,16 +57,20 @@ export const removeAlaramAction = id => {
 export const UpdateAlarm = data => {
   return async dispatch => {
     try {
-      await dispatch({ type: types.EditAlarm, payload: data });
-      LocalNotification(
-        data?.id,
-        data?.time,
-        data?.vibrate,
-        data?.snooze,
-        data?.repeatType,
-        'Alarm',
-        data?.name,
-      );
+      await DeleteLocalNotification(data?.id);
+      setTimeout(() => {
+        dispatch({ type: types.EditAlarm, payload: data });
+        LocalNotification(
+          Math.floor(Math.random() * 255),
+          data?.time,
+          data?.vibrate,
+          data?.snooze,
+          data?.repeatType,
+          'Alarm',
+          data?.name,
+        );
+      }, 1000)
+
     } catch (err) {
       throw new Error(err);
     }
