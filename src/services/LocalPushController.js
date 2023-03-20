@@ -68,7 +68,13 @@ export const LocalNotification = (
   message,
   text,
 ) => {
-  console.log('PROVIDED TEXT ', updatedVal);
+  console.log('after notification ', id,
+    updatedVal,
+    vibrate,
+    snooze,
+    repeatType,
+    message,
+    text,);
 
   PushNotification.localNotificationSchedule({
     id: `${id}`,
@@ -90,6 +96,12 @@ export const LocalNotification = (
     invokeApp: false,
   });
 };
+
+
+export const DeleteLocalNotification = (id) => {
+  console.log(id, 'deleteeee')
+  PushNotification.cancelLocalNotification(`${id}`);
+}
 
 PushNotification.getScheduledLocalNotifications(nots => {
   console.log('nots', nots);

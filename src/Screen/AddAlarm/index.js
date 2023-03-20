@@ -47,10 +47,8 @@ const AddAlarm = ({ navigation, route }) => {
   };
 
   const handleOnSubmit = async () => {
-    const randomid = Math.random() + Date.now();
-    const id = parseInt(randomid.toFixed());
     const data = {
-      id: id,
+      id: Math.floor(Math.random() * 255),
       name,
       time: time,
       vibrate: isVibrateEnabled,
@@ -59,6 +57,7 @@ const AddAlarm = ({ navigation, route }) => {
       ringOnce: ringOnce,
       custom: custom,
     };
+    console.log(data, 'before Action')
     if (name != null) {
       await dispatch(AddAlarmAction(data));
       navigation.goBack();
