@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { vh, vw } from '../../utils/dimensions';
+import {StyleSheet} from 'react-native';
+import {vh, vw} from '../../utils/dimensions';
 // import themeColors from '../../../Utils/themeColors';
 // import {vh, vw} from '../../../Utils/Untis';
 
@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 70 * vw,
     height: 30 * vh,
+    backgroundColor: '#000c',
+    elevation: 10,
+    shadowColor: '#ffff',
   },
   contentContainer: {
     padding: vw * 6,
@@ -28,7 +31,7 @@ const styles = StyleSheet.create({
     marginBottom: vh * 2,
   },
   title: {
-    color: '#000',
+    color: '#ffff',
     fontSize: vh * 2,
     marginBottom: vh * 1.8,
     textAlign: 'center',
@@ -45,20 +48,31 @@ const styles = StyleSheet.create({
     width: vw * 60,
   },
   primaryButton: {
-    backgroundColor: 'green',
+    backgroundColor: 'black',
     height: vh * 6,
     width: vw * 25,
     paddingVertical: 1 * vh,
     marginTop: vh * 1.8,
     marginRight: vh * 0.6,
+    elevation: 5,
+    shadowColor: 'white',
+    borderColor: '#ffff',
+    borderRadius: 1,
+    borderWidth: 0.2,
   },
   secondaryButton: {
-    backgroundColor: 'red',
+    backgroundColor: 'black',
     height: vh * 6,
     width: vw * 25,
     paddingVertical: 1 * vh,
     marginTop: vh * 1.8,
-    marginLeft: vh * 0.6,
+    marginRight: vh * 0.6,
+    elevation: 5,
+    shadowColor: 'white',
+    borderColor: '#ffff',
+    borderRadius: 1,
+    borderWidth: 0.2,
+    justifyContent: 'center',
   },
   iconStyle: {
     tintColor: 'grey',

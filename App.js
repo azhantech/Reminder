@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {Platform, StatusBar, StyleSheet, UIManager, View} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import Navigator from './src/navigation/index';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/src/integration/react';
@@ -16,7 +16,12 @@ const App = props => {
     initiateNotification();
     ReactnativeSplash.hide();
   }, []);
-
+  PushNotification.configure({
+    onNotification: notification => {
+      setNotificationData(notification);
+      confirmationRef.current.show();
+    },
+  });
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -29,14 +34,14 @@ const App = props => {
 
           <Navigator />
 
-          {/* <AlarmPopUp
+          <AlarmPopUp
             reference={confirmationRef}
             icon={generalImages.joggingPerson}
             title="Go Jogging"
             primaryButtonText="Snooze"
             secondaryButtonText="I'm Going"
             notificationData={notificationData}
-          /> */}
+          />
         </View>
       </PersistGate>
     </Provider>

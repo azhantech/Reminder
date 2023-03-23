@@ -1,77 +1,14 @@
-import { View, Image, TouchableOpacity } from 'react-native';
-import React, { useImperativeHandle, useRef, useEffect, useState } from 'react';
+import {View, Image, TouchableOpacity} from 'react-native';
+import React, {useImperativeHandle, useRef, useEffect, useState} from 'react';
 import PopupHOC from '../PopupHOC';
 import styles from './styles';
-// import IconButton from '../../Buttons/IconButton';
-import { icons } from '../../../Assets';
-// import MainButton from '../../Buttons/MainButton';
 import SoundPlayer from 'react-native-sound-player';
-// import {
-//   postSnoozeReminder,
-// } from '../../../redux/actions/generalActions';
-import { useDispatch } from 'react-redux';
 import CircularBold from '../Texts/CircularBold';
+import {vh} from '../../utils/dimensions';
+import {LocalNotification} from '../../services/LocalPushController';
+import moment from 'moment';
 
 const AlarmPopUp = props => {
-  const dispatch = useDispatch();
-  const [reminderDetails, setReminderDetails] = useState(null);
-
-  console.log(props?.notificationData, 'notificationsDTAT')
-  // useEffect(() => {
-  //   handleReminderDetails();
-  // }, [props?.notificationData?.id]);
-
-  // const handleReminderDetails = async () => {
-  //   try {
-  //     const response = await dispatch(
-  //       getOtherReminderDetails(
-  //         props?.notificationData?.id,
-  //         'Jogging Reminder',
-  //       ),
-  //     );
-  //     if (response) {
-  //       setReminderDetails(response?.response?.message);
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // const handleJoggingNotification = async mode => {
-  //   const data = {
-  //     id: props?.notificationData?.id,
-  //     type: props?.notificationData?.type,
-  //     going: mode == 'going' ? 1 : 0,
-  //     snooze: mode == 'snooze' ? 1 : 0,
-  //   };
-
-  //   try {
-  //     const response = await dispatch(postJoggingNotification(data));
-  //     if (response) {
-  //       hide();
-  //     }
-  //   } catch (e) {
-  //     showToast(e);
-  //   }
-  // };
-
-  // const handleSnooze = async status => {
-  //   const data = {
-  //     reminder_id: props?.notificationData?.id,
-  //     status: status,
-  //     type: props?.notificationData?.type,
-  //     time_id: null,
-  //   };
-
-  //   try {
-  //     const response = await dispatch(postSnoozeReminder(data));
-  //     if (response) {
-  //       hide();
-  //     }
-  //   } catch (e) {
-  //     // showToast(e);
-  //   }
-  // };
   const startMusic = () => {
     try {
       SoundPlayer.playSoundFile('alarm', 'mp3');
@@ -92,7 +29,19 @@ const AlarmPopUp = props => {
       showToast('File is not valid');
     }
   };
-
+  const hanldeSnooze = async () => {
+    const time = new Date();
+    var newDateObj = moment(time).add(1, 'm').toDate();
+    await LocalNotification(
+      props?.notificationData?.id,
+      newDateObj,
+      true,
+      true,
+      'Alarm',
+      props?.notificationData?.title,
+    );
+    hide();
+  };
   const modalRef = useRef();
   useImperativeHandle(props?.reference, () => ({
     hide: hide,
@@ -105,59 +54,44 @@ const AlarmPopUp = props => {
   };
   const show = onShow => {
     modalRef?.current.show();
-    startMusic()
-    // if (props?.notificationData?.alarm) {
-    //   startMusic();
-    // }
+    startMusic();
   };
 
   return (
     <PopupHOC style={[styles.container, props.style]} reference={modalRef}>
-      {/* <IconButton
-        // onPress={() => handleJoggingNotification('snooze')}
-        icon={icons.close}
-        style={styles.IconButton}
-        iconStyle={styles.iconStyle}
-      /> */}
       <View style={styles.contentContainer}>
-        <Image source={props.icon} style={[styles.icon, props.iconStyle]} />
         <CircularBold numberOfLines={4} style={styles.title}>
-          {props.title}
+          {props?.notificationData?.title}
         </CircularBold>
-        {props.subText ? (
-          <CircularBold numberOfLines={6} style={styles.subText}>
-            {props.subText}
-          </CircularBold>
-        ) : null}
 
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.primaryButton} onPress={hide}>
+          <TouchableOpacity style={styles.primaryButton} onPress={hanldeSnooze}>
             <CircularBold
-              numberOfLines={4} style={[styles.title, {
-                color: '#fff'
-              }]}>
+              numberOfLines={4}
+              style={[
+                styles.title,
+                {
+                  color: '#fff',
+                  fontSize: vh * 1.8,
+                },
+              ]}>
               {props.primaryButtonText}
             </CircularBold>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.secondaryButton} onPress={hide}>
-            <CircularBold numberOfLines={4} style={[styles.title, {
-              color: '#fff'
-            }]}>
+            <CircularBold
+              numberOfLines={2}
+              style={[
+                styles.title,
+                {
+                  color: '#fff',
+                  fontSize: vh * 1.8,
+                },
+              ]}>
               {props.secondaryButtonText}
             </CircularBold>
           </TouchableOpacity>
-          {/* <MainButton
-            text={props.primaryButtonText}
-            style={styles.primaryButton}
-            onPress={() => handleSnooze('snooze')}
-          /> */}
-
-          {/* <MainButton
-            onPress={() => handleJoggingNotification('going')}
-            text={props.secondaryButtonText}
-            style={styles.secondaryButton}
-          /> */}
         </View>
       </View>
     </PopupHOC>

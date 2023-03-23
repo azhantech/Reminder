@@ -1,11 +1,9 @@
 import moment from 'moment';
-import { Platform } from 'react-native';
-import PushNotification, { Importance } from 'react-native-push-notification';
-import { snoozeAlarm } from '../redux/actions/AlarmAction';
+import {Platform} from 'react-native';
+import PushNotification, {Importance} from 'react-native-push-notification';
 export const initiateNotification = () => {
   PushNotification.configure({
     onRegister: token => console.log('Token', token),
-    onNotification: notification => console.log('NOTIFICATION', notification),
     permissions: {
       alert: true,
       badge: true,
@@ -17,9 +15,9 @@ export const initiateNotification = () => {
       console.log(notification, 'notificationnotification');
       if (notification.action === 'Snooze') {
         const time = new Date();
-        var newDateObj = moment(time).add(5, 'm').toDate();
+        var newDateObj = moment(time).add(1, 'm').toDate();
         LocalNotification(
-          Math.floor(Math.random() * 255),
+          notification?.notificationId,
           newDateObj,
           true,
           true,
@@ -68,14 +66,6 @@ export const LocalNotification = (
   message,
   text,
 ) => {
-  console.log('after notification ', id,
-    updatedVal,
-    vibrate,
-    snooze,
-    repeatType,
-    message,
-    text,);
-
   PushNotification.localNotificationSchedule({
     id: `${id}`,
     channelId: 'hello',
@@ -97,11 +87,10 @@ export const LocalNotification = (
   });
 };
 
-
-export const DeleteLocalNotification = (id) => {
-  console.log(id, 'deleteeee')
+export const DeleteLocalNotification = id => {
+  console.log(id, 'deleteeee');
   PushNotification.cancelLocalNotification(`${id}`);
-}
+};
 
 PushNotification.getScheduledLocalNotifications(nots => {
   console.log('nots', nots);
