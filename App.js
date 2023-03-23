@@ -37,9 +37,9 @@ const App = props => {
           <AlarmPopUp
             reference={confirmationRef}
             icon={generalImages.joggingPerson}
-            title="Go Jogging"
+            title="Dis"
             primaryButtonText="Snooze"
-            secondaryButtonText="I'm Going"
+            secondaryButtonText="Cancel"
             notificationData={notificationData}
           />
         </View>
