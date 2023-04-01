@@ -54,5 +54,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+
+        <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActionService" />
+            <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActionHandlerReceiver"
+            android:exported="true">
+                <intent-filter>
+                    <action android:name="${applicationId}.firstAction" />
+                    <action android:name="${applicationId}.secondAction" />
+                </intent-filter>
+            </receiver>
     </application>
 </manifest>

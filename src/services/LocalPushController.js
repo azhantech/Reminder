@@ -1,50 +1,43 @@
 import moment from 'moment';
-import {Platform} from 'react-native';
-import PushNotification, {Importance} from 'react-native-push-notification';
+import { AppRegistry, Platform } from 'react-native';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import PushNotification, { Importance } from 'react-native-push-notification';
+import { name as appName } from '../../app.json';
+import App from '../../App';
 export const initiateNotification = () => {
-  PushNotification.configure({
-    onRegister: token => console.log('Token', token),
-    permissions: {
-      alert: true,
-      badge: true,
-      sound: true,
-    },
-    popInitialNotification: true,
-    requestPermissions: Platform.OS === 'ios',
-    onAction: function (notification) {
-      console.log(notification, 'notificationnotification');
-      if (notification.action === 'Snooze') {
-        const time = new Date();
-        var newDateObj = moment(time).add(1, 'm').toDate();
-        LocalNotification(
-          notification?.notificationId,
-          newDateObj,
-          true,
-          true,
-          'Alarm',
-          notification?.title,
-        );
-        // console.log('Daya  ====>0', data);
-        // snoozeAlarm(data);
-        // console.log('Time ======= === === ==>', time);
-        // LocalNotification(
-        //   Math.floor(Math.random() * 255),
-        //   time,
-        //   notification?.vibrate,
-        //   true,
-        //   'Alarm',
-        //   notification?.title,
-        // );
-      } else if (notification.action === 'Cancel') {
-        console.log('Alarm Stoped');
-        //PushNotification.cancelAllLocalNotifications();
-      } else {
-        console.log('Notification opened');
-      }
-    },
-    actions: ['Snooze', 'Cancel'],
-    // requestPermissions: true,
-  });
+  // PushNotification.configure({
+  //   onRegister: token => console.log('Token', token),
+  //   permissions: {
+  //     alert: true,
+  //     badge: true,
+  //     sound: true,
+
+  //   },
+  //   popInitialNotification: true,
+  //   requestPermissions: Platform.OS === 'ios',
+  //   foreground: true,
+  //   onAction: function (notification) {
+  //     console.log(notification, 'notificationnotification');
+  //     if (notification.action === 'Snooze') {
+  //       console.log('snooze')
+  //       const time = new Date();
+  //       var newDateObj = moment(time).add(1, 'm').toDate();
+  //       LocalNotification(
+  //         notification?.notificationId,
+  //         newDateObj,
+  //         true,
+  //         true,
+  //         'Alarm',
+  //         notification?.title,
+  //       );
+  //     } else if (notification.action === 'Cancel') {
+  //       console.log('Alarm Stoped');
+  //     } else {
+  //       console.log('Notification opened');
+  //     }
+  //   },
+  //   actions: ['Snooze', 'Cancel'],
+  // });
 
   PushNotification.createChannel({
     channelId: 'hello',
@@ -54,6 +47,7 @@ export const initiateNotification = () => {
     soundName: 'alarm.mp3',
     importance: Importance.HIGH,
     vibrate: true,
+
   });
 };
 
@@ -84,11 +78,11 @@ export const LocalNotification = (
     actions: ['Snooze', 'Cancel'],
     allowWhileIdle: true,
     invokeApp: false,
+    ignoreInForeground: false,
   });
 };
 
 export const DeleteLocalNotification = id => {
-  console.log(id, 'deleteeee');
   PushNotification.cancelLocalNotification(`${id}`);
 };
 

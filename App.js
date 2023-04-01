@@ -1,19 +1,19 @@
-import React, {useRef, useState} from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StatusBar, StyleSheet, View, AppRegistry } from 'react-native';
 import Navigator from './src/navigation/index';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/src/integration/react';
-import {store, persistor} from './src/redux/store';
-import {initiateNotification} from './src/services/LocalPushController';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/src/integration/react';
+import { store, persistor } from './src/redux/store';
+import { initiateNotification } from './src/services/LocalPushController';
 import ReactnativeSplash from 'react-native-animated-splash';
 import AlarmPopUp from './src/Component/AlarmPopUp';
 import PushNotification from 'react-native-push-notification';
-import {generalImages} from './src/assets/images';
+import { generalImages } from './src/assets/images';
 const App = props => {
   const [notificationData, setNotificationData] = useState(null);
   const confirmationRef = useRef();
   React.useEffect(() => {
-    initiateNotification();
+    // initiateNotification();
     ReactnativeSplash.hide();
   }, []);
   PushNotification.configure({
@@ -22,6 +22,7 @@ const App = props => {
       confirmationRef.current.show();
     },
   });
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
