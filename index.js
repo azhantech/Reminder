@@ -4,7 +4,7 @@
 
 import moment from 'moment';
 import { AppRegistry } from 'react-native';
-import PushNotification from 'react-native-push-notification';
+import PushNotification, { Importance } from 'react-native-push-notification';
 import App from './App';
 import { name as appName } from './app.json';
 import { LocalNotification } from './src/services/LocalPushController';
@@ -39,6 +39,17 @@ PushNotification.configure({
         }
     },
     actions: ['Snooze', 'Cancel'],
+
+});
+
+PushNotification.createChannel({
+    channelId: 'hello',
+    channelName: 'my channel',
+    channelDescription: 'A channel for Notification',
+    playSound: true,
+    soundName: 'alarm.mp3',
+    importance: Importance.HIGH,
+    vibrate: true,
 
 });
 
