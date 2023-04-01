@@ -1,7 +1,7 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import { Image, Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import {Image, Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
 // import {BlurView} from '@react-native-community/blur';
-import { vh, vw } from '../../utils/dimensions';
+import {vh, vw} from '../../utils/dimensions';
 // const BottomSheetWrapperComponent =
 const PopupHOC = props => {
   useImperativeHandle(props?.reference, () => ({
@@ -33,7 +33,7 @@ const PopupHOC = props => {
     <Modal
       animationType="slide"
       transparent={true}
-      visible={visible}
+      visible={props?.visible}
       style={styles.modal}>
       <View style={[styles.mainContainer, props.mainContainerStyle]}>
         <TouchableOpacity

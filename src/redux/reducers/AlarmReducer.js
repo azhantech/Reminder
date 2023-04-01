@@ -1,8 +1,10 @@
 import initialStates from './initialState';
 import * as types from '../types';
+import {useSelector} from 'react-redux';
 const initialState = initialStates.alarmReducer;
 
 const AlarmReducer = (state = initialState, action) => {
+  console.log('Action.payload ==============>', action.payload);
   switch (action.type) {
     case types.AddAlarm:
       return {
@@ -39,10 +41,9 @@ const AlarmReducer = (state = initialState, action) => {
           alarmData[i].ring = action?.payload?.ring;
         }
       }
-      return { ...state.alarms, alarms: alarmData };
+      return {...state.alarms, alarms: alarmData};
     default:
       return state;
   }
 };
-
 export default AlarmReducer;

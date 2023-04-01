@@ -1,24 +1,26 @@
-import React, { useRef, useState } from 'react';
-import { StatusBar, StyleSheet, View, AppRegistry } from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {StatusBar, StyleSheet, View, AppRegistry} from 'react-native';
 import Navigator from './src/navigation/index';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/src/integration/react';
-import { store, persistor } from './src/redux/store';
-import { initiateNotification } from './src/services/LocalPushController';
+import {Provider, useSelector} from 'react-redux';
+import {PersistGate} from 'redux-persist/src/integration/react';
+import {store, persistor} from './src/redux/store';
+import {initiateNotification} from './src/services/LocalPushController';
 import ReactnativeSplash from 'react-native-animated-splash';
 import AlarmPopUp from './src/Component/AlarmPopUp';
 import PushNotification from 'react-native-push-notification';
-import { generalImages } from './src/assets/images';
+import {generalImages} from './src/assets/images';
 const App = props => {
   const [notificationData, setNotificationData] = useState(null);
+  const [visible, setVisible] = useState(false);
   const confirmationRef = useRef();
   React.useEffect(() => {
-    // initiateNotification();
     ReactnativeSplash.hide();
   }, []);
+
   PushNotification.configure({
     onNotification: notification => {
       setNotificationData(notification);
+      setVisible(true);
       confirmationRef.current.show();
     },
   });
@@ -36,12 +38,14 @@ const App = props => {
           <Navigator />
 
           <AlarmPopUp
+            visible={visible}
             reference={confirmationRef}
             icon={generalImages.joggingPerson}
             title="Dis"
             primaryButtonText="Snooze"
             secondaryButtonText="Cancel"
             notificationData={notificationData}
+            setVisible={setVisible}
           />
         </View>
       </PersistGate>

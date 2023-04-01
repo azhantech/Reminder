@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { AppRegistry, Platform } from 'react-native';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import PushNotification, { Importance } from 'react-native-push-notification';
-import { name as appName } from '../../app.json';
+import {AppRegistry, Platform} from 'react-native';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import PushNotification, {Importance} from 'react-native-push-notification';
+import {name as appName} from '../../app.json';
 import App from '../../App';
 export const initiateNotification = () => {
   // PushNotification.configure({
@@ -47,7 +47,6 @@ export const initiateNotification = () => {
     soundName: 'alarm.mp3',
     importance: Importance.HIGH,
     vibrate: true,
-
   });
 };
 
@@ -60,6 +59,7 @@ export const LocalNotification = (
   message,
   text,
 ) => {
+  console.log('Notfivation ======>');
   PushNotification.localNotificationSchedule({
     id: `${id}`,
     channelId: 'hello',

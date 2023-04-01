@@ -9,6 +9,11 @@ import {LocalNotification} from '../../services/LocalPushController';
 import moment from 'moment';
 
 const AlarmPopUp = props => {
+  useEffect(() => {
+    if (props?.visible) {
+      startMusic();
+    }
+  }, [props?.visible]);
   const startMusic = () => {
     try {
       SoundPlayer.playSoundFile('alarm', 'mp3');
@@ -37,7 +42,7 @@ const AlarmPopUp = props => {
       newDateObj,
       true,
       true,
-      'Alarm',
+      'hour',
       props?.notificationData?.title,
     );
     hide();
@@ -50,15 +55,18 @@ const AlarmPopUp = props => {
 
   const hide = onHide => {
     stopMusic();
+    props?.setVisible(false);
     modalRef?.current.hide();
   };
   const show = onShow => {
     modalRef?.current.show();
-    startMusic();
   };
 
   return (
-    <PopupHOC style={[styles.container, props.style]} reference={modalRef}>
+    <PopupHOC
+      style={[styles.container, props.style]}
+      reference={modalRef}
+      visible={props?.visible}>
       <View style={styles.contentContainer}>
         <CircularBold numberOfLines={4} style={styles.title}>
           {props?.notificationData?.title}
