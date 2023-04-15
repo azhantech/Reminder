@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 
   itemViewStyle: {
-    minHeight: 30 * vh,
+    minHeight: 45 * vh,
     width: 80 * vw,
     borderRadius: 3 * vw,
     alignItems: 'center',

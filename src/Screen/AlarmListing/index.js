@@ -8,6 +8,7 @@ import CircularBold from '../../Component/Texts/CircularBold';
 import { getAlarms } from '../../redux/actions/AlarmAction';
 import { colors } from '../../utils/appTheme';
 import { vh, vw } from '../../utils/dimensions';
+import moment from 'moment';
 
 const AlarmList = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const AlarmList = ({ navigation }) => {
       </TouchableOpacity>
     );
   };
+
   return (
     <View
       style={{ flex: 1, backgroundColor: colors.black, alignItems: 'center' }}>

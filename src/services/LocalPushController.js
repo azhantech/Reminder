@@ -1,8 +1,8 @@
 import moment from 'moment';
-import {AppRegistry, Platform} from 'react-native';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import PushNotification, {Importance} from 'react-native-push-notification';
-import {name as appName} from '../../app.json';
+import { AppRegistry, Platform } from 'react-native';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import PushNotification, { Importance } from 'react-native-push-notification';
+import { name as appName } from '../../app.json';
 import App from '../../App';
 export const initiateNotification = () => {
   // PushNotification.configure({
@@ -59,7 +59,13 @@ export const LocalNotification = (
   message,
   text,
 ) => {
-  console.log('Notfivation ======>');
+  console.log('Notfivation ======>', id,
+    updatedVal,
+    vibrate,
+    snooze,
+    repeatType,
+    message,
+    text,);
   PushNotification.localNotificationSchedule({
     id: `${id}`,
     channelId: 'hello',

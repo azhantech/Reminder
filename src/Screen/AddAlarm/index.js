@@ -1,18 +1,18 @@
 import moment from 'moment';
-import React, {useState, useRef} from 'react';
-import {View, Switch, Text, TextInput} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useDispatch} from 'react-redux';
+import React, { useState, useRef } from 'react';
+import { View, Switch, Text, TextInput } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
 import CustomPicker from '../../Component/CustomerPicker';
 import DatePickerPopUp from '../../Component/DatePickerPopUp';
 import CircularBold from '../../Component/Texts/CircularBold';
-import {AddAlarmAction} from '../../redux/actions/AlarmAction';
-import {colors} from '../../utils/appTheme';
-import {vh, vw} from '../../utils/dimensions';
+import { AddAlarmAction } from '../../redux/actions/AlarmAction';
+import { colors } from '../../utils/appTheme';
+import { vh, vw } from '../../utils/dimensions';
 
-const AddAlarm = ({navigation, route}) => {
+const AddAlarm = ({ navigation, route }) => {
   const dispatch = useDispatch();
-  const repeatData = ['day', 'hour', 'minute', 'week'];
+  const repeatData = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const dateRef = useRef(null);
   const [time, setTime] = useState(new Date());
   const [name, setName] = useState(null);
@@ -22,7 +22,7 @@ const AddAlarm = ({navigation, route}) => {
   const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(false);
   const formattedToDate = moment(new Date(time)).format('hh:mm A');
   const [repeatPicker, setRepeatPicker] = useState(false);
-  const [selectedRepeatValue, setSelectedRepeatValue] = useState(null);
+  const [repeatedDays, setRepeatedDays] = useState([])
 
   const toggleVibrateSwitch = () =>
     setIsVibrateEnabled(previousState => !previousState);
@@ -34,10 +34,20 @@ const AddAlarm = ({navigation, route}) => {
   };
 
   const handleItem = item => {
-    setSelectedRepeatValue(item);
-    setTimeout(() => {
-      setRepeatPicker(false);
-    }, 500);
+    var tempRepeatedDays = [...repeatedDays]
+    const itemExists = tempRepeatedDays.indexOf(item)
+    console.warn(itemExists)
+    if (itemExists > -1) {
+      tempRepeatedDays.splice(itemExists, 1)
+    } else {
+      tempRepeatedDays.push(item)
+    }
+    setRepeatedDays(tempRepeatedDays)
+
+    // setSelectedRepeatValue(item);
+    // setTimeout(() => {
+    //   setRepeatPicker(false);
+    // }, 500);
   };
 
   const handleOnSubmit = async () => {
@@ -47,7 +57,7 @@ const AddAlarm = ({navigation, route}) => {
       time: time,
       vibrate: isVibrateEnabled,
       snooze: isSnoozeEnabled,
-      ring: custom ? selectedRepeatValue : 'ring once',
+      ring: custom ? repeatedDays : 'ring once',
       ringOnce: ringOnce,
       custom: custom,
     };
@@ -88,7 +98,7 @@ const AddAlarm = ({navigation, route}) => {
           borderBottomWidth: vw * 1,
           borderColor: colors.white,
         }}>
-        <CircularBold style={{fontSize: vh * 7, color: colors.white}}>
+        <CircularBold style={{ fontSize: vh * 7, color: colors.white }}>
           {formattedToDate}
         </CircularBold>
       </TouchableOpacity>
@@ -115,7 +125,7 @@ const AddAlarm = ({navigation, route}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: ringOnce ? colors.drawerBlack : colors.white}}>
+          <Text style={{ color: ringOnce ? colors.drawerBlack : colors.white }}>
             Ring Once
           </Text>
         </TouchableOpacity>
@@ -130,7 +140,7 @@ const AddAlarm = ({navigation, route}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: custom ? colors.drawerBlack : colors.white}}>
+          <Text style={{ color: custom ? colors.drawerBlack : colors.white }}>
             Custom
           </Text>
         </TouchableOpacity>
@@ -162,7 +172,7 @@ const AddAlarm = ({navigation, route}) => {
             marginBottom: 2 * vh,
           }}>
           {' '}
-          {selectedRepeatValue ? selectedRepeatValue : 'Select'}
+          {repeatedDays?.length ? repeatedDays?.toString() : 'Select'}
         </Text>
       </TouchableOpacity>
     );
@@ -171,7 +181,7 @@ const AddAlarm = ({navigation, route}) => {
   const renderAlarmTitle = () => {
     return (
       <View>
-        <Text style={{color: colors.white}}>Alarm Name</Text>
+        <Text style={{ color: colors.white }}>Alarm Name</Text>
         <TextInput
           value={name}
           onChangeText={text => setName(text)}
@@ -199,9 +209,9 @@ const AddAlarm = ({navigation, route}) => {
             justifyContent: 'space-between',
             marginTop: 2 * vh,
           }}>
-          <Text style={{color: colors.white}}> Vibrate</Text>
+          <Text style={{ color: colors.white }}> Vibrate</Text>
           <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
             thumbColor={isVibrateEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleVibrateSwitch}
@@ -217,9 +227,9 @@ const AddAlarm = ({navigation, route}) => {
             justifyContent: 'space-between',
             marginTop: 2 * vh,
           }}>
-          <Text style={{color: colors.white}}> Snooze</Text>
+          <Text style={{ color: colors.white }}> Snooze</Text>
           <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
             thumbColor={isSnoozeEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSnoozeSwitch}
@@ -230,11 +240,11 @@ const AddAlarm = ({navigation, route}) => {
     );
   };
   return (
-    <View style={{flex: 1, backgroundColor: '#000'}}>
+    <View style={{ flex: 1, backgroundColor: '#000' }}>
       <DatePickerPopUp
         ref={e => (dateRef.current = e)}
         onYes={date => setTime(date)}
-        // minimumDate={moment().toDate()}
+      // minimumDate={moment().toDate()}
       />
 
       <CustomPicker
@@ -242,7 +252,7 @@ const AddAlarm = ({navigation, route}) => {
         visible={repeatPicker}
         onHide={() => setRepeatPicker(false)}
         onPress={item => handleItem(item)}
-        selectedItem={selectedRepeatValue}
+        selectedItem={repeatedDays}
       />
       {renderTime()}
       <View
@@ -277,7 +287,7 @@ const AddAlarm = ({navigation, route}) => {
             alignItems: 'center',
           }}
           onPress={handleOnSubmit}>
-          <CircularBold style={{color: colors.white}}>ADD</CircularBold>
+          <CircularBold style={{ color: colors.white }}>ADD</CircularBold>
         </TouchableOpacity>
       </View>
     </View>

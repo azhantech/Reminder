@@ -1,24 +1,26 @@
 import PushNotification from 'react-native-push-notification';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   DeleteLocalNotification,
   LocalNotification,
 } from '../../services/LocalPushController';
-import {store} from '../store';
+import { store } from '../store';
 import * as types from '../types';
 
 export const AddAlarmAction = data => {
   return async dispatch => {
     try {
-      await dispatch({type: types.AddAlarm, payload: data});
+      await dispatch({ type: types.AddAlarm, payload: data });
       LocalNotification(
         data?.id,
         data?.time,
         data?.vibrate,
         data?.snooze,
-        data?.repeatType,
+        // data?.repeatType,
+        data?.ring,
         'Alarm',
         data?.name,
+
       );
     } catch (err) {
       console.log('Error from AddAlarm ====>', err);
@@ -35,6 +37,7 @@ export const snoozeAlarm = data => {
         data?.snooze,
         'Alarm',
         data?.name,
+        data?.ring
       );
     } catch (err) {
       console.log('Error from AddAlarm ====>', err);
@@ -60,7 +63,7 @@ export const UpdateAlarm = data => {
     try {
       await DeleteLocalNotification(data?.id);
       setTimeout(() => {
-        dispatch({type: types.EditAlarm, payload: data});
+        dispatch({ type: types.EditAlarm, payload: data });
         LocalNotification(
           data?.id,
           data?.time,
@@ -69,6 +72,7 @@ export const UpdateAlarm = data => {
           data?.repeatType,
           'Alarm',
           data?.name,
+          data?.ring
         );
       }, 1000);
     } catch (err) {
